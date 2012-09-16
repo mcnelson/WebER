@@ -21,9 +21,11 @@ group :assets do
 end
 
 group :development do
-  gem "rails-erd"
+  gem 'rails-erd'
+  gem 'debugger'
+  gem 'thin'
+  gem 'rspec-rails'
 end
-
 
 gem 'jquery-rails'
 
@@ -38,6 +40,5 @@ gem 'jquery-rails'
 
 gem 'capistrano'
 
-gem 'debugger'
 gem 'execjs'
 gem 'therubyracer'
