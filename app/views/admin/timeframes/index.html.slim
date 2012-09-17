@@ -3,8 +3,7 @@ h1 Listing timeframes
 table
   tr
     th Name
-    th Starts at
-    th Ends at
+    th Timeframe
     th
     th
     th
@@ -12,11 +11,10 @@ table
   - @timeframes.each do |timeframe|
     tr
       td = timeframe.name
-      td = timeframe.starts_at
-      td = timeframe.ends_at
-      td = link_to 'Show', timeframe
+      td = timeframe.starts_at.strftime("%a %b %e %l:%M:%P") + " > " + timeframe.ends_at.strftime("%a %b %e %l:%M:%P")
+      td = link_to 'Show', [:admin, timeframe]
       td = link_to 'Edit', edit_admin_timeframe_path(timeframe)
-      td = link_to 'Destroy', timeframe, :confirm => 'Are you sure?', :method => :delete
+      td = link_to 'Destroy', [:admin, timeframe], :confirm => 'Are you sure?', :method => :delete
 
 br
 
