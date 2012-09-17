@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @timeframe.name
+p
+  strong Starts at:
+  = @timeframe.starts_at
+p
+  strong Ends at:
+  = @timeframe.ends_at
+
+= link_to 'Edit', edit_admin_timeframe_path(@timeframe)
+'|
+= link_to 'Back', admin_timeframes_path

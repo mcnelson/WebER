@@ -14,10 +14,10 @@
 #
 development:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   database: weber_development
   pool: 5
-  username: weber
+  username: michael
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a

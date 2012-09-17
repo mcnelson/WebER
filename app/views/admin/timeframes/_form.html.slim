@@ -1,0 +1,18 @@
+= form_for [:admin, @timeframe] do |f|
+  - if @timeframe.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@timeframe.errors.count, "error")} prohibited this timeframe from being saved:"
+      ul
+        - @timeframe.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :starts_at
+    = f.datetime_select :starts_at
+  .field
+    = f.label :ends_at
+    = f.datetime_select :ends_at
+  .actions = f.submit 'Save'
