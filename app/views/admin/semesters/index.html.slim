@@ -2,7 +2,8 @@ h1 Listing semesters
 
 table
   tr
-    th Semester Starts
+    th Year
+    th Term
     th Dates
     th
     th
@@ -10,7 +11,8 @@ table
 
   - @semesters.each do |semester|
     tr
-      td = semester.starts_at.strftime("%Y")
+      td = semester.year
+      td = semester.term
       td = semester.starts_at.strftime("%b %e") + " - " + semester.ends_at.strftime("%b %e")
       td = link_to 'Show', [:admin, semester]
       td = link_to 'Edit', edit_admin_semester_path(semester)

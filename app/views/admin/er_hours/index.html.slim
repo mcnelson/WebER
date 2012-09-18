@@ -2,22 +2,22 @@ h1 Listing ER Hours
 
 table
   tr
-    th Starts at
-    th Ends at
     th Day
+    th Starts
+    th Ends
     th
     th
     th
 
   - @er_hours.each do |er_hour|
     tr
-      td = er_hour.day
-      td = er_hour.starts_at
-      td = er_hour.ends_at
+      td = er_hour.day.capitalize
+      td = er_hour.starts_at.strftime "%l:%M%P"
+      td = er_hour.ends_at.strftime "%l:%M%P"
 
-      td = link_to 'Show', admin_er_hour
-      td = link_to 'Edit', admin_edit_er_hour_path(er_hour)
-      td = link_to 'Destroy', admin_er_hour, :confirm => 'Are you sure?', method: :delete
+      td = link_to 'Show', [:admin, er_hour]
+      td = link_to 'Edit', edit_admin_er_hour_path(er_hour)
+      td = link_to 'Destroy', [:admin, er_hour], confirm: 'Are you sure?', method: :delete
 
 br
 

@@ -12,15 +12,18 @@
 
   .field
     = f.label :starts_at
-    = f.time_select :starts_at
-
+    = f.time_select :starts_at, ampm: true, minute_step: 15
 
   .field
     = f.label :ends_at
-    = f.time_select :ends_at
+    = f.time_select :ends_at, ampm: true, minute_step: 15
 
   .field
-    = f.label :semester
-    = f.collection_select :semester_id, Semester.all, :id, :starts_at
+    = f.label :semester_id
+    = f.collection_select :semester_id, Semester.live, :id, :yearterm
+
+  .field
+    = f.label :er_hour_id, "Associated ER Hour"
+    = f.collection_select :er_hour_id, ErHour.all, :id, :description, include_blank: true
 
   .actions = f.submit 'Save'

@@ -3,4 +3,20 @@ class Semester < ActiveRecord::Base
 
   attr_accessible :ends_at, :starts_at
   validates_presence_of :ends_at, :starts_at
+
+  scope :live, lambda { where("ends_at >= ?", Time.now) }
+
+  TERM_SPLIT_MONTH = 6
+
+  def term
+    starts_at.month.in?(TERM_SPLIT_MONTH .. 12) ? "Fall" : "Spring"
+  end
+
+  def year
+    starts_at.year
+  end
+
+  def yearterm
+    "#{year.to_s} #{term} (#{starts_at.strftime "%b %e"} - #{ends_at.strftime "%b %e"})"
+  end
 end
