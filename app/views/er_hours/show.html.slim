@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Starts at:
+  = @er_hour.starts_at
+p
+  strong Ends at:
+  = @er_hour.ends_at
+p
+  strong Day:
+  = @er_hour.day
+
+= link_to 'Edit', edit_er_hour_path(@er_hour)
+'|
+= link_to 'Back', er_hours_path

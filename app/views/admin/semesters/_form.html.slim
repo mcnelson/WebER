@@ -9,7 +9,22 @@
   .field
     = f.label :starts_at
     = f.date_select :starts_at
+
   .field
     = f.label :ends_at
     = f.date_select :ends_at
+
+  = fields_for :er_hours do |sf|
+    .field
+      = sf.label :day
+      = sf.select :day, weekdays_for_select
+
+    .field
+      = sf.label :starts_at
+      = sf.time_select :starts_at, ampm: true
+
+    .field
+      = sf.label :ends_at
+      = sf.time_select :ends_at, ampm: true
+
   .actions = f.submit 'Save'

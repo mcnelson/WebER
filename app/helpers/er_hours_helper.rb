@@ -1,0 +1,2 @@
+module ErHoursHelper
+end

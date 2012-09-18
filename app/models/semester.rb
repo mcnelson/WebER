@@ -1,3 +1,9 @@
 class Semester < ActiveRecord::Base
-  attr_accessible :ends_at, :name, :starts_at
+  has_many :er_hour
+
+  attr_accessible :ends_at, :starts_at
+  accepts_nested_attributes_for :er_hour
+
+  validates_presence_of :ends_at, :starts_at
+
 end

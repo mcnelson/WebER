@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917002441) do
+ActiveRecord::Schema.define(:version => 20120918000705) do
+
+  create_table "er_hours", :force => true do |t|
+    t.time     "starts_at",                :null => false
+    t.time     "ends_at",                  :null => false
+    t.string   "day",         :limit => 3, :null => false
+    t.integer  "semester_id",              :null => false
+    t.integer  "er_hour_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "semesters", :force => true do |t|
     t.date     "starts_at",  :null => false
