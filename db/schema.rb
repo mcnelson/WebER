@@ -13,12 +13,11 @@
 
 ActiveRecord::Schema.define(:version => 20120917002441) do
 
-  create_table "timeframes", :force => true do |t|
-    t.string   "name",       :limit => 60, :null => false
-    t.datetime "starts_at",                :null => false
-    t.datetime "ends_at",                  :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+  create_table "semesters", :force => true do |t|
+    t.date     "starts_at",  :null => false
+    t.date     "ends_at",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

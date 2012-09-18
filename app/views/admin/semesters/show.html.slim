@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @semester.name
+p
+  strong Starts at:
+  = @semester.starts_at
+p
+  strong Ends at:
+  = @semester.ends_at
+
+= link_to 'Edit', edit_admin_semester_path(@semester)
+'|
+= link_to 'Back', admin_semesters_path

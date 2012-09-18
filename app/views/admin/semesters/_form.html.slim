@@ -1,0 +1,15 @@
+= form_for [:admin, @semester] do |f|
+  - if @semester.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@semester.errors.count, "error")} prohibited this semester from being saved:"
+      ul
+        - @semester.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :starts_at
+    = f.date_select :starts_at
+  .field
+    = f.label :ends_at
+    = f.date_select :ends_at
+  .actions = f.submit 'Save'

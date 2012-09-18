@@ -1,6 +1,6 @@
 Weber::Application.routes.draw do
 
   namespace :admin do
-    resources :timeframes
+    resources :semesters
   end
 end
