@@ -1,8 +1,7 @@
 Weber::Application.routes.draw do
 
-  resources :er_hours
-
   namespace :admin do
     resources :semesters
+    resources :er_hours
   end
 end

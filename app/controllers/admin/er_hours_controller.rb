@@ -1,6 +1,5 @@
-class ErHoursController < ApplicationController
-  # GET /er_hours
-  # GET /er_hours.json
+class Admin::ErHoursController < AdminController
+
   def index
     @er_hours = ErHour.all
 
@@ -10,8 +9,6 @@ class ErHoursController < ApplicationController
     end
   end
 
-  # GET /er_hours/1
-  # GET /er_hours/1.json
   def show
     @er_hour = ErHour.find(params[:id])
 
@@ -21,8 +18,6 @@ class ErHoursController < ApplicationController
     end
   end
 
-  # GET /er_hours/new
-  # GET /er_hours/new.json
   def new
     @er_hour = ErHour.new
 
@@ -32,19 +27,16 @@ class ErHoursController < ApplicationController
     end
   end
 
-  # GET /er_hours/1/edit
   def edit
     @er_hour = ErHour.find(params[:id])
   end
 
-  # POST /er_hours
-  # POST /er_hours.json
   def create
     @er_hour = ErHour.new(params[:er_hour])
 
     respond_to do |format|
       if @er_hour.save
-        format.html { redirect_to @er_hour, notice: 'Er hour was successfully created.' }
+        format.html { redirect_to [:admin, @er_hour], notice: 'Er hour was successfully created.' }
         format.json { render json: @er_hour, status: :created, location: @er_hour }
       else
         format.html { render action: "new" }
@@ -53,14 +45,12 @@ class ErHoursController < ApplicationController
     end
   end
 
-  # PUT /er_hours/1
-  # PUT /er_hours/1.json
   def update
     @er_hour = ErHour.find(params[:id])
 
     respond_to do |format|
       if @er_hour.update_attributes(params[:er_hour])
-        format.html { redirect_to @er_hour, notice: 'Er hour was successfully updated.' }
+        format.html { redirect_to [:admin, @er_hour], notice: 'Er hour was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -69,14 +59,12 @@ class ErHoursController < ApplicationController
     end
   end
 
-  # DELETE /er_hours/1
-  # DELETE /er_hours/1.json
   def destroy
     @er_hour = ErHour.find(params[:id])
     @er_hour.destroy
 
     respond_to do |format|
-      format.html { redirect_to er_hours_url }
+      format.html { redirect_to admin_er_hours_url }
       format.json { head :no_content }
     end
   end

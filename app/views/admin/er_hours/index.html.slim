@@ -1,0 +1,24 @@
+h1 Listing ER Hours
+
+table
+  tr
+    th Starts at
+    th Ends at
+    th Day
+    th
+    th
+    th
+
+  - @er_hours.each do |er_hour|
+    tr
+      td = er_hour.day
+      td = er_hour.starts_at
+      td = er_hour.ends_at
+
+      td = link_to 'Show', admin_er_hour
+      td = link_to 'Edit', admin_edit_er_hour_path(er_hour)
+      td = link_to 'Destroy', admin_er_hour, :confirm => 'Are you sure?', method: :delete
+
+br
+
+= link_to 'New Er hour', new_admin_er_hour_path

@@ -14,17 +14,7 @@
     = f.label :ends_at
     = f.date_select :ends_at
 
-  = fields_for :er_hours do |sf|
-    .field
-      = sf.label :day
-      = sf.select :day, weekdays_for_select
-
-    .field
-      = sf.label :starts_at
-      = sf.time_select :starts_at, ampm: true
-
-    .field
-      = sf.label :ends_at
-      = sf.time_select :ends_at, ampm: true
+  h2 Add ER Hours
+  p Add the start and end times of each ER check in/check out window.
 
   .actions = f.submit 'Save'
