@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 gem 'pg'
 gem 'slim-rails'
+gem 'passenger'
 
 # Gems used only for assets and not required
 # in production environments by default.
