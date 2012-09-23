@@ -5,7 +5,7 @@ class ErHour < ActiveRecord::Base
   belongs_to :associated_hour, class_name: "ErHour"
   belongs_to :semester
 
-  validates_presence_of :date, :starts_at, :ends_at, :semester_id
+  validates_presence_of :day, :starts_at, :ends_at, :semester_id
   validates_uniqueness_of :er_hour_id
 
   def description
