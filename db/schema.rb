@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120918000705) do
+ActiveRecord::Schema.define(:version => 20120923045647) do
 
   create_table "er_hours", :force => true do |t|
     t.time     "starts_at",                :null => false
@@ -28,6 +28,18 @@ ActiveRecord::Schema.define(:version => 20120918000705) do
     t.date     "ends_at",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "user_infos", :force => true do |t|
+    t.boolean  "active",                       :default => true
+    t.string   "punet",           :limit => 8,                   :null => false
+    t.integer  "pu_student_id"
+    t.integer  "strikes",                      :default => 0
+    t.boolean  "can_reserve",                  :default => true
+    t.text     "notes"
+    t.string   "password_digest"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
   end
 
 end

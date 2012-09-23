@@ -1,4 +1,4 @@
-= form_for [:admin, @er_hour] do |f|
+= simple_form_for [:admin, @er_hour] do |f|
   - if @er_hour.errors.any?
     #error_explanation
       h2 = "#{pluralize(@er_hour.errors.count, "error")} prohibited this er_hour from being saved:"
