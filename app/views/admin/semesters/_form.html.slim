@@ -1,4 +1,4 @@
-= form_for [:admin, @semester] do |f|
+= simple_form_for [:admin, @semester], html: { class: "form-horizontal" } do |f|
   - if @semester.errors.any?
     #error_explanation
       h2 = "#{pluralize(@semester.errors.count, "error")} prohibited this semester from being saved:"
@@ -7,14 +7,9 @@
           li = message
 
   .field
-    = f.label :starts_at
-    = f.date_select :starts_at
+    = f.input :starts_at
 
   .field
-    = f.label :ends_at
-    = f.date_select :ends_at
-
-  h2 Add ER Hours
-  p Add the start and end times of each ER check in/check out window.
+    = f.input :ends_at
 
   .actions = f.submit 'Save'
