@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @er_hour] do |f|
+= simple_form_for [:admin, @er_hour], html: {class: 'form-horizontal'} do |f|
   - if @er_hour.errors.any?
     #error_explanation
       h2 = "#{pluralize(@er_hour.errors.count, "error")} prohibited this er_hour from being saved:"
@@ -6,24 +6,14 @@
         - @er_hour.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.label :day
-    = f.select :day, weekdays_for_select
+  = f.input :day, collection: weekdays_for_select
 
-  .field
-    = f.label :starts_at
-    = f.time_select :starts_at, ampm: true, minute_step: 15
+  = f.input :starts_at, label: "Start Date", ampm: true, minute_step: 15
 
-  .field
-    = f.label :ends_at
-    = f.time_select :ends_at, ampm: true, minute_step: 15
+  = f.input :ends_at, label: "Start Date", ampm: true, minute_step: 15
 
-  .field
-    = f.label :semester_id
-    = f.collection_select :semester_id, Semester.live, :id, :yearterm
+  = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
 
-  .field
-    = f.label :er_hour_id, "Associated ER Hour"
-    = f.collection_select :er_hour_id, ErHour.all, :id, :description, include_blank: true
+  = f.association :associated_hour, label: "Associated ER Hour", collection: ErHour.live_excluding(@er_hour.id).all, label_method: :description
 
   .actions = f.submit 'Save'

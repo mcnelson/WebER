@@ -4,7 +4,7 @@ class Semester < ActiveRecord::Base
   attr_accessible :ends_at, :starts_at
   validates_presence_of :ends_at, :starts_at
 
-  scope :live, lambda { where("ends_at >= ?", Time.now) }
+  scope :live, where("ends_at >= ?", Time.now)
 
   TERM_SPLIT_MONTH = 6
 

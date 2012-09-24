@@ -1,0 +1,30 @@
+= simple_form_for [:admin, @equipment] do |f|
+  - if @equipment.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@equipment.errors.count, "error")} prohibited this equipment from being saved:"
+      ul
+        - @equipment.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.input :active, label: "Active/Available for checkout"
+
+  .field
+    = f.input :status, collection: Equipment::STATUSES
+
+  .field
+    = f.input :name
+
+  .field
+    = f.input :brand
+
+  .field
+    = f.input :model
+
+  .field
+    = f.input :serial, label: "Serial #"
+
+  .field
+    = f.input :max_reservation_period, hint: "Leave blank to use the default (#{distance_of_time_in_words Weber::Application.config.default_max_reservation_period})"
+
+  .actions = f.submit 'Save'

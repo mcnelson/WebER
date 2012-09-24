@@ -1,0 +1,29 @@
+h1 Listing Equipment
+
+table
+  tr
+    th Active
+    th Status
+    th Name
+    th Brand
+    th Model
+    th Serial
+    th
+    th
+    th
+
+  - @equipment.each do |equipment|
+    tr
+      td = equipment.active
+      td = equipment.status
+      td = equipment.name
+      td = equipment.brand
+      td = equipment.model
+      td = equipment.serial
+      td = link_to 'Show', [:admin, equipment]
+      td = link_to 'Edit', edit_admin_equipment_path(equipment)
+      td = link_to 'Destroy', [:admin, equipment], confirm: 'Are you sure?', method: :delete
+
+br
+
+= link_to 'New Equipment', new_admin_equipment_path

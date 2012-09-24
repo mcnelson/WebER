@@ -11,16 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923045647) do
+ActiveRecord::Schema.define(:version => 20120924011947) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "title",      :limit => 100, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  create_table "equipment", :force => true do |t|
+    t.boolean  "active",                                :default => true, :null => false
+    t.string   "status",                 :limit => 20,                    :null => false
+    t.string   "name",                   :limit => 100,                   :null => false
+    t.string   "brand",                  :limit => 100
+    t.string   "model",                  :limit => 100
+    t.string   "serial",                 :limit => 100
+    t.integer  "max_reservation_period"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.integer  "category_id"
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+  end
 
   create_table "er_hours", :force => true do |t|
-    t.time     "starts_at",                :null => false
-    t.time     "ends_at",                  :null => false
-    t.string   "day",         :limit => 3, :null => false
-    t.integer  "semester_id",              :null => false
-    t.integer  "er_hour_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.time     "starts_at",                       :null => false
+    t.time     "ends_at",                         :null => false
+    t.string   "day",                :limit => 3, :null => false
+    t.integer  "semester_id",                     :null => false
+    t.integer  "associated_hour_id"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "semesters", :force => true do |t|
