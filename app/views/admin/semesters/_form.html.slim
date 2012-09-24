@@ -7,9 +7,9 @@
           li = message
 
   .field
-    = f.input :starts_at
+    = f.input :starts_at, label: "Start Date"
 
   .field
-    = f.input :ends_at
+    = f.input :ends_at, label: "End Date"
 
   .actions = f.submit 'Save'
