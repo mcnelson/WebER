@@ -1,8 +1,8 @@
 class Equipment < ActiveRecord::Base
-  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status
-  validates_presence_of :active, :status, :name, :category
+  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status, :category_id
+  validates_presence_of :active, :status, :name, :category_id
 
-  has_one :category
+  belongs_to :category
 
   STATUSES = [
     "available",

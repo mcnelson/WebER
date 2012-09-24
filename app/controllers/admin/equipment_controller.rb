@@ -50,7 +50,7 @@ class Admin::EquipmentController < AdminController
 
     respond_to do |format|
       if @equipment.update_attributes(params[:equipment])
-        format.html { redirect_to @equipment, notice: 'Equipment was successfully updated.' }
+        format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
