@@ -14,5 +14,6 @@
   = f.input :model
   = f.input :serial, label: "Serial #"
   = f.input :max_reservation_period, hint: "Leave blank to use the default (#{distance_of_time_in_words Weber::Application.config.default_max_reservation_period})"
+  /= f.input :photo
 
   .actions = f.submit 'Save'

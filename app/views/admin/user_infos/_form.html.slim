@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @user_info] do |f|
+= simple_form_for [:admin, @user_info], html: { class: "form-horizontal" } do |f|
   - if @user_info.errors.any?
     #error_explanation
       h2 = "#{pluralize(@user_info.errors.count, "error")} prohibited this user_info from being saved:"
@@ -7,29 +7,15 @@
           li = message
 
   h2 Login Credentials
-  .field
-    = f.input :punet, label: "PUNetID"
 
-  .field
-    = f.input :password
-
-  .field
-    = f.input :password_confirmation
-
-  - if !@user_info.new_record?
-    .field
-      = f.input :active, label: "Active account?"
-
-  .field
-    = f.input :pu_student_id, label: "PU Student ID#"
-
-  .field
-    = f.input :strikes
-
-  .field
-    = f.input :can_reserve, label: "Allowed to create reservations?"
-
-  .field
-    = f.input :notes
+  = f.input :punet, label: "PUNetID"
+  = f.input :password
+  = f.input :password_confirmation
+  = f.input :email
+  = f.input :active, label: "Active account?" if !@user_info.new_record?
+  = f.input :pu_student_id, label: "PU Student ID#"
+  = f.input :strikes
+  = f.input :can_reserve, label: "Allowed to create reservations?"
+  = f.input :notes
 
   .actions = f.submit 'Save'

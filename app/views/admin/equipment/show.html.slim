@@ -22,6 +22,10 @@ p
   strong Serial:
   = @equipment.serial
 
+/p
+  strong Photo
+  = image_tag @equipment.photo(:thumb)
+
 - if @equipment.max_reservation_period
   p
     strong Max reservation period:

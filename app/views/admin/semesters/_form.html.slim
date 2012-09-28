@@ -6,10 +6,7 @@
         - @semester.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.input :starts_at, label: "Start Date"
-
-  .field
-    = f.input :ends_at, label: "End Date"
+  = f.input :starts_at, label: "Start Date"
+  = f.input :ends_at, label: "End Date"
 
   .actions = f.submit 'Save'
