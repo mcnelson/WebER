@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120928230901) do
+ActiveRecord::Schema.define(:version => 20120929182710) do
 
   create_table "categories", :force => true do |t|
     t.string   "title",      :limit => 100, :null => false
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(:version => 20120928230901) do
     t.datetime "updated_at",                      :null => false
   end
 
+  create_table "reservations", :force => true do |t|
+    t.datetime "starts_at",                :null => false
+    t.datetime "ends_at",                  :null => false
+    t.string   "status",     :limit => 30, :null => false
+    t.text     "notes"
+    t.integer  "user_id",                  :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
   create_table "semesters", :force => true do |t|
     t.date     "starts_at",  :null => false
     t.date     "ends_at",    :null => false
@@ -53,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20120928230901) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "user_infos", :force => true do |t|
+  create_table "users", :force => true do |t|
     t.boolean  "active",                       :default => true
     t.string   "punet",           :limit => 8,                   :null => false
     t.integer  "pu_student_id"

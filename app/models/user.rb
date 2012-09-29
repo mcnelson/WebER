@@ -1,4 +1,4 @@
-class UserInfo < ActiveRecord::Base
+class User < ActiveRecord::Base
   attr_accessible :active, :can_reserve, :notes, :pu_student_id, :punet, :strikes, :password, :password_confirmation, :email
 
   validates_uniqueness_of :pu_student_id, :punet, :email
@@ -6,4 +6,6 @@ class UserInfo < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   has_secure_password
+
+  has_many :reservation
 end

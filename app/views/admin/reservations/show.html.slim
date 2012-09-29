@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Starts at:
+  = @reservation.starts_at
+p
+  strong Ends at:
+  = @reservation.ends_at
+p
+  strong Status:
+  = @reservation.status
+
+= link_to 'Edit', edit_admin_reservation_path(@reservation)
+'|
+= link_to 'Back', admin_reservations_path

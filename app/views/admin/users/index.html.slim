@@ -1,0 +1,29 @@
+h1 Listing Users
+
+table
+  tr
+    th Active
+    th PUNetID
+    th Student #
+    th Strikes
+    th Can reserve
+    th Notes
+    th
+    th
+    th
+
+  - @users.each do |user|
+    tr
+      td = user.active
+      td = user.punet
+      td = user.pu_student_id
+      td = user.strikes
+      td = user.can_reserve
+      td = user.notes
+      td = link_to 'Show', [:admin, user]
+      td = link_to 'Edit', edit_admin_user_path(user)
+      td = link_to 'Destroy', [:admin, user], confirm: 'Are you sure?', method: :delete
+
+br
+
+= link_to 'New User', new_admin_user_path

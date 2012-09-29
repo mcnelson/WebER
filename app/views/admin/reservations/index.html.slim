@@ -1,0 +1,23 @@
+h1 Listing Reservations
+
+table
+  tr
+    th Starts at
+    th Ends at
+    th Status
+    th
+    th
+    th
+
+  - @reservations.each do |reservation|
+    tr
+      td = reservation.starts_at
+      td = reservation.ends_at
+      td = reservation.status
+      td = link_to 'Show', [:admin, reservation]
+      td = link_to 'Edit', edit_admin_reservation_path(reservation)
+      td = link_to 'Destroy', [:admin, reservation], :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Reservation', new_admin_reservation_path
