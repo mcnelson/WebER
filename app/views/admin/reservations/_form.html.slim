@@ -4,7 +4,7 @@
   .form-inputs
     = f.input :starts_at
     = f.input :ends_at
-    = f.input :status, collection: Reservation::STATUSES
+    = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
     = f.association :user, url: autocomplete_user_punet_admin_reservations_path, as: :autocomplete
 
   .form-actions

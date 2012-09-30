@@ -16,4 +16,8 @@ class Equipment < ActiveRecord::Base
     "damaged",
     "overdue"
   ]
+
+  def self.formatted_statuses
+    self::STATUSES.map { |s| s.capitalize }
+  end
 end

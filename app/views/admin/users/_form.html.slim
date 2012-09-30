@@ -14,7 +14,7 @@
 
     h2 Permissions
     = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
-    = f.input :permission_level, collection: User::PERMISSION_LEVELS, as: :radio_buttons
+    = f.input :permission_level, collection: User.formatted_permission_levels, as: :radio_buttons
     = f.input :can_reserve, label: "Allowed to create reservations?"
 
     h2 General

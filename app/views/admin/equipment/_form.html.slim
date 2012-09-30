@@ -8,7 +8,7 @@
 
   .form-inputs
     = f.input :active, label: "Active/Available for checkout"
-    = f.input :status, collection: Equipment::STATUSES
+    = f.input :status, collection: Equipment.formatted_statuses, as: :radio_buttons
     = f.association :category
     = f.input :name
     = f.input :brand
