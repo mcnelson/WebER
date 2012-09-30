@@ -1,5 +1,5 @@
 class Admin::ReservationsController < AdminController
-  autocomplete :user, :punet
+  autocomplete :user, :punet, full: true
 
   def index
     @reservations = Reservation.all

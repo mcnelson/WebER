@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :reservation, dependent: :restrict
   has_many :package, dependent: :restrict
 
+  scope :active_users, where(active: true)
+
   PERMISSION_LEVELS = [
     "student",
     "workstudy",

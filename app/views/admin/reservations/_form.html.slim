@@ -5,7 +5,14 @@
     = f.input :starts_at
     = f.input :ends_at
     = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-    = f.association :user, url: autocomplete_user_punet_admin_reservations_path, as: :autocomplete
+    = f.input :punet_autocomplete,
+      url:        autocomplete_user_punet_admin_reservations_path,
+      as:         :autocomplete,
+      label:      "Owner",
+      hint:       "The owning user's PUNetID",
+      id_element: "#reservation_user_id"
+
+    = f.association :user, as: :hidden
 
   .form-actions
     = f.button :submit

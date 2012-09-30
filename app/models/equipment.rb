@@ -4,9 +4,11 @@ class Equipment < ActiveRecord::Base
 
   belongs_to :category
 
-  belongs_to :reservation
-  belongs_to :package
+  has_many :equipment_reservations
+  has_many :reservation, through: :equipment_reservations
 
+  has_many :equipment_packages
+  has_many :package, through: :equipment_packages
 
   has_attached_file :photo
 

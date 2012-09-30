@@ -1,4 +1,4 @@
 class EquipmentPackage < ActiveRecord::Base
-  belongs_to :equipemnt
+  belongs_to :equipment
   belongs_to :package
 end
