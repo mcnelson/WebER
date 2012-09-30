@@ -1,7 +1,7 @@
 class Admin::UsersController < AdminController
 
   def index
-    @users = UserInfo.all
+    @users = User.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,7 +10,7 @@ class Admin::UsersController < AdminController
   end
 
   def show
-    @user = UserInfo.find(params[:id])
+    @user = User.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -19,7 +19,7 @@ class Admin::UsersController < AdminController
   end
 
   def new
-    @user = UserInfo.new
+    @user = User.new
 
     respond_to do |format|
       format.html
@@ -28,16 +28,16 @@ class Admin::UsersController < AdminController
   end
 
   def edit
-    @user = UserInfo.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def create
-    @user = UserInfo.new(params[:user_info])
+    @user = User.new(params[:user])
 
     respond_to do |format|
       if @user.save
         format.html { redirect_to [:admin, @user], notice: 'User info was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user_info }
+        format.json { render json: @user, status: :created, location: [:admin, @user]}
       else
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -46,7 +46,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = UserInfo.find(params[:id])
+    @user = User.find(params[:id])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -60,7 +60,7 @@ class Admin::UsersController < AdminController
   end
 
   def destroy
-    @user = UserInfo.find(params[:id])
+    @user = User.find(params[:id])
     @user.destroy
 
     respond_to do |format|

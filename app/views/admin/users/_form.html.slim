@@ -1,21 +1,27 @@
-= simple_form_for [:admin, @user_info], html: { class: "form-horizontal" } do |f|
-  - if @user_info.errors.any?
+= simple_form_for [:admin, @user], html: { class: "form-horizontal" } do |f|
+  - if @user.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@user_info.errors.count, "error")} prohibited this user_info from being saved:"
+      h2 = "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
       ul
-        - @user_info.errors.full_messages.each do |message|
+        - @user.errors.full_messages.each do |message|
           li = message
 
-  h2 Login Credentials
+  .form-inputs
+    h2 Login Credentials
+    = f.input :punet, label: "PUNetID"
+    = f.input :password
+    = f.input :password_confirmation
 
-  = f.input :punet, label: "PUNetID"
-  = f.input :password
-  = f.input :password_confirmation
-  = f.input :email
-  = f.input :active, label: "Active account?" if !@user_info.new_record?
-  = f.input :pu_student_id, label: "PU Student ID#"
-  = f.input :strikes
-  = f.input :can_reserve, label: "Allowed to create reservations?"
-  = f.input :notes
+    h2 Permissions
+    = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
+    = f.input :permission_level, collection: User::PERMISSION_LEVELS, as: :radio_buttons
+    = f.input :can_reserve, label: "Allowed to create reservations?"
 
-  .actions = f.submit 'Save'
+    h2 General
+    = f.input :email
+    = f.input :pu_student_id, label: "PU Student ID#"
+    = f.input :strikes
+    = f.input :notes
+
+  .form-actions
+    = f.button :submit

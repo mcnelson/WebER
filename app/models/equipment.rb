@@ -4,6 +4,10 @@ class Equipment < ActiveRecord::Base
 
   belongs_to :category
 
+  belongs_to :reservation
+  belongs_to :package
+
+
   has_attached_file :photo
 
   STATUSES = [

@@ -7,6 +7,13 @@ Weber::Application.routes.draw do
 
     resources :categories
     resources :equipment
-    resources :reservations
+
+    resources :reservations do
+      collection do
+        get :autocomplete_user_punet
+      end
+    end
+
+    resources :packages
   end
 end

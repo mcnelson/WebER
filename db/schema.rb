@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929182710) do
+ActiveRecord::Schema.define(:version => 20120930024248) do
 
   create_table "categories", :force => true do |t|
     t.string   "title",      :limit => 100, :null => false
@@ -36,6 +36,21 @@ ActiveRecord::Schema.define(:version => 20120929182710) do
     t.datetime "updated_at",                                              :null => false
   end
 
+  create_table "equipment_packages", :force => true do |t|
+    t.integer  "equipment_id", :null => false
+    t.integer  "package_id",   :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "equipment_reservations", :force => true do |t|
+    t.integer  "equipment_id",   :null => false
+    t.integer  "reservation_id", :null => false
+    t.integer  "package_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "er_hours", :force => true do |t|
     t.time     "starts_at",                       :null => false
     t.time     "ends_at",                         :null => false
@@ -44,6 +59,14 @@ ActiveRecord::Schema.define(:version => 20120929182710) do
     t.integer  "associated_hour_id"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "packages", :force => true do |t|
+    t.string   "title",                  :limit => 200, :null => false
+    t.integer  "max_reservation_period"
+    t.integer  "user_id",                               :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "reservations", :force => true do |t|
@@ -64,16 +87,17 @@ ActiveRecord::Schema.define(:version => 20120929182710) do
   end
 
   create_table "users", :force => true do |t|
-    t.boolean  "active",                       :default => true
-    t.string   "punet",           :limit => 8,                   :null => false
+    t.boolean  "active",                         :default => true
+    t.string   "punet",            :limit => 8,                    :null => false
     t.integer  "pu_student_id"
-    t.integer  "strikes",                      :default => 0
-    t.boolean  "can_reserve",                  :default => true
+    t.integer  "strikes",                        :default => 0
+    t.boolean  "can_reserve",                    :default => true
     t.text     "notes"
     t.string   "password_digest"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
-    t.string   "email",                                          :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.string   "email",                                            :null => false
+    t.string   "permission_level", :limit => 50,                   :null => false
   end
 
 end

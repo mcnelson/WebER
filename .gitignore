@@ -20,3 +20,6 @@
 
 # System temp stuff
 public/system/*
+
+# Swap
+*~

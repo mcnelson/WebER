@@ -1,0 +1,8 @@
+= simple_form_for(@package) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :max_reservation_period
+
+  .form-actions
+    = f.button :submit

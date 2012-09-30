@@ -4,8 +4,8 @@
   .form-inputs
     = f.input :starts_at
     = f.input :ends_at
-    = f.input :status
-    = f.association :user
+    = f.input :status, collection: Reservation::STATUSES
+    = f.association :user, url: autocomplete_user_punet_admin_reservations_path, as: :autocomplete
 
   .form-actions
     = f.button :submit

@@ -6,7 +6,9 @@
         - @semester.errors.full_messages.each do |message|
           li = message
 
-  = f.input :starts_at, label: "Start Date"
-  = f.input :ends_at, label: "End Date"
+  .form-inputs
+    = f.input :starts_at, label: "Start Date"
+    = f.input :ends_at, label: "End Date"
 
-  .actions = f.submit 'Save'
+  .form-actions
+    = f.button :submit
