@@ -7,15 +7,12 @@
         = f.input :starts_at, as: :datetime, ampm: true, minute_step: 15
         = f.input :ends_at, as: :datetime, ampm: true, minute_step: 15
         = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-        = f.input :user_autocomplete,
+        = f.association :user,
           url:          autocomplete_user_punet_admin_reservations_path,
           as:           :autocomplete,
           label:        "Owner",
-          placeholder:  (@reservation.user.punet.present?) ? "Currently: #{@reservation.user.punet}" : "",
-          hint:         "The owning user's PUNetID",
-          id_element:   "#reservation_user_id"
-
-        = f.association :user, as: :hidden
+          placeholder:  (@reservation.user.present?) ? "Currently: #{@reservation.user.punet}" : "",
+          hint:         "The owning user's PUNetID"
 
       .span6
         = f.input :equipment_autocomplete,
