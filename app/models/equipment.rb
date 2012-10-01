@@ -10,7 +10,10 @@ class Equipment < ActiveRecord::Base
   has_many :equipment_packages
   has_many :package, through: :equipment_packages
 
-  has_attached_file :photo
+  has_attached_file :photo,
+    styles: {
+      forty: ["40x40#", :jpg]
+  }
 
   STATUSES = [
     "available",
@@ -21,5 +24,9 @@ class Equipment < ActiveRecord::Base
 
   def self.formatted_statuses
     self::STATUSES.map { |s| s.capitalize }
+  end
+
+  def pretty_name
+    "#{name}: #{brand} #{model}"
   end
 end

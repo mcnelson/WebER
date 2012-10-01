@@ -2,17 +2,30 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :starts_at
-    = f.input :ends_at
-    = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-    = f.input :punet_autocomplete,
-      url:        autocomplete_user_punet_admin_reservations_path,
-      as:         :autocomplete,
-      label:      "Owner",
-      hint:       "The owning user's PUNetID",
-      id_element: "#reservation_user_id"
+    .row
+      .span6
+        = f.input :starts_at, as: :datetime, ampm: true, minute_step: 15
+        = f.input :ends_at, as: :datetime, ampm: true, minute_step: 15
+        = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
+        = f.input :user_autocomplete,
+          url:          autocomplete_user_punet_admin_reservations_path,
+          as:           :autocomplete,
+          label:        "Owner",
+          placeholder:  (@reservation.user.punet.present?) ? "Currently: #{@reservation.user.punet}" : "",
+          hint:         "The owning user's PUNetID",
+          id_element:   "#reservation_user_id"
 
-    = f.association :user, as: :hidden
+        = f.association :user, as: :hidden
+
+      .span6
+        = f.input :equipment_autocomplete,
+          url:          autocomplete_equipment_name_admin_reservations_path,
+          as:           :autocomplete,
+          label:        "Add Equipment",
+          placeholder:  "Search equipment",
+          hint:         "Start typing the name, brand, or model of any equipment"
+
+        #reservation_equipment
 
   .form-actions
     = f.button :submit

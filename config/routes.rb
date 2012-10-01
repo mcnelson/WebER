@@ -11,6 +11,7 @@ Weber::Application.routes.draw do
     resources :reservations do
       collection do
         get :autocomplete_user_punet
+        get :autocomplete_equipment_name
       end
     end
 
