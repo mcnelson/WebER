@@ -1,4 +1,5 @@
 class Admin::EquipmentController < AdminController
+  include ApplicationHelper
 
   def index
     @equipment = Equipment.all

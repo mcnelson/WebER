@@ -34,10 +34,6 @@ class Admin::ReservationsController < AdminController
 
   def edit
     @reservation = Reservation.find(params[:id])
-
-    if params[:add_equipment]
-      equipment_row
-    end
   end
 
   def create
@@ -75,14 +71,6 @@ class Admin::ReservationsController < AdminController
     respond_to do |format|
       format.html { redirect_to admin_reservations_path }
       format.json { head :no_content }
-    end
-  end
-
-  def equipment_row
-    @equipment = Equipment.find(params[:equipment_id])
-
-    respond_to do |format|
-      format.html { render partial: "equipment_row", locals: { idx: params[:idx], equipment: @equipment } }
     end
   end
 end

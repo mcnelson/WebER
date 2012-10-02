@@ -3,9 +3,11 @@ $ ->
     $(this).attr("value", "")
 
     $.ajax({
-      url: "?add_equipment=1&idx=#{ countEquipment() }&equipment_id=#{ data.item.id }"
+      url: "/admin/equipment/#{ data.item.id }/row?index=#{ countEquipment() }"
     }).complete (html) ->
       $("#reservation_equipment").append(html.responseText)
+      $(".equipment_row[data-equipment-id=#{ data.item.id }] .remove_link").on "click", (evt, data) ->
+        $(this).closest(".equipment_row").remove()
 
 countEquipment = () ->
   $("#reservation_equipment > div").length

@@ -1,4 +1,7 @@
 Weber::Application.routes.draw do
+  resource :ajax do
+    get :equipment_row
+  end
 
   namespace :admin do
     resources :semesters

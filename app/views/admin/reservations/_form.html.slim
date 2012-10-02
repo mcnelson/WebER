@@ -21,8 +21,11 @@
           label:        "Add Equipment",
           placeholder:  "Search equipment",
           hint:         "Start typing the name, brand, or model of any equipment"
+          html:         { "date-ajax-url": ajax_equipment_row_path(f.object) }
 
         #reservation_equipment
+          - @reservation.equipment.each_with_index do |equipment, index|
+            = equipment_row equipment, index
 
   .form-actions
     = f.button :submit

@@ -1,3 +1,24 @@
-// Place all the styles related to the Reservations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.admin_reservations {
+  .equipment_row {
+    height: 40px;
+    margin-bottom: 5px;
+
+    a.remove_link {
+      float: right;
+    }
+
+    img {
+      float: left;
+      margin-right: 7px;
+    }
+
+    h3 {
+      line-height: 1.2em;
+      font-size: 1.2em;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
+  }
+}
