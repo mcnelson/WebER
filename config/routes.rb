@@ -1,7 +1,5 @@
 Weber::Application.routes.draw do
-  resource :ajax do
-    get :equipment_row
-  end
+  get '/ajaxes/equipment_row'
 
   namespace :admin do
     resources :semesters

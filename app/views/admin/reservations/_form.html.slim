@@ -20,8 +20,8 @@
           as:           :autocomplete,
           label:        "Add Equipment",
           placeholder:  "Search equipment",
-          hint:         "Start typing the name, brand, or model of any equipment"
-          html:         { "date-ajax-url": ajax_equipment_row_path(f.object) }
+          hint:         "Start typing the name, brand, or model of any equipment",
+          input_html:   { :'data-ajax-url' => ajaxes_equipment_row_path(format: :json) }
 
         #reservation_equipment
           - @reservation.equipment.each_with_index do |equipment, index|

@@ -1,0 +1,7 @@
+- @unique = Time.now.strftime("%N")
+div.equipment_row data-index="#{ @unique }" data-equipment-id="#{@equipment.id}"
+  = js_link "Remove", class: "remove_link"
+  = image_tag @equipment.photo(:forty)
+  h3 = @equipment.name
+  span = "#{@equipment.brand} #{@equipment.model}"
+  = hidden_field_tag "reservation[equipment_attributes][#{ @unique }][id]", @equipment.id
