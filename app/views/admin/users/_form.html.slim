@@ -6,22 +6,26 @@
         - @user.errors.full_messages.each do |message|
           li = message
 
-  .form-inputs
-    h2 Login Credentials
-    = f.input :punet, label: "PUNetID"
-    = f.input :password
-    = f.input :password_confirmation
+  .row
+    .span6
+      .form-inputs
+        h2 Login Credentials
+        = f.input :punet, label: "PUNetID"
+        = f.input :password
+        = f.input :password_confirmation
 
-    h2 Permissions
-    = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
-    = f.input :permission_level, collection: User.formatted_permission_levels, as: :radio_buttons
-    = f.input :can_reserve, label: "Allowed to create reservations?"
+        h2 Permissions
+        = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
+        = f.input :permission_level, collection: User.formatted_permission_levels, as: :radio_buttons
+        = f.input :can_reserve, label: "Allowed to create reservations?"
 
-    h2 General
-    = f.input :email
-    = f.input :pu_student_id, label: "PU Student ID#"
-    = f.input :strikes
-    = f.input :notes
+    .span6
+      .form-inputs
+        h2 General
+        = f.input :email
+        = f.input :pu_student_id, label: "PU Student ID#"
+        = f.input :strikes
+        = f.input :notes
 
   .form-actions
     = f.button :submit

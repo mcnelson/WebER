@@ -3,12 +3,28 @@
 $weberBlue: #072540;
 $weberTeal: #2B5932;
 $weberDarkGray: #192126;
-$weberLightGray: #7B878C;
+$weberDesatBlue: #7B878C;
 $weberCream: #F2F2F2;
+
+$weberBluishWhite: #D9DADB;
 
 body {
   background: $weberBlue;
   color: black;
+
+  h1 {
+    font-family: lato_blackitalic;
+    color: $weberCream;
+    text-transform: uppercase;
+    font-size: 1.8em;
+    letter-spacing: 0.07em;
+  }
+
+  h2 {
+    color: $weberCream;
+    font-size: 1.6em;
+    letter-spacing: 0.04em;
+  }
 
   .navbar {
     .navbar-inner {
@@ -40,7 +56,14 @@ body {
     }
   }
 
-  select {
-    width: auto;
+  .main.container {
+    background: $weberBluishWhite;
+
+    & > h1:first-of-type {
+      background: #072540;
+      margin-top: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 }
