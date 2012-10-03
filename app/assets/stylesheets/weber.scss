@@ -1,0 +1,46 @@
+
+// Branding colors
+$weberBlue: #072540;
+$weberTeal: #2B5932;
+$weberDarkGray: #192126;
+$weberLightGray: #7B878C;
+$weberCream: #F2F2F2;
+
+body {
+  background: $weberBlue;
+  color: black;
+
+  .navbar {
+    .navbar-inner {
+      padding: 7px 0;
+
+      .container {
+        height: 50px;
+
+        img.logo {
+          float: left;
+          margin-right: 2em;
+        }
+
+        ul.nav {
+          margin-top: 15px;
+          vertical-align: bottom;
+
+          li {
+            a {
+              background: $weberCream;
+              border-left: solid 1px #DDD;
+              border-right: solid 1px #DDD;
+              border-top: solid 1px #DDD;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  select {
+    width: auto;
+  }
+}
