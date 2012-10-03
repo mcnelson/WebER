@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title = yield :title
+    title = yield :full_title || "WebER"
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application", params[:controller]
     = csrf_meta_tags
@@ -18,4 +18,5 @@ html
             li: a href="#" Hello?
 
     .main.container
+      h1 = yield :page_title
       = yield
