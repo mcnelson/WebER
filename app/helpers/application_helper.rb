@@ -4,6 +4,10 @@ module ApplicationHelper
     content_for(:page_title) { title }
   end
 
+  def form_errors(object)
+    render partial: "form_errors", locals: { object: object }
+  end
+
   def weekdays_for_select
     Date::DAYNAMES.zip( Date::DAYNAMES.map { |d| d.downcase[0..2] } )
   end

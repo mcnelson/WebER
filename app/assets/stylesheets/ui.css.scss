@@ -1,5 +1,18 @@
+@import "_brand_colors";
 
 // DateTime selects need to be skinny
 select.datetime {
   width: auto;
+}
+
+form {
+  margin: 0;
+}
+
+// Form action area
+.form-actions {
+  margin-bottom: 0;
+  background: $weberDesatBlue;
+  border-top: solid 1px #192126;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2) inset;
 }

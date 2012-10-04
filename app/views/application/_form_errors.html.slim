@@ -1,0 +1,7 @@
+  - if equipment.errors.any?
+    .gasket
+      .alert.alert-error
+        strong = "#{pluralize(equipment.errors.count, "error")} prohibited this equipment from being saved:"
+        ul
+          - equipment.errors.full_messages.each do |message|
+            li = message

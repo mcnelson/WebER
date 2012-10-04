@@ -17,6 +17,8 @@ html
             li: a href="#" Hello?
             li: a href="#" Hello?
 
-    .main.container
-      h1 = yield :page_title
-      = yield
+    .container
+      h1.page-title = yield :page_title
+
+      .main
+        = yield
