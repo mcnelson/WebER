@@ -15,14 +15,19 @@
         = f.input :photo
 
     .span6
-      h2 Restrictions
-      .form-inputs
-        = f.input :active, hint: "Available for checkout?"
-        = f.input :status, collection: Equipment.formatted_statuses, as: :radio_buttons
-        = f.input :max_reservation_period, hint: "Leave blank to use the default (#{distance_of_time_in_words Weber::Application.config.default_max_reservation_period})"
+      .gasket
+        h2 Restrictions
+        .form-inputs
+          = f.input :active, hint: "Available for checkout?"
+          = f.input :status, collection: Equipment.formatted_statuses, as: :radio_buttons
+          = f.input :max_reservation_period, hint: "Leave blank to use the default (#{distance_of_time_in_words Weber::Application.config.default_max_reservation_period})"
 
   .form-actions
     .btn-group
       = f.button :submit, class: "btn-primary"
       = link_to 'Show', [:admin, @equipment], class: "btn"
       = link_to 'Back', admin_equipment_index_path, class: "btn"
+
+- content_for :js do
+  coffee:
+    weber.equipment.form.init()
