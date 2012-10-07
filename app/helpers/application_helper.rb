@@ -15,4 +15,8 @@ module ApplicationHelper
   def js_link(label, options={})
     link_to label, 'javascript:;', options
   end
+
+  def body_class
+    "#{ params[:controller].gsub(/\//, '_') }_#{ params[:action] }"
+  end
 end

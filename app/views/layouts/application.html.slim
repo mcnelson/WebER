@@ -1,11 +1,25 @@
 doctype html
 html
-head
-  title Weber
-  = stylesheet_link_tag    "application", :media => "all"
-  = javascript_include_tag "application"
-  = csrf_meta_tags
+  head
+    title = yield :full_title || "WebER"
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = yield :js
 
-body
-  #head
-  = yield
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+  body class="#{ body_class }"
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = image_tag "logo.png", width: 132, height: 50, class: "logo"
+          ul.nav
+            li: a href="#" Hello?
+            li: a href="#" Hello?
+
+    .container
+      h1.page-title = yield :page_title
+
+      .main
+        = yield
