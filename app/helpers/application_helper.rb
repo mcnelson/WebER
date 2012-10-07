@@ -19,4 +19,8 @@ module ApplicationHelper
   def body_class
     "#{ params[:controller].gsub(/\//, '_') }_#{ params[:action] }"
   end
+
+  def user_bar
+    render partial: "user_bar"
+  end
 end

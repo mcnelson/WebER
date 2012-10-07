@@ -1,0 +1,11 @@
+.user-bar
+- if current_user
+  .signed-in
+    ' Signed in as 
+    strong = current_user.punet
+    ' , 
+    = current_user.permission_level.capitalize
+  = link_to "Sign Out", signout_path, method: :delete
+- else
+  .signed-out
+    = link_to "Sign In", signin_path

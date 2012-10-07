@@ -19,8 +19,4 @@ class User < ActiveRecord::Base
     "workstudy",
     "admin"
   ]
-
-  def self.formatted_permission_levels
-    PERMISSION_LEVELS.map { |p| p.capitalize }
-  end
 end

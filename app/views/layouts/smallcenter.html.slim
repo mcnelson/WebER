@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title = yield :full_title || "WebER"
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = yield :js
+
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+  body#smallcenter class="#{ body_class }"
+    .container
+      .row
+        .offset3.span6
+          h1.page-title = yield :page_title
+
+      .row
+        .offset3.span6
+          .main
+            = yield

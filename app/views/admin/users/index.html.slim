@@ -7,7 +7,6 @@ table.table.table-striped
     th Student #
     th Strikes
     th Can reserve
-    th Notes
     th
     th
     th
@@ -19,7 +18,6 @@ table.table.table-striped
       td = user.pu_student_id
       td = user.strikes
       td = user.can_reserve
-      td = user.notes
       td = link_to 'Show', [:admin, user]
       td = link_to 'Edit', edit_admin_user_path(user)
       td = link_to 'Destroy', [:admin, user], confirm: 'Are you sure?', method: :delete

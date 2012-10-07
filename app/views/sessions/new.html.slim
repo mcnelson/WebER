@@ -1,14 +1,21 @@
 - set_title("Sign In")
 
-= form_for sessions_path, html: { class: "form-horizontal" } do
-  .form-inputs
+= form_for :session, url: signin_path, html: { class: "form-horizontal" } do
+  - if flash[:alert]
+    .alert.alert-error = flash[:alert]
 
-  .row
-    .offset3.span6
-      .control-group
-        .control-label = label_tag :punet
-        .controls = text_field_tag :punet, params[:punet]
+  .form-inputs.gasket
+    p If you are a film & video student, you can sign in below. If this is your first time using WebER, you'll need to first set a password for your account, which will happen automatically.
+    .control-group
+      .control-label = label_tag :punet, "PUNetID"
+      .controls = text_field_tag :punet, params[:punet]
 
-      .control-group
-        .control-label = label_tag :password
-        .controls = text_field_tag :password, params[:password]
+    .control-group
+      .control-label = label_tag :password
+      .controls = password_field_tag :password, params[:password]
+
+  .form-actions
+    .btn-group
+      = submit_tag "Sign In", class: "btn btn-primary"
+      = link_to "Forgot password?", "TODO", class: "btn"
+      = link_to "Back", request.referer || root_url, class: "btn"

@@ -1,7 +1,11 @@
 Weber::Application.routes.draw do
   root :to => "Admin::Reservations#new"
 
-  resources :sessions, only: [:new, :create, :destroy]
+  controller :sessions do
+    get :signin, action: :new
+    post :signin, action: :create
+    delete :signout, action: :destroy
+  end
 
   namespace :admin do
     resources :semesters
