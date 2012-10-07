@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def form_errors(object)
-    render partial: "form_errors", locals: { equipment: object }
+    render partial: "form_errors", locals: { object: object }
   end
 
   def weekdays_for_select
