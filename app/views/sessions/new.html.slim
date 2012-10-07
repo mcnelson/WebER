@@ -1,0 +1,14 @@
+- set_title("Sign In")
+
+= form_for sessions_path, html: { class: "form-horizontal" } do
+  .form-inputs
+
+  .row
+    .offset3.span6
+      .control-group
+        .control-label = label_tag :punet
+        .controls = text_field_tag :punet, params[:punet]
+
+      .control-group
+        .control-label = label_tag :password
+        .controls = text_field_tag :password, params[:password]
