@@ -1,5 +1,5 @@
 = simple_form_for(@package) do |f|
-  = f.error_notification
+  = form_errors @package
 
   .form-inputs
     = f.input :max_reservation_period
