@@ -60,6 +60,28 @@ body {
     }
   }
 
+  .ptable {
+    p strong {
+      display: inline-block;
+      width: 50%;
+    }
+
+    &.ptable-40 p strong {
+      width: 40%;
+    }
+
+    &.ptable-30 p strong {
+      width: 30%;
+    }
+  }
+
+  // Bootstrap pagination styling
+  .pagination {
+    a {
+      line-height: 28px;
+    }
+  }
+
   .gasket {
     margin: 0 20px;
   }

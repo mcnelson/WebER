@@ -15,5 +15,6 @@
 //= require jquery-ui
 //= require twitter/bootstrap
 //= require chosen.jquery
+//= require jquery.colorbox-min
 //= require coffeescript-namespacing
 //= require_tree .

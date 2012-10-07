@@ -1,7 +1,7 @@
 class Admin::EquipmentController < AdminController
 
   def index
-    @equipment = Equipment.all
+    @equipment = Equipment.order(:name).page params[:page]
 
     respond_to do |format|
       format.html

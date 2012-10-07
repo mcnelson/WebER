@@ -12,8 +12,14 @@ class Equipment < ActiveRecord::Base
 
   has_attached_file :photo,
     styles: {
-      forty: ["40x40#", :jpg]
-  }
+      forty: ["40x40#", :jpg],
+      twosixty: ["260x180#", :jpg],
+      threehundred: ["300x200#", :jpg],
+      tentwentyfour: ["1024x768>", :jpg]
+    },
+    convert_options: {
+      thumb: "-quality 75 -strip"
+    }
 
   STATUSES = [
     "available",

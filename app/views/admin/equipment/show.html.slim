@@ -2,37 +2,45 @@
 
 p#notice = notice
 
-p
-  strong Active:
-  = @equipment.active
-p
-  strong Status:
-  = @equipment.status
-p
-  strong Category:
-  = @equipment.category.title
-p
-  strong Name:
-  = @equipment.name
-p
-  strong Brand:
-  = @equipment.brand
-p
-  strong Model:
-  = @equipment.model
-p
-  strong Serial:
-  = @equipment.serial
+.row
+  .span6
+    .gasket
+      .ptable.ptable-40
+        p
+          strong Name:
+          = @equipment.name
+        p
+          strong Category:
+          = @equipment.category.title
+        p
+          strong Brand:
+          = @equipment.brand
+        p
+          strong Model:
+          = @equipment.model
+        p
+          strong Serial:
+          = @equipment.serial
+        p
+          strong Active:
+          = @equipment.active
+        p
+          strong Status:
+          = @equipment.status
+        - if @equipment.max_reservation_period
+          p
+            strong Max reservation period:
+            = @equipment.max_reservation_period
 
-p
-  strong Photo
-  = image_tag @equipment.photo(:forty)
+  .span6
+    .thumbnails
+      li
+        = link_to @equipment.photo(:tentwentyfour), class: :thumbnail do
+          = image_tag @equipment.photo(:threehundred), class: "equipment-photo", width: 300, height: 200
 
-- if @equipment.max_reservation_period
-  p
-    strong Max reservation period:
-    = @equipment.max_reservation_period
+        p Notes
 
-= link_to 'Edit', edit_admin_equipment_path(@equipment)
-'|
-= link_to 'Back', admin_equipment_index_path
+.form-actions
+  .btn-group
+    = link_to 'Edit', edit_admin_equipment_path(@equipment), class: "btn btn-primary"
+    = link_to 'Back', admin_equipment_index_path, class: "btn"
