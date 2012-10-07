@@ -5,7 +5,7 @@ class AdminController < ApplicationController
 
   def check_permissions
     # Login if no user
-    redirect_to signin_path if current_user.nil?
+    return redirect_to signin_path if current_user.nil?
 
     # Allow admin, workstudy to pass. This could be further restricted at the controller level
     return if current_user and ["admin", "workstudy"].include? current_user.permission_level
