@@ -8,9 +8,15 @@ namespace "weber.equipment.form", (exports) ->
 namespace "weber.equipment.show", (exports) ->
   exports.init = ->
     $ ->
-      $('.equipment-photo').colorbox {
+      $(".equipment-photo").colorbox {
         href: $(@).parent('a').attr('href'),
         transition: "fade",
         speed: 150
       }
 
+namespace "weber.equipment.index", (exports) ->
+  exports.init = ->
+    $ ->
+      $("#status").chosen().on("change", (evt) ->
+        $(@).parent('form').submit()
+      )

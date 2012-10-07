@@ -1,7 +1,11 @@
 class Admin::EquipmentController < AdminController
 
   def index
-    @equipment = Equipment.order(:name).page params[:page]
+    if params[:status]
+      @equipment = Equipment.where(status: params[:status]).order(:name).page params[:page]
+    else
+      @equipment = Equipment.order(:name).page params[:page]
+    end
 
     respond_to do |format|
       format.html

@@ -32,6 +32,10 @@ class Equipment < ActiveRecord::Base
     self::STATUSES.map { |s| s.capitalize }
   end
 
+  def self.formatted_statuses_for_select
+    self::STATUSES.map { |s| [s.capitalize, s] }
+  end
+
   def pretty_name
     "#{name}: #{brand} #{model}"
   end

@@ -60,6 +60,7 @@ body {
     }
   }
 
+  // Show
   .ptable {
     p strong {
       display: inline-block;
@@ -75,8 +76,24 @@ body {
     }
   }
 
+  // Index
+  .table {
+    th {
+      border-bottom: 3px inset #BBB;
+      background-color: inherit !important;
+      padding: 3px 10px;
+      border-left: dotted 1px #AAA;
+      border-right: dotted 1px #AAA;
+      text-transform: uppercase;
+      color: #666;
+      font-size: 0.85em;
+    }
+  }
+
   // Bootstrap pagination styling
   .pagination {
+    margin: 0;
+
     a {
       line-height: 28px;
     }
@@ -84,5 +101,9 @@ body {
 
   .gasket {
     margin: 0 20px;
+  }
+
+  .liner {
+    padding: 10px;
   }
 }
