@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   layout "smallcenter"
 
-  before_filter :no_anonymous, except: :destroy
+  before_filter :anonymous_only, except: :destroy
 
   def new
   end
@@ -23,8 +23,8 @@ class SessionsController < ApplicationController
     redirect_to root_url, notice: "Logged out successfully."
   end
 
-  def no_anonymous
+  def anonymous_only
     #redirect_back if current_user
-    render nothing: true
+    render nothing: true if current_user
   end
 end
