@@ -1,10 +1,14 @@
 Weber::Application.routes.draw do
-  #root :to => "Sessions#new" eventually will work
+  root :to => "Dashboards#index"
 
   controller :sessions do
     get :signin, action: :new
     post :signin, action: :create
     delete :signout, action: :destroy
+  end
+
+  controller :dashboards do
+    get :index
   end
 
   namespace :admin do
