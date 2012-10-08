@@ -11,5 +11,6 @@ class AdminController < ApplicationController
     return if current_user and ["admin", "workstudy"].include? current_user.permission_level
     # Kick out otherwise
     redirect_back
+    #return render_403
   end
 end
