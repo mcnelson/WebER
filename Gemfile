@@ -29,6 +29,10 @@ gem 'kaminari'
 # Autocomplete, use Slash4's fork to support multiple column search (https://github.com/crowdint/rails3-jquery-autocomplete/pull/95)
 gem 'rails3-jquery-autocomplete', git: "git://github.com/slash4/rails3-jquery-autocomplete.git"
 
+# Specs
+gem 'factory_girl'
+gem 'factory_girl_rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

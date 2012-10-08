@@ -17,5 +17,9 @@ class ApplicationController < ActionController::Base
     "http://#{request.host}:#{request.port}#{request.fullpath}"
   end
 
+  def render_403
+    render file: "public/403", format: :html, status: 404, layout: nil
+  end
+
   helper_method :current_user
 end

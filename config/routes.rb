@@ -1,5 +1,5 @@
 Weber::Application.routes.draw do
-  root :to => "Admin::Reservations#new"
+  #root :to => "Sessions#new" eventually will work
 
   controller :sessions do
     get :signin, action: :new
