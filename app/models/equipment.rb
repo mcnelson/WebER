@@ -12,7 +12,7 @@ class Equipment < ActiveRecord::Base
 
   has_attached_file :photo,
     styles: {
-      forty: ["40x40#", :jpg],
+      forty: ["40x40#", :jpg], # change me to 32x32
       twosixty: ["260x180#", :jpg],
       threehundred: ["300x200#", :jpg],
       tentwentyfour: ["1024x768>", :jpg]
