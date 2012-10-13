@@ -35,7 +35,7 @@ p#notice = notice
   .span6
     .thumbnails
       li
-        = link_to @equipment.photo(:tentwentyfour), class: :thumbnail do
+        = link_to @equipment.photo(:seventwenty), class: :thumbnail do
           = image_tag @equipment.photo(:threehundred), class: "equipment-photo", width: 300, height: 200
 
         p Notes
@@ -44,3 +44,7 @@ p#notice = notice
   .btn-group
     = link_to 'Edit', edit_admin_equipment_path(@equipment), class: "btn btn-primary"
     = link_to 'Back', admin_equipment_index_path, class: "btn"
+
+- content_for :js do
+  coffee:
+    weber.equipment.show.init()
