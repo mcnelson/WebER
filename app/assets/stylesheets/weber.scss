@@ -4,6 +4,11 @@ body {
   background: $weberBlue;
   color: black;
 
+  // We don't like underlines on our links.
+  a {
+    text-decoration: none !important;
+  }
+
   h1 {
     font-family: lato_blackitalic;
     color: $weberCream;
@@ -87,6 +92,20 @@ body {
       text-transform: uppercase;
       color: #666;
       font-size: 0.85em;
+
+      a {
+        color: #666;
+
+        &.current {
+          color: $weberTeal;
+        }
+
+        i {
+          float: right;
+          text-decoration: none;
+          opacity: .5;
+        }
+      }
     }
   }
 

@@ -4,7 +4,7 @@ p#notice = notice
 
 .row
   .span6
-    .gasket
+    .liner
       .ptable.ptable-40
         p
           strong Name:
@@ -33,12 +33,11 @@ p#notice = notice
             = @equipment.max_reservation_period
 
   .span6
-    .thumbnails
-      li
-        = link_to @equipment.photo(:seventwenty), class: :thumbnail do
-          = image_tag @equipment.photo(:threehundred), class: "equipment-photo", width: 300, height: 200
-
-        p Notes
+    .liner
+      .thumbnails
+        li
+          = link_to @equipment.photo(:seventwenty), class: :thumbnail do
+            = image_tag @equipment.photo(:threehundred), class: "equipment-photo", width: 300, height: 200
 
 .form-actions
   .btn-group

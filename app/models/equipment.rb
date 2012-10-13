@@ -18,9 +18,13 @@ class Equipment < ActiveRecord::Base
       seventwenty: ["720x450>", :jpg],
       tentwentyfour: ["1024x768>", :jpg]
     },
+
     convert_options: {
       thumb: "-quality 75 -strip"
-    }
+    },
+
+    default_style: :thirtytwo,
+    default_url: "/assets/noimage.jpg"
 
   STATUSES = [
     "available",

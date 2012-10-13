@@ -18,18 +18,19 @@
 .row
   .span12
     .liner
-      table.table.table-striped
+      table.table.table-striped.table-condensed
         tr
-          th Name
-          th Active
-          th Status
-          th Brand
-          th Model
-          th Serial
+          th colspan="2" = sortable "name"
+          th = sortable "active"
+          th = sortable "status"
+          th = sortable "brand"
+          th = sortable "model"
+          th = sortable "serial"
           th colspan="3"
 
         - @equipment.each do |equipment|
-          tr
+          tr class="#{ "error" if ["damaged", "overdue"].include? equipment.status }"
+            td = image_tag equipment.photo(:thirtytwo), width: 32, height: 32
             td = equipment.name
             td = equipment.active
             td = equipment.status

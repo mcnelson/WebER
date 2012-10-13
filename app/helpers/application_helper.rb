@@ -23,4 +23,40 @@ module ApplicationHelper
   def user_bar
     render partial: "user_bar"
   end
+
+  def sortable(column, title = nil)
+    title ||= column.titleize
+
+    link_class = ""
+    link_href = ""
+    link_inner = ""
+
+    if column == sort_column
+      case sort_direction
+        when "asc"
+          link_class = "current asc"
+          link_href = params.merge sort: column, direction: "desc", page: nil
+          link_inner = "#{ column }<i class=\"icon-chevron-up\"></i>"
+
+        when "desc"
+          link_class = "current desc"
+          link_href = nil # self
+          link_inner = "#{ column }<i class=\"icon-chevron-down\"></i>"
+
+        else
+          link_class = ""
+          link_href = params.merge sort: column, direction: "asc", page: nil
+          link_inner = "#{ column }"
+      end
+    else
+      link_class = ""
+      link_href = params.merge sort: column, direction: "asc", page: nil
+      link_inner = "#{ column }"
+    end
+
+
+    link_to link_href, { class: link_class} do
+      link_inner.html_safe
+    end
+  end
 end
