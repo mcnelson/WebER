@@ -17,7 +17,7 @@ namespace "weber.equipment.show", (exports) ->
 namespace "weber.equipment.index", (exports) ->
   exports.init = ->
     $ ->
-      $("#status").chosen({
+      $(".equipment-filters select").chosen({
         allow_single_deselect: true
       }).on("change", (evt) ->
         $(@).parent('form').submit()

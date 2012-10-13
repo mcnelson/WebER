@@ -1,10 +1,10 @@
 - set_title("Listing Equipment")
 .row
   .span4
-    .liner
+    .liner.equipment-filters
       = form_tag nil, method: :get do
-        = select_tag :status, options_for_select(Equipment::formatted_statuses_for_select, params[:status])
-        /= text_field_tag :filter, params[:status], placeholder: "Filter by status"
+        = select_tag :status, options_for_select(Equipment::formatted_statuses_for_select, params[:status]), :"data-placeholder" => "Filter by status", include_blank: true
+        = select_tag :category, options_for_select(Category.all.map { |c| [c.title, c.id] }, params[:category]), :"data-placeholder" => "Filter by category", include_blank: true
 
   .span4
     .liner

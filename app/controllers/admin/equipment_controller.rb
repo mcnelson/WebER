@@ -1,11 +1,12 @@
 class Admin::EquipmentController < AdminController
 
   def index
-    if params[:status]
-      @equipment = Equipment.where(status: params[:status]).order(:name).page params[:page]
-    else
-      @equipment = Equipment.order(:name).page params[:page]
-    end
+    @equipment = Equipment.joins(:category)
+
+    @equipment = @equipment.where(status: params[:status]) if params[:status].present?
+    @equipment = @equipment.where(category_id: params[:category]) if params[:category].present?
+
+    @equipment = @equipment.order(:name).page params[:page]
 
     respond_to do |format|
       format.html
