@@ -1,4 +1,5 @@
 class Admin::EquipmentController < AdminController
+  helper_method :sort_column, :sort_direction
 
   def index
     @equipment = Equipment.joins(:category)
@@ -6,7 +7,9 @@ class Admin::EquipmentController < AdminController
     @equipment = @equipment.where(status: params[:status]) if params[:status].present?
     @equipment = @equipment.where(category_id: params[:category]) if params[:category].present?
 
-    @equipment = @equipment.order(:name).page params[:page]
+    @equipment = @equipment.order(sort_column + " " + sort_direction)
+
+    @equipment = @equipment.page params[:page]
 
     respond_to do |format|
       format.html
@@ -72,5 +75,13 @@ class Admin::EquipmentController < AdminController
       format.html { redirect_to admin_equipment_index_path }
       format.json { head :no_content }
     end
+  end
+
+  def sort_column
+    params[:sort] || "name"
+  end
+
+  def sort_direction
+    params[:direction] || "asc"
   end
 end
