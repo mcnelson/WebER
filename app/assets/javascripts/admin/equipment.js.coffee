@@ -9,7 +9,7 @@ namespace "weber.equipment.show", (exports) ->
   exports.init = ->
     $ ->
       $(".equipment-photo").colorbox {
-        href: $(@).parent('a').attr('href'),
+        href: $(".equipment-photo").parent('a').attr('href'),
         transition: "fade",
         speed: 150
       }
@@ -17,6 +17,8 @@ namespace "weber.equipment.show", (exports) ->
 namespace "weber.equipment.index", (exports) ->
   exports.init = ->
     $ ->
-      $("#status").chosen().on("change", (evt) ->
+      $("#status").chosen({
+        allow_single_deselect: true
+      }).on("change", (evt) ->
         $(@).parent('form').submit()
       )
