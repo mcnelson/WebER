@@ -1,7 +1,7 @@
 class Admin::SemestersController < AdminController
 
   def index
-    @semesters = Semester.all
+    @semesters = Semester.all.page params[:page]
 
     respond_to do |format|
       format.html

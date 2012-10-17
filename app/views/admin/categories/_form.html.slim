@@ -5,4 +5,7 @@
     = f.input :title
 
   .form-actions
-    = f.button :submit
+    .btn-group
+      = f.button :submit, class: "btn btn-primary"
+      = link_to 'Show', [:admin, @category], class: "btn" if @category.persisted?
+      = link_to 'Back', admin_categories_path, class: "btn"

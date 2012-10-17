@@ -1,19 +1,30 @@
 - set_title("Listing Categories")
 
-table.table.table-striped
-  tr
-    th Title
-    th
-    th
-    th
+.row
+  .span4
+    .liner
+      = link_to 'New Category', new_admin_category_path, class: "btn btn-primary btn-small"
 
-  - @categories.each do |category|
-    tr
-      td = category.title
-      td = link_to 'Show', [:admin, category]
-      td = link_to 'Edit', edit_admin_category_path(category)
-      td = link_to 'Destroy', [:admin, category], confirm: 'Are you sure?', method: :delete
+  .span4
+    .liner
+      = paginate @categories
 
-br
+.row
+  .span6
+    .liner
+      table.table.table-striped
+        tr
+          th Title
+          th colspan="3"
 
-= link_to 'New Category', new_admin_category_path
+        - @categories.each do |category|
+          tr
+            td = category.title
+            td
+              .btn-group
+                = link_to 'Show', [:admin, category], class: "btn btn-small"
+                = link_to 'Edit', edit_admin_category_path(category), class: "btn btn-small btn-primary"
+                = link_to 'Destroy', [:admin, category], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
+
+  .span6
+    .liner Show or Edit a category to see equipment.

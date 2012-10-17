@@ -1,6 +1,8 @@
 class Admin::CategoriesController < AdminController
+  helper_method :sort_column, :sort_direction # #show renders equipment table
+
   def index
-    @categories = Category.all
+    @categories = Category.page params[:page]
 
     respond_to do |format|
       format.html
@@ -66,5 +68,13 @@ class Admin::CategoriesController < AdminController
       format.html { redirect_to admin_categories_path }
       format.json { head :no_content }
     end
+  end
+
+  def sort_column
+    params[:sort] || "name"
+  end
+
+  def sort_direction
+    params[:direction] || "asc"
   end
 end
