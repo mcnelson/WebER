@@ -24,7 +24,6 @@ class SessionsController < ApplicationController
   end
 
   def anonymous_only
-    #redirect_back if current_user
-    render nothing: true if current_user.present?
+    redirect_back if current_user.present?
   end
 end
