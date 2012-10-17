@@ -1,8 +1,7 @@
 class Admin::PackagesController < AdminController
-  # GET /packages
-  # GET /packages.json
+
   def index
-    @packages = Package.all
+    @packages = Package.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

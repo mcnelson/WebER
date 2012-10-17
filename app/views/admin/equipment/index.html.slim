@@ -1,47 +1,27 @@
 - set_title("Listing Equipment")
 .row
   .span4
-    .liner.equipment-filters
-      = form_tag nil, method: :get do
-        = select_tag :status, options_for_select(Equipment::formatted_statuses_for_select, params[:status]), :"data-placeholder" => "Filter by status", include_blank: true
-        = select_tag :category, options_for_select(Category.all.map { |c| [c.title, c.id] }, params[:category]), :"data-placeholder" => "Filter by category", include_blank: true
+    .liner
+      .btn-group
+        = link_to 'New Equipment', new_admin_equipment_path, class: "btn btn-small btn-primary"
+        = link_to admin_categories_path, class: "btn btn-small" do
+          i.icon-share
+          |  Categories
 
   .span4
     .liner
       = paginate @equipment
 
   .span4
-    .liner
-      .pull-right
-        = link_to 'New Equipment', new_admin_equipment_path, class: "btn btn-primary"
+    .liner.equipment-filters
+      = form_tag nil, method: :get do
+        .pull-right = select_tag :status, options_for_select(Equipment::formatted_statuses_for_select, params[:status]), :"data-placeholder" => "Filter by status", include_blank: true
+        .pull-right = select_tag :category, options_for_select(Category.all.map { |c| [c.title, c.id] }, params[:category]), :"data-placeholder" => "Filter by category", include_blank: true
 
 .row
   .span12
     .liner
-      table.table.table-striped.table-condensed
-        tr
-          th colspan="2" = sortable "name"
-          th = sortable "active"
-          th = sortable "status"
-          th = sortable "brand"
-          th = sortable "model"
-          th = sortable "serial"
-          th colspan="3"
-
-        - @equipment.each do |equipment|
-          tr class="#{ "error" if ["damaged", "overdue"].include? equipment.status }"
-            td = image_tag equipment.photo(:thirtytwo), width: 32, height: 32
-            td = equipment.name
-            td = equipment.active
-            td = equipment.status
-            td = equipment.brand
-            td = equipment.model
-            td = equipment.serial
-            td
-              .btn-group.pull-right
-                = link_to 'Show', [:admin, equipment], class: "btn btn-small"
-                = link_to 'Edit', edit_admin_equipment_path(equipment), class: "btn btn-small btn-primary"
-                = link_to 'Destroy', [:admin, equipment], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
+      = render partial: "table", locals: { equipmentdata: @equipment }
 
 - content_for :js do
   coffee:

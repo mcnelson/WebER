@@ -1,7 +1,7 @@
 class Admin::ErHoursController < AdminController
 
   def index
-    @er_hours = ErHour.all
+    @er_hours = ErHour.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

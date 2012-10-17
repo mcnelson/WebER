@@ -6,7 +6,7 @@ class Admin::ReservationsController < AdminController
     display_value:  :pretty_name
 
   def index
-    @reservations = Reservation.all
+    @reservations = Reservation.page params[:page]
 
     respond_to do |format|
       format.html
