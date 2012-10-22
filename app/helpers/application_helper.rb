@@ -59,4 +59,12 @@ module ApplicationHelper
       link_inner.html_safe
     end
   end
+
+  def nav_link_to(label, path, opts={})
+    p = Rails.application.routes.recognize_path path
+
+    opts = opts.merge({ class: "nav-current" }) if controller.controller_name == p[:controller].gsub(/^.*\//, '')
+
+    link_to label, path, opts
+  end
 end
