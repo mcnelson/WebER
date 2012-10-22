@@ -1,23 +1,30 @@
 - set_title("Listing Semesters")
 
-table.table.table-striped
-  tr
-    th Year
-    th Term
-    th Dates
-    th
-    th
-    th
+.row-fluid
+  .span4
+    .liner
+      = link_to 'New Semester', new_admin_semester_path, class: "btn btn-primary"
 
-  - @semesters.each do |semester|
-    tr
-      td = semester.year
-      td = semester.term
-      td = semester.starts_at.strftime("%b %e") + " - " + semester.ends_at.strftime("%b %e")
-      td = link_to 'Show', [:admin, semester]
-      td = link_to 'Edit', edit_admin_semester_path(semester)
-      td = link_to 'Destroy', [:admin, semester], :confirm => 'Are you sure?', :method => :delete
+.row-fluid
+  .span12
+    .liner
+      table.table.table-striped
+        tr
+          th Year
+          th Term
+          th Dates
+          th
 
-br
-
-= link_to 'New Semester', new_admin_semester_path
+        - @semesters.each do |semester|
+          tr
+            td = semester.year
+            td = semester.term
+            td = semester.starts_at.strftime("%b %e") + " - " + semester.ends_at.strftime("%b %e")
+            td
+              .btn-group
+                = link_to 'Show', [:admin, semester], class: "btn btn-small"
+                = link_to admin_semester_er_hours_path(semester), class: "btn btn-small" do
+                  i.icon-share
+                  |  Hours...
+                = link_to 'Edit', edit_admin_semester_path(semester), class: "btn btn-small btn-primary"
+                = link_to 'Destroy', [:admin, semester], data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-small btn-warning"

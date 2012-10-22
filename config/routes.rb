@@ -12,8 +12,10 @@ Weber::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :semesters
-    resources :er_hours
+    resources :semesters do
+      resources :er_hours, except: :index
+    end
+
     resources :users
 
     resources :categories
