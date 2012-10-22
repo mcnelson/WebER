@@ -45,6 +45,10 @@ body {
               border-right: solid 1px #DDD;
               border-top: solid 1px #DDD;
               margin-right: 4px;
+
+              &.nav-current {
+                box-shadow: $weberBlue 0px -3px 0px inset;
+              }
             }
           }
         }
