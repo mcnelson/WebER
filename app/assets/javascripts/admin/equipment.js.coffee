@@ -20,5 +20,5 @@ namespace "weber.equipment.index", (exports) ->
       $(".equipment-filters select").chosen({
         allow_single_deselect: true
       }).on("change", (evt) ->
-        $(@).parent('form').submit()
+        $(@).parents('form').submit()
       )

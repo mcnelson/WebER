@@ -1,8 +1,11 @@
 = simple_form_for [:admin, @category], html: { class: "form-horizontal" } do |f|
   = form_errors @category
 
-  .form-inputs
-    = f.input :title
+  .row
+    .span6
+      .liner
+        .form-inputs
+          = f.input :title
 
   .form-actions
     .btn-group

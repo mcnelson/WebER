@@ -1,8 +1,8 @@
 table.table.table-striped.table-condensed
   tr
     th colspan="2" = sortable "name"
-    th = sortable "active"
     th = sortable "status"
+    th = sortable "category"
     th = sortable "brand"
     th = sortable "model"
     th = sortable "serial"
@@ -12,8 +12,8 @@ table.table.table-striped.table-condensed
     tr class="#{ "error" if ["damaged", "overdue"].include? equipment.status }"
       td = image_tag equipment.photo(:thirtytwo), width: 32, height: 32
       td = equipment.name
-      td = equipment.active
       td = equipment.status
+      td = equipment.category.title
       td = equipment.brand
       td = equipment.model
       td = equipment.serial
