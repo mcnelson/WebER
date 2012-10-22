@@ -3,9 +3,20 @@
 p#notice = notice
 
 .row
-  .span12
+  .span6
     .liner
-      = render partial: "admin/equipment/table", locals: { equipmentdata: @category.equipment }
+      h3 = @category.title
+      p
+        strong = @category.equipment.count
+        |  units
+
+      = link_to admin_equipment_index_path({ category: @category.id }), class: "btn btn-small" do
+        i.icon-share
+        |  Edit Equipment...
+
+  .span6
+    .liner
+      = render partial: "admin/equipment/light_table", locals: { equipmentdata: @category.equipment }
 
 .form-actions
   .btn-group

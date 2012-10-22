@@ -78,7 +78,11 @@ class Admin::EquipmentController < AdminController
   end
 
   def sort_column
-    params[:sort] || "name"
+    if params[:sort] == "category"
+      params[:sort] = "category.title"
+    else
+      params[:sort] || "name"
+    end
   end
 
   def sort_direction

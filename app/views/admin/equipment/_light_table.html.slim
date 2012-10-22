@@ -1,0 +1,14 @@
+table.table.table-striped.table-condensed
+  tr
+    th colspan="2" = sortable "name"
+    th = sortable "brand"
+    th = sortable "model"
+    th = sortable "serial"
+
+  - equipmentdata.each do |equipment|
+    tr class="#{ "error" if ["damaged", "overdue"].include? equipment.status }"
+      td = image_tag equipment.photo(:thirtytwo), width: 32, height: 32
+      td = equipment.name
+      td = equipment.brand
+      td = equipment.model
+      td = equipment.serial
