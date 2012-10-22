@@ -1,12 +1,22 @@
-= simple_form_for [:admin, @er_hour], html: { class: 'form-horizontal'} do |f|
+= simple_form_for [:admin, @er_hour.semester, @er_hour], html: { class: 'form-horizontal'} do |f|
   = form_errors @er_hour
 
-  .form-inputs
-    = f.input :day, collection: weekdays_for_select
-    = f.input :starts_at, label: "Start Date", ampm: true, minute_step: 15
-    = f.input :ends_at, label: "Start Date", ampm: true, minute_step: 15
-    = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
-    = f.association :associated_hour, label: "Associated ER Hour", collection: ErHour.live_excluding(@er_hour.id).all, label_method: :description
+  .row
+    .span12
+      .liner
+        .form-inputs
+          = f.input :day, collection: weekdays_for_select
+          = f.input :starts_at, label: "Start Date", ampm: true, minute_step: 15
+          = f.input :ends_at, label: "Start Date", ampm: true, minute_step: 15
+          = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
+          = f.association :associated_hour, label: "Associated ER Hour", collection: ErHour.live_excluding(@er_hour.id).all, label_method: :description
 
   .form-actions
-    = f.button :submit
+    .btn-group
+      = f.button :submit, class: "btn-primary"
+      = link_to 'Show', [:admin, @er_hour.semester, @er_hour], class: "btn" if @er_hour.persisted?
+      = link_to 'Back', admin_semester_er_hours_path, class: "btn"
+
+- content_for :js do
+  coffee:
+    weber.er_hours.form.init()

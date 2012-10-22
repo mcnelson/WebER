@@ -36,7 +36,7 @@ class Admin::ErHoursController < AdminController
 
     respond_to do |format|
       if @er_hour.save
-        format.html { redirect_to [:admin, @er_hour], notice: 'Er hour was successfully created.' }
+        format.html { redirect_to [:admin, @er_hour.semester, @er_hour], notice: 'Er hour was successfully created.' }
         format.json { render json: @er_hour, status: :created, location: @er_hour }
       else
         format.html { render action: "new" }
@@ -50,7 +50,7 @@ class Admin::ErHoursController < AdminController
 
     respond_to do |format|
       if @er_hour.update_attributes(params[:er_hour])
-        format.html { redirect_to [:admin, @er_hour], notice: 'Er hour was successfully updated.' }
+        format.html { redirect_to [:admin, @er_hour.semester, @er_hour], notice: 'Er hour was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -64,7 +64,7 @@ class Admin::ErHoursController < AdminController
     @er_hour.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_er_hours_url }
+      format.html { redirect_to [:admin, @er_hour.semester, @er_hour] }
       format.json { head :no_content }
     end
   end

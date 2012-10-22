@@ -1,26 +1,27 @@
-h1 Listing ER Hours
-- set_title("Listing ER Hours")
+/- set_title("Listing ER Hours")
 
+.row-fluid
+  .span4
+    .liner
+      = link_to 'New Er hour', new_admin_semester_er_hour_path, class: "btn btn-primary"
 
-table.table.table-striped
-  tr
-    th Day
-    th Starts
-    th Ends
-    th
-    th
-    th
+.row-fluid
+  .liner
+    table.table.table-striped
+      tr
+        th Day
+        th Starts
+        th Ends
+        th
 
-  - @er_hours.each do |er_hour|
-    tr
-      td = er_hour.day.capitalize
-      td = er_hour.starts_at.strftime "%l:%M%P"
-      td = er_hour.ends_at.strftime "%l:%M%P"
+      - @er_hours.each do |er_hour|
+        tr
+          td = er_hour.day.capitalize
+          td = er_hour.starts_at.strftime "%l:%M%P"
+          td = er_hour.ends_at.strftime "%l:%M%P"
 
-      td = link_to 'Show', [:admin, er_hour]
-      td = link_to 'Edit', edit_admin_er_hour_path(er_hour)
-      td = link_to 'Destroy', [:admin, er_hour], confirm: 'Are you sure?', method: :delete
-
-br
-
-= link_to 'New Er hour', new_admin_er_hour_path
+          td
+            .btn-group
+              = link_to 'Show', [:admin, er_hour.semester, er_hour], class: "btn btn-small"
+              = link_to 'Edit', edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-small btn-primary"
+              = link_to 'Destroy', [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"

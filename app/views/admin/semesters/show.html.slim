@@ -2,13 +2,39 @@
 
 p#notice = notice
 
-p
-  strong Starts at:
-  = @semester.starts_at
-p
-  strong Ends at:
-  = @semester.ends_at
+.row-fluid
+  .span6
+    .liner
+      .ptable.ptable-40
+        p
+          strong Starts at:
+          = @semester.starts_at.strftime("%b %e")
 
-= link_to 'Edit', edit_admin_semester_path(@semester)
-'|
-= link_to 'Back', admin_semesters_path
+        p
+          strong Ends at:
+          = @semester.ends_at.strftime("%b %e")
+
+  .span6
+    .liner
+      table.table.table-striped
+        tr
+          th Day
+          th Starts
+          th Ends
+          th
+
+        - @semester.er_hour.each do |er_hour|
+          tr
+            td = er_hour.day.capitalize
+            td = er_hour.starts_at.strftime "%l:%M%P"
+            td = er_hour.ends_at.strftime "%l:%M%P"
+
+            td
+              .btn-group
+                = link_to 'Edit', edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-small btn-primary"
+                = link_to 'Destroy', [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
+
+.form-actions
+  .btn-group
+    = link_to 'Edit', edit_admin_semester_path(@semester), class: "btn btn-primary"
+    = link_to 'Back', admin_semesters_path, class: "btn"
