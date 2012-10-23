@@ -17,6 +17,10 @@ class Semester < ActiveRecord::Base
   end
 
   def yearterm
+    "#{year.to_s} #{term}"
+  end
+
+  def yearterm_with_range
     "#{year.to_s} #{term} (#{starts_at.strftime "%b %e"} - #{ends_at.strftime "%b %e"})"
   end
 end

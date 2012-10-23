@@ -1,21 +1,35 @@
-- set_title("View Semester")
+- set_title("View Semester: #{ @semester.yearterm }")
 
 p#notice = notice
 
 .row-fluid
   .span6
-    .liner
+    .gasket
+      h2 Semester
       .ptable.ptable-40
         p
-          strong Starts at:
+          strong Assumed term:
+          = @semester.yearterm
+
+        p
+          strong Begins:
           = @semester.starts_at.strftime("%b %e")
 
         p
-          strong Ends at:
+          strong Ends:
           = @semester.ends_at.strftime("%b %e")
 
   .span6
-    .liner
+    .gasket
+      h2 ER Hours
+
+      table.table
+        - ErHour.associated_pairs(@semester).each do |pair|
+          tr
+            td = pair.first.weekday_with_range
+            td: i.icon-arrow-right
+            td = pair.second.weekday_with_range
+
 
 .form-actions
   .btn-group
