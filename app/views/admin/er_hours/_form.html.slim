@@ -9,13 +9,12 @@
           = f.input :starts_at, label: "Start Time", ampm: true, minute_step: 15
           = f.input :ends_at, label: "End Time", ampm: true, minute_step: 15
           = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
-          = f.association :associated_hour, label: "Associated ER Hour", collection: ErHour.live_excluding(@er_hour.id).all, label_method: :description
+          = f.association :associated_hour, label: "Associated ER Hour", collection: @associated_hours, label_method: :description, hint: (@associated_hours.blank? ? "Note: No other ER hours exist for this semester yet." : "")
 
   .form-actions
     .btn-group
       = f.button :submit, class: "btn-primary"
-      = link_to 'Show', [:admin, @er_hour.semester, @er_hour], class: "btn" if @er_hour.persisted?
-      = link_to 'Back', admin_semester_er_hours_path, class: "btn"
+      = link_to 'Back', edit_admin_semester_path(@er_hour.semester), class: "btn"
 
 - content_for :js do
   coffee:

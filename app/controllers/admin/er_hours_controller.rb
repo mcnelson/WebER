@@ -1,34 +1,22 @@
 class Admin::ErHoursController < AdminController
 
-  def index
-    @er_hours = ErHour.page params[:page]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @er_hours }
-    end
-  end
-
-  def show
-    @er_hour = ErHour.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @er_hour }
-    end
-  end
-
   def new
     @er_hour = ErHour.new
+    @associated_hours = ErHour.where(semester_id: params[:semester_id]).all
+
+    # Nested route, so we need to tell it what semester
+    @er_hour.semester = Semester.find params[:semester_id]
+
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @er_hour }
     end
   end
 
   def edit
     @er_hour = ErHour.find(params[:id])
+    @associated_hours = ErHour.live_excluding(@er_hour).all
   end
 
   def create
@@ -36,7 +24,7 @@ class Admin::ErHoursController < AdminController
 
     respond_to do |format|
       if @er_hour.save
-        format.html { redirect_to [:admin, @er_hour.semester, @er_hour], notice: 'Er hour was successfully created.' }
+        format.html { redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'Er hour was successfully created.' }
         format.json { render json: @er_hour, status: :created, location: @er_hour }
       else
         format.html { render action: "new" }
@@ -50,7 +38,7 @@ class Admin::ErHoursController < AdminController
 
     respond_to do |format|
       if @er_hour.update_attributes(params[:er_hour])
-        format.html { redirect_to [:admin, @er_hour.semester, @er_hour], notice: 'Er hour was successfully updated.' }
+        format.html { redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'Er hour was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -64,7 +52,7 @@ class Admin::ErHoursController < AdminController
     @er_hour.destroy
 
     respond_to do |format|
-      format.html { redirect_to [:admin, @er_hour.semester, @er_hour] }
+      format.html { redirect_to edit_admin_semester_path(@er_hour.semester) }
       format.json { head :no_content }
     end
   end
