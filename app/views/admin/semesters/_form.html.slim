@@ -1,12 +1,10 @@
 = simple_form_for [:admin, @semester], html: { class: "form-horizontal" } do |f|
   = form_errors @semester
 
-  .row
-    .span12
-      .liner
-        .form-inputs
-          = f.input :starts_at, label: "Start Date"
-          = f.input :ends_at, label: "End Date"
+  .gasket
+    .form-inputs
+      = f.input :starts_at, label: "Start Date"
+      = f.input :ends_at, label: "End Date"
 
   .form-actions
     .btn-group

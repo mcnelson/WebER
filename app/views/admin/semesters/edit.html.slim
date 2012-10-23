@@ -1,3 +1,29 @@
 - set_title("Edit Semester")
 
-= render 'form'
+= simple_form_for [:admin, @semester], html: { class: "form-horizontal" } do |f|
+  = form_errors @semester
+
+  .row-fluid
+    .span6
+      .gasket
+        h2 Timeframe
+
+        .form-inputs
+          = f.input :starts_at, label: "Start Date"
+          = f.input :ends_at, label: "End Date"
+
+    .span6
+      .gasket
+        .pull-right = link_to 'Add ER Hour', new_admin_semester_er_hour_path(@semester), class: "btn btn-primary"
+        h2 ER Hours
+
+        = render 'er_hours_table'
+
+  .form-actions
+    .row-fluid
+      .span6
+        .gasket
+          .btn-group
+            = f.button :submit, class: "btn-primary"
+            = link_to 'Show', [:admin, @semester], class: "btn" if @semester.persisted?
+            = link_to 'Back', admin_semesters_path, class: "btn"

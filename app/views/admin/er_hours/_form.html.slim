@@ -6,8 +6,8 @@
       .liner
         .form-inputs
           = f.input :day, collection: weekdays_for_select
-          = f.input :starts_at, label: "Start Date", ampm: true, minute_step: 15
-          = f.input :ends_at, label: "Start Date", ampm: true, minute_step: 15
+          = f.input :starts_at, label: "Start Time", ampm: true, minute_step: 15
+          = f.input :ends_at, label: "End Time", ampm: true, minute_step: 15
           = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
           = f.association :associated_hour, label: "Associated ER Hour", collection: ErHour.live_excluding(@er_hour.id).all, label_method: :description
 
