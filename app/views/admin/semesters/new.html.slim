@@ -1,3 +1,19 @@
 - set_title("New semester")
 
-= render 'form'
+= simple_form_for [:admin, @semester], html: { class: "form-horizontal" } do |f|
+  = form_errors @semester
+
+  .liner
+    .form-inputs
+      = f.input :starts_at, label: "Start Date"
+      = f.input :ends_at, label: "End Date"
+
+  .form-actions
+    .btn-group
+      = f.button :submit, class: "btn-primary"
+      = link_to 'Show', [:admin, @semester], class: "btn" if @semester.persisted?
+      = link_to 'Back', admin_semesters_path, class: "btn"
+
+- content_for :js do
+  coffee:
+    weber.semesters.new.init()

@@ -1,0 +1,22 @@
+
+.row-fluid
+  .liner
+    table.table.table-striped
+      tr
+        th Day
+        th Starts
+        th Ends
+        th
+
+      - @semester.er_hour.each do |er_hour|
+        tr
+          td = er_hour.day.capitalize
+          td = er_hour.starts_at.strftime "%l:%M%P"
+          td = er_hour.ends_at.strftime "%l:%M%P"
+
+          td
+            .btn-group
+              = link_to edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-mini btn-primary" do
+                i.icon-pencil
+              = link_to [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-mini btn-warning" do
+                i.icon-remove
