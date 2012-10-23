@@ -2,11 +2,11 @@ class Admin::ErHoursController < AdminController
 
   def new
     @er_hour = ErHour.new
-    @associated_hours = ErHour.where(semester_id: params[:semester_id]).all
 
     # Nested route, so we need to tell it what semester
     @er_hour.semester = Semester.find params[:semester_id]
 
+    @associated_hours = ErHour.available_for_association(@er_hour)
 
     respond_to do |format|
       format.html
@@ -16,7 +16,7 @@ class Admin::ErHoursController < AdminController
 
   def edit
     @er_hour = ErHour.find(params[:id])
-    @associated_hours = ErHour.live_excluding(@er_hour).all
+    @associated_hours = ErHour.available_for_association(@er_hour).all
   end
 
   def create
