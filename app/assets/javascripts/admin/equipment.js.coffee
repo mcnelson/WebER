@@ -5,6 +5,8 @@ namespace "weber.equipment.form", (exports) ->
         allow_single_deselect: true
       }
 
+      $('.controls textarea').css('overflow', 'hidden').autogrow()
+
 namespace "weber.equipment.show", (exports) ->
   exports.init = ->
     $ ->

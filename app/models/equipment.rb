@@ -1,5 +1,5 @@
 class Equipment < ActiveRecord::Base
-  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status, :category_id, :photo
+  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status, :category_id, :photo, :notes
   validates_presence_of :active, :status, :name, :category_id
 
   belongs_to :category
