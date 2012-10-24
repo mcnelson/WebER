@@ -44,4 +44,8 @@ class Equipment < ActiveRecord::Base
   def pretty_name
     "#{name}: #{brand} #{model}"
   end
+
+  def status
+    read_attribute(:status) || STATUSES.first
+  end
 end
