@@ -7,7 +7,11 @@ class Admin::EquipmentController < AdminController
     @equipment = @equipment.where(status: params[:status]) if params[:status].present?
     @equipment = @equipment.where(category_id: params[:category]) if params[:category].present?
 
-    @equipment = @equipment.order(sort_column + " " + sort_direction)
+    if sort_column == "category"
+      @equipment = @equipment.order("categories.title " + sort_direction)
+    else
+      @equipment = @equipment.order(sort_column + " " + sort_direction)
+    end
 
     @equipment = @equipment.page params[:page]
 
@@ -78,11 +82,7 @@ class Admin::EquipmentController < AdminController
   end
 
   def sort_column
-    if params[:sort] == "category"
-      params[:sort] = "category.title"
-    else
-      params[:sort] || "name"
-    end
+    params[:sort] || "name"
   end
 
   def sort_direction
