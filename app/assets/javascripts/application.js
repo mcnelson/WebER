@@ -10,11 +10,12 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require coffeescript-namespacing
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require twitter/bootstrap
-//= require chosen.jquery
 //= require jquery.colorbox-min
-//= require coffeescript-namespacing
+//= require chosen.jquery
+//= require twitter/bootstrap
+//= require jquery.autogrow-textarea
 //= require_tree .

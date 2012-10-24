@@ -27,10 +27,16 @@ p#notice = notice
         p
           strong Status:
           = @equipment.status
+
         - if @equipment.max_reservation_period
           p
             strong Max reservation period:
             = @equipment.max_reservation_period
+
+        - if @equipment.notes.present?
+          p
+            strong Notes:
+            = simple_format @equipment.notes
 
   .span6
     .liner
