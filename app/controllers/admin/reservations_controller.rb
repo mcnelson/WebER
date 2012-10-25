@@ -1,9 +1,4 @@
 class Admin::ReservationsController < AdminController
-  autocomplete :user, [:punet], full: true
-  autocomplete :equipment, [:name, :brand, :model],
-    full:           true,
-    extra_data:     [:name, :brand, :model],
-    display_value:  :pretty_name
 
   def index
     @reservations = Reservation.page params[:page]

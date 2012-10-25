@@ -27,7 +27,8 @@ gem "paperclip", "~> 3.0"
 gem 'kaminari'
 
 # Autocomplete, use Slash4's fork to support multiple column search (https://github.com/crowdint/rails3-jquery-autocomplete/pull/95)
-gem 'rails3-jquery-autocomplete', git: "git://github.com/slash4/rails3-jquery-autocomplete.git"
+# Actually, screw this gem...
+# gem 'rails3-jquery-autocomplete', git: "git://github.com/slash4/rails3-jquery-autocomplete.git"
 
 # Calendar rendering
 gem 'later_dude', '>= 0.3.1' # 0.3.0 was broken!
