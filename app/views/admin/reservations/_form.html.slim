@@ -4,8 +4,8 @@
   .form-inputs
     .row
       .span6
-        = f.input :starts_at, as: :datetime, ampm: true, minute_step: 15
-        = f.input :ends_at, as: :datetime, ampm: true, minute_step: 15
+        = f.input :starts_at, as: :datepicker, ampm: true, minute_step: 15
+        = f.input :ends_at, as: :datepicker, ampm: true, minute_step: 15
         = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
         = f.association :user,
           url:          autocomplete_user_punet_admin_reservations_path,

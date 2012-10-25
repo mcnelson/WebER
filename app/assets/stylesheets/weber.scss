@@ -122,6 +122,15 @@ body {
     }
   }
 
+  // Jquery UI adjustments
+  .ui-datepicker {
+    font-size: 0.9em;
+  }
+
+  .error .ui-datepicker {
+    border: solid 1px #A5515E;
+  }
+
   .gasket {
     margin: 0 20px;
   }
