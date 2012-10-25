@@ -11,5 +11,6 @@
  *= require_self
  *= require chosen
  *= require colorbox
+ *= require jquery-ui-1.9.0.overcast
  *= require_tree .
  */
