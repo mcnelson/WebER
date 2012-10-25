@@ -8,7 +8,7 @@ class DatepickerInput < SimpleForm::Inputs::Base
   def input_options
     super.tap do |options|
       options[:include_blank] = true
-      options[:order]         = [:day, :month, :year]
+      options[:order]         = [:year, :month, :day]
       options[:start_year]    = Time.now.year - 100
       options[:end_year]      = Time.now.year - 18
     end
