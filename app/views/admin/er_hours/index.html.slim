@@ -24,4 +24,4 @@
             .btn-group
               = link_to 'Show', [:admin, er_hour.semester, er_hour], class: "btn btn-small"
               = link_to 'Edit', edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-small btn-primary"
-              = link_to 'Destroy', [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
+              = link_to 'Delete', [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
