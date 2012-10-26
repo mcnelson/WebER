@@ -16,7 +16,7 @@ table.table.table-striped
       td = reservation.status
       td = link_to 'Show', [:admin, reservation]
       td = link_to 'Edit', edit_admin_reservation_path(reservation)
-      td = link_to 'Destroy', [:admin, reservation], :confirm => 'Are you sure?', :method => :delete
+      td = link_to 'Delete', [:admin, reservation], :confirm => 'Are you sure?', :method => :delete
 
 br
 
