@@ -23,17 +23,21 @@ p#notice = notice
     .gasket
       h2 ER Hours
 
-      table.table
-        - ErHour.associated_pairs(@semester).each do |pair|
-          - if pair.class == Array
-            tr
-              td = pair.first.weekday_with_range
-              td: i.icon-arrow-right
-              td = pair.second.weekday_with_range
-          - else
-            tr
-              td colspan="2"
-                = "#{pair.weekday_with_range} (Unassociated)"
+      - if @semester.er_hour.present?
+        table.table
+          - ErHour.associated_pairs(@semester).each do |pair|
+            - if pair.class == Array
+              tr
+                td = pair.first.weekday_with_range
+                td: i.icon-arrow-right
+                td = pair.second.weekday_with_range
+            - else
+              tr
+                td colspan="2"
+                  = "#{pair.weekday_with_range} (Unassociated)"
+      - else
+        span.label.strong No ER hours defined yet.
+
 
 
 .form-actions
