@@ -1,26 +1,30 @@
 = simple_form_for [:admin, @user], html: { class: "form-horizontal" } do |f|
   = form_errors @user
 
-  .row
+  .row-fluid
     .span6
-      .form-inputs
-        h2 Login Credentials
-        = f.input :punet, label: "PUNetID"
-        = f.input :password
-        = f.input :password_confirmation
+      .liner
+        .form-inputs
+          h2 Login Credentials
+          = f.input :punet, label: "PUNetID"
+          = f.input :password
+          = f.input :password_confirmation
 
-        h2 Permissions
-        = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
-        = f.input :permission_level, collection: User::PERMISSION_LEVELS, as: :radio_buttons, label_method: :capitalize
-        = f.input :can_reserve, label: "Allowed to create reservations?"
+          h2 Permissions
+          = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
+          = f.input :permission_level, collection: User::PERMISSION_LEVELS, as: :radio_buttons, label_method: :capitalize
+          = f.input :can_reserve, label: "Allowed to create reservations?"
 
     .span6
-      .form-inputs
-        h2 General
-        = f.input :email
-        = f.input :pu_student_id, label: "PU Student ID#"
-        = f.input :strikes
-        = f.input :notes
+      .liner
+        .form-inputs
+          h2 General
+          = f.input :email
+          = f.input :pu_student_id, label: "PU Student ID#"
+          = f.input :strikes
+          = f.input :notes
 
   .form-actions
-    = f.button :submit
+    .btn-group
+      = link_to "Back", admin_users_path, class: "btn"
+      = f.button :submit, class: "btn btn-primary"

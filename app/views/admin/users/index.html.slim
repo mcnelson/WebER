@@ -1,27 +1,34 @@
 - set_title("Listing Users")
 
-table.table.table-striped
-  tr
-    th Active
-    th PUNetID
-    th Student #
-    th Strikes
-    th Can reserve
-    th
-    th
-    th
+.row-fluid
+  .span4
+    .liner
+      = link_to 'New User', new_admin_user_path, class: "btn btn-primary"
 
-  - @users.each do |user|
-    tr
-      td = user.active
-      td = user.punet
-      td = user.pu_student_id
-      td = user.strikes
-      td = user.can_reserve
-      td = link_to 'Show', [:admin, user]
-      td = link_to 'Edit', edit_admin_user_path(user)
-      td = link_to 'Delete', [:admin, user], confirm: 'Are you sure?', method: :delete
+  .span4.pagination-centered
+    = paginate @users
 
-br
+.row-fluid
+  .span12
+    .liner
+      table.table.table-striped
+        tr
+          th PUNetID
+          th Active
+          th Student #
+          th Strikes
+          th Can reserve
+          th
 
-= link_to 'New User', new_admin_user_path
+        - @users.each do |user|
+          tr
+            td = user.punet
+            td = active_label user
+            td = user.pu_student_id
+            td = user.strikes
+            td = user.can_reserve
+            td
+              .btn-group
+                = link_to 'Show', [:admin, user], class: "btn btn-small"
+                = link_to 'Edit', edit_admin_user_path(user), class: "btn btn-small btn-primary"
+                = link_to 'Delete', [:admin, user], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-warning"
