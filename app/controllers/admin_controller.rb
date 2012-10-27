@@ -1,16 +1,21 @@
 class AdminController < ApplicationController
   layout 'admin'
 
-  before_filter :check_permissions
+  before_filter :require_workstudy
 
-  def check_permissions
+  def require_workstudy
     # Login if no user
     return redirect_to signin_path if current_user.nil?
+    return if current_user.workstudy?
 
-    # Allow admin, workstudy to pass. This could be further restricted at the controller level
-    return if current_user and ["admin", "workstudy"].include? current_user.permission_level
     # Kick out otherwise
-    #redirect_back
-    return render_403
+    render_403
+  end
+
+  def require_admin
+    return redirect_to signin_path if current_user.nil?
+    return if current_user.admin?
+
+    render_403
   end
 end
