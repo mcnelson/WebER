@@ -14,9 +14,19 @@ class User < ActiveRecord::Base
 
   scope :active_users, where(active: true)
 
+  after_initialize :create_permission_methods
+
   PERMISSION_LEVELS = [
     "student",
     "workstudy",
     "admin"
   ]
+
+  def create_permission_methods
+    PERMISSION_LEVELS.each_with_index do |pl, i|
+      self.class.send :define_method, "#{pl}?" do
+        (PERMISSION_LEVELS.index(permission_level) >= i)
+      end
+    end
+  end
 end
