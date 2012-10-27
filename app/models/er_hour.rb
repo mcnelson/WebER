@@ -26,7 +26,11 @@ class ErHour < ActiveRecord::Base
     pairs = []
     set = ErHour.where(semester_id: semester.id).order(:starts_at).all
     set.each do |er_hour|
-      pairs << [er_hour, er_hour.associated_hour].sort_by! { |o| Date.parse(o.day).wday }
+      if er_hour.associated_hour.present?
+        pairs << [er_hour, er_hour.associated_hour].sort_by! { |o| Date.parse(o.day).wday }
+      else
+        pairs << er_hour
+      end
 
       # Remove the associated hour from the set
       set.delete er_hour.associated_hour

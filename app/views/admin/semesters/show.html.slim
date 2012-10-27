@@ -25,10 +25,15 @@ p#notice = notice
 
       table.table
         - ErHour.associated_pairs(@semester).each do |pair|
-          tr
-            td = pair.first.weekday_with_range
-            td: i.icon-arrow-right
-            td = pair.second.weekday_with_range
+          - if pair.class == Array
+            tr
+              td = pair.first.weekday_with_range
+              td: i.icon-arrow-right
+              td = pair.second.weekday_with_range
+          - else
+            tr
+              td colspan="2"
+                = "#{pair.weekday_with_range} (Unassociated)"
 
 
 .form-actions
