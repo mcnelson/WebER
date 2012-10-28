@@ -1,7 +1,7 @@
 class DatepickerInput < SimpleForm::Inputs::Base
   def input
     template.content_tag :div, class: 'simpleform-inline-datepicker' do
-      @builder.hidden_field(attribute_name, :class => 'datepicker-input')
+      @builder.hidden_field(attribute_name, value: @builder.object.send(attribute_name).to_s, class: 'datepicker-input')
     end
   end
 

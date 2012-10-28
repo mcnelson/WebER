@@ -5,5 +5,5 @@ $ ->
     dateFormat: "yy/mm/dd"
   })
 
-  $(".simpleform-inline-datepicker").each (d) ->
-    d.datepicker("setDate", $(@).children('input').attr("value"))
+  $(".simpleform-inline-datepicker").each ->
+    $(@).datepicker("setDate", $(@).children('input').attr("value"))

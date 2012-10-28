@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024224855) do
+ActiveRecord::Schema.define(:version => 20121028205951) do
 
   create_table "categories", :force => true do |t|
     t.string   "title",      :limit => 100, :null => false
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20121024224855) do
   end
 
   create_table "reservations", :force => true do |t|
-    t.datetime "starts_at",                :null => false
-    t.datetime "ends_at",                  :null => false
+    t.date     "starts_at",                :null => false
+    t.date     "ends_at",                  :null => false
     t.string   "status",     :limit => 30, :null => false
     t.text     "notes"
     t.integer  "user_id",                  :null => false
