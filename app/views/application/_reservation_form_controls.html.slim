@@ -1,0 +1,17 @@
+.form-inputs
+  .row
+    .span4
+      .liner
+        = f.input :starts_at, as: :datepicker
+        = f.input :ends_at, as: :datepicker
+        - if current_user.workstudy? && controller.class == Admin::ReservationsController
+          = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
+          = f.association :user, label:"Owner", hint:"The owning user's PUNetID", label_method: :punet
+
+    .span4
+      .liner
+        p stuff
+
+    .span4
+      .liner
+        p more stuff

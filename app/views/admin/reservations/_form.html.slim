@@ -1,23 +1,10 @@
 = simple_form_for [:admin, @reservation], html: { class: "form-horizontal" } do |f|
   = form_errors @reservation
 
-  .form-inputs
-    .row
-      .span4
-        .liner
-          = f.input :starts_at, as: :datepicker
-          = f.input :ends_at, as: :datepicker
-          - if current_user.workstudy? && controller.class == Admin::ReservationsController
-            = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-            = f.association :user, label:"Owner", hint:"The owning user's PUNetID"
-
-      .span4
-        .liner
-          p stuff
-
-      .span4
-        .liner
-          p more stuff
+  = render partial: 'reservation_form_controls', locals: { f: f }
 
   .form-actions
-    = f.button :submit
+    .btn-group
+      = link_to "Back", admin_reservations_path, class: "btn"
+      = link_to "Show", [:admin, @reservation], class: "btn" if @reservation.persisted?
+      = f.button :submit, class: "btn btn-primary"
