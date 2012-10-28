@@ -3,26 +3,21 @@
 
   .form-inputs
     .row
-      .span6
-        = f.input :starts_at, as: :datepicker
-        = f.input :ends_at, as: :datepicker
-        = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-        = f.association :user,
-          url:          autocomplete_user_punet_admin_reservations_path,
-          as:           :autocomplete,
-          label:        "Owner",
-          placeholder:  (@reservation.user.present?) ? "Currently: #{@reservation.user.punet}" : "",
-          hint:         "The owning user's PUNetID"
+      .span4
+        .liner
+          = f.input :starts_at, as: :datepicker
+          = f.input :ends_at, as: :datepicker
+          - if current_user.workstudy? && controller.class == Admin::ReservationsController
+            = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
+            = f.association :user, label:"Owner", hint:"The owning user's PUNetID"
 
-      .span6
-        = f.input :equipment_autocomplete,
-          url:          autocomplete_equipment_name_admin_reservations_path,
-          as:           :autocomplete,
-          label:        "Add Equipment",
-          placeholder:  "Search equipment",
-          hint:         "Start typing the name, brand, or model of any equipment"
+      .span4
+        .liner
+          p stuff
 
-        #reservation_equipment
+      .span4
+        .liner
+          p more stuff
 
   .form-actions
     = f.button :submit
