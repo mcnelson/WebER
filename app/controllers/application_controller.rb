@@ -1,6 +1,31 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def require_student
+    # Login if no user
+    return redirect_to signin_path if current_user.nil?
+    return if current_user.workstudy?
+
+    # Kick out otherwise
+    render_403
+  end
+
+  def require_workstudy
+    # Login if no user
+    return redirect_to signin_path if current_user.nil?
+    return if current_user.workstudy?
+
+    # Kick out otherwise
+    render_403
+  end
+
+  def require_admin
+    return redirect_to signin_path if current_user.nil?
+    return if current_user.admin?
+
+    render_403
+  end
+
   private
 
   def current_user
