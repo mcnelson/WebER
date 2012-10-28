@@ -10,7 +10,12 @@
 
     .span4
       .liner
-        p stuff
+        .tabs
+          ul
+            - Category.all.each do |category|
+              li = link_to category.title, ajax_reservation_tabbox_path({ category_id: category.id, reservation_id: @reservation.id })
+
+            div
 
     .span4
       .liner

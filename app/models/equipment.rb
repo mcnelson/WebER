@@ -48,4 +48,9 @@ class Equipment < ActiveRecord::Base
   def status
     read_attribute(:status) || STATUSES.first
   end
+
+  def available_in_range?(start_at, end_at)
+    
+
+  end
 end
