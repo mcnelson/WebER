@@ -13,6 +13,8 @@ Weber::Application.routes.draw do
 
   resources :reservations
 
+  get "ajax/reservation_tabbox"
+
   namespace :admin do
     #root to: "Dashboards#admin_index"
 
@@ -25,13 +27,7 @@ Weber::Application.routes.draw do
     resources :categories
     resources :equipment
 
-    resources :reservations do
-      collection do
-        get :autocomplete_user_punet
-        get :autocomplete_equipment_name
-      end
-    end
-
+    resources :reservations
     resources :packages
   end
 end
