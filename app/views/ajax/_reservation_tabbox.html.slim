@@ -1,5 +1,16 @@
 
-- @equipment.each do |equipment|
-  .equipment-row#{  }
-    .pull-left
-      = image_tag equipment.photo(:forty), width: 40, height: 40, class: "img-rounded"
+- @available.each do |equipment|
+  .equipment-row
+    = render partial: "reservation_row", locals: { equipment: equipment }
+
+- if @unavailable.present?
+  em
+    | The following equipment is unavailable between 
+    strong DATE
+    |  and 
+    strong DATE
+    | .
+
+  - @unavailable.each do |equipment|
+    .equipment-row.equipment-unavailable
+      = render partial: "reservation_row", locals: { equipment: equipment }

@@ -49,10 +49,10 @@ class Equipment < ActiveRecord::Base
     read_attribute(:status) || STATUSES.first
   end
 
-  def available_in_range(start_at, end_at)
+  def available_in_range?(start_at, end_at)
     reservation = Reservation.find_by_range(start_at, end_at)
 
-    return reservation.equipment.exists? self if reservation.present?
-    return false
+    return !reservation.equipment.exists?(self) if reservation.present?
+    return true
   end
 end
