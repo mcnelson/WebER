@@ -1,7 +1,9 @@
 .form-inputs
   .row
     .span4
-      .liner
+      .gasket
+        h2 Properties
+
         = f.input :starts_at, as: :datepicker
         = f.input :ends_at, as: :datepicker
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
@@ -9,7 +11,9 @@
           = f.association :user, label:"Owner", hint:"The owning user's PUNetID", label_method: :punet
 
     .span4
-      .liner
+      .gasket
+        h2 Equipment Library
+
         .tabs
           ul
             - Category.all.each do |category|
@@ -18,5 +22,6 @@
             div
 
     .span4
-      .liner
+      .gasket
+        h2 Items In Your Reservation
         p more stuff
