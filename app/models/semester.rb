@@ -6,8 +6,9 @@ class Semester < ActiveRecord::Base
 
   scope :live, where("ends_at >= ?", Time.now)
   scope :for_date, lambda { |date|
-    where("starts_at < ?", date)
-      .where("ends_at > ?", date)
+    where("semesters.starts_at < ?", date)
+      .where("semesters.ends_at > ?", date)
+      .joins(:er_hour)
   }
 
   TERM_SPLIT_MONTH = 6

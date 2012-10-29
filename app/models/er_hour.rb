@@ -20,10 +20,6 @@ class ErHour < ActiveRecord::Base
     "#{day.capitalize} #{starts_at.strftime "%l:%M%P"} - #{ends_at.strftime "%l:%M%P"}"
   end
 
-  def day
-    starts_at.strftime("%a")
-  end
-
   private
 
   def self.associated_pairs(semester)
