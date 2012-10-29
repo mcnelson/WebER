@@ -52,7 +52,10 @@ class Equipment < ActiveRecord::Base
   def available_in_range?(start_at, end_at)
     reservation = Reservation.find_by_range(start_at, end_at)
 
+    # If equipment exists in overlapping reservation, return false
     return !reservation.equipment.exists?(self) if reservation.present?
-    return true
+
+    # Otherwise assume available
+    true
   end
 end
