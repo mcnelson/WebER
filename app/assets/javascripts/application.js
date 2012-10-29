@@ -13,10 +13,11 @@
 //= require coffeescript-namespacing
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery-ui-1.9.1.custom
 //= require jquery.colorbox-min
 //= require chosen.jquery
 //= require twitter/bootstrap
 //= require jquery.autogrow-textarea
+//= require jquery.parseparams
 //
 //= require_tree .
