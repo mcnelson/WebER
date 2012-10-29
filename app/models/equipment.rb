@@ -10,6 +10,8 @@ class Equipment < ActiveRecord::Base
   has_many :equipment_packages
   has_many :package, through: :equipment_packages
 
+  has_many :accessory_dependencies
+
   has_attached_file :photo,
     styles: {
       thirtytwo: ["32x32#", :jpg],
