@@ -5,6 +5,12 @@ namespace "weber.equipment.form", (exports) ->
         allow_single_deselect: true
       }
 
+      # Chosenify upon adding dependency
+      $(document).on "nested:fieldAdded", (evt) ->
+        $(".controls select").chosen {
+          allow_single_deselect: true
+        }
+
       $('.controls textarea').css('overflow', 'hidden').autogrow()
 
 namespace "weber.equipment.show", (exports) ->

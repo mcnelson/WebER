@@ -1,5 +1,5 @@
 class Equipment < ActiveRecord::Base
-  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status, :category_id, :photo, :notes
+  attr_accessible :active, :brand, :max_reservation_period, :model, :name, :serial, :status, :category_id, :photo, :notes, :accessory, :accessory_dependencies_attributes
   validates_presence_of :active, :status, :name, :category_id
 
   belongs_to :category
@@ -11,6 +11,7 @@ class Equipment < ActiveRecord::Base
   has_many :package, through: :equipment_packages
 
   has_many :accessory_dependencies
+  accepts_nested_attributes_for :accessory_dependencies, allow_destroy: true
 
   has_attached_file :photo,
     styles: {
@@ -35,13 +36,7 @@ class Equipment < ActiveRecord::Base
     "overdue"
   ]
 
-  def self.formatted_statuses
-    self::STATUSES.map { |s| s.capitalize }
-  end
-
-  def self.formatted_statuses_for_select
-    self::STATUSES.map { |s| [s.capitalize, s] }
-  end
+  scope :accessories, lambda { where(accessory: true) }
 
   def pretty_name
     "#{name}: #{brand} #{model}"
@@ -59,5 +54,13 @@ class Equipment < ActiveRecord::Base
 
     # Otherwise assume available
     true
+  end
+
+  def self.formatted_statuses
+    self::STATUSES.map { |s| s.capitalize }
+  end
+
+  def self.formatted_statuses_for_select
+    self::STATUSES.map { |s| [s.capitalize, s] }
   end
 end

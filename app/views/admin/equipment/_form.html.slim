@@ -1,22 +1,37 @@
-= simple_form_for [:admin, @equipment], html: { class: "form-horizontal" } do |f|
+= simple_nested_form_for [:admin, @equipment], html: { class: "form-horizontal" } do |f|
   = form_errors @equipment
 
   .row
     .span6
       .gasket
-        h2 Information
+        h2 Properties
 
         .form-inputs
           = f.input :name
           = f.association :category
+          = f.input :photo
+
           = f.input :brand
           = f.input :model
           = f.input :serial, label: "Serial #"
-          = f.input :photo
+          = f.input :accessory, hint: "Is this equipment an accessory?"
+
+          h2 Accessory Dependencies
+
+          = f.fields_for :accessory_dependencies do |g|
+            = g.association :accessory_equipment, collection: Equipment.accessories, label: "Accessory", label_method: :pretty_name
+            = g.input :optional
+            = g.link_to_remove class: "btn btn-inverse btn-mini" do
+              span.icon: i.icon-minus
+              |  Remove
+
+          = f.link_to_add :accessory_dependencies, class: "btn btn-mini" do
+            span.icon: i.icon-plus
+            |  Add
 
     .span6
       .gasket
-        h2 Administrative Options
+        h2 Administrative Settings
         .form-inputs
           = f.input :active, hint: "Available for checkout?"
           = f.input :status, collection: Equipment::STATUSES, as: :radio_buttons, label_method: :capitalize

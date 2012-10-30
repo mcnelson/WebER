@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20121029225516) do
   end
 
   create_table "equipment", :force => true do |t|
-    t.boolean  "active",                                :default => true, :null => false
-    t.string   "status",                 :limit => 20,                    :null => false
-    t.string   "name",                   :limit => 100,                   :null => false
+    t.boolean  "active",                                :default => true,  :null => false
+    t.string   "status",                 :limit => 20,                     :null => false
+    t.string   "name",                   :limit => 100,                    :null => false
     t.string   "brand",                  :limit => 100
     t.string   "model",                  :limit => 100
     t.string   "serial",                 :limit => 100
@@ -40,9 +40,10 @@ ActiveRecord::Schema.define(:version => 20121029225516) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "category_id"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.text     "notes"
+    t.boolean  "accessory",                             :default => false, :null => false
   end
 
   create_table "equipment_packages", :force => true do |t|

@@ -19,5 +19,6 @@
 //= require twitter/bootstrap
 //= require jquery.autogrow-textarea
 //= require jquery.parseparams
+//= require jquery_nested_form
 //
 //= require_tree .
