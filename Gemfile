@@ -16,6 +16,7 @@ gem 'rspec-rails'               # Specs
 gem 'factory_girl'              # Specs
 gem 'factory_girl_rails'        # Specs
 gem 'turn', '< 0.8.3'           # Alternative runners for MiniTest
+gem 'nested_form'               # Form controls for has many relationships
 
 # Gems used only for assets and not required
 # in production environments by default.

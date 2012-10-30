@@ -7,5 +7,9 @@ class CreateAccessoryDependencies < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    change_table :equipment do |t|
+      t.boolean :accessory, null: false, default: false
+    end
   end
 end
