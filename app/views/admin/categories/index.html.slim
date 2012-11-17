@@ -1,30 +1,44 @@
 - set_title("Listing Categories")
 
-.row
-  .span4
-    .liner
-      = link_to 'New Category', new_admin_category_path, class: "btn btn-primary btn-small"
-
-  .span4
-    .liner
-      = paginate @categories
-
-.row
+.row-fluid
   .span6
-    .liner
+    .gasket
+      h2 Equipment Categories
+
       table.table.table-striped
         tr
           th Title
+          th Units
           th colspan="3"
 
-        - @categories.each do |category|
+        - @equipment_categories.each do |equipment_category|
           tr
-            td = category.title
+            td = equipment_category.title
+            td = equipment_category.equipment.count
             td
               .btn-group
-                = link_to 'Show', [:admin, category], class: "btn btn-small"
-                = link_to 'Edit', edit_admin_category_path(category), class: "btn btn-small btn-primary"
-                = link_to 'Delete', [:admin, category], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+                = link_to 'Edit', edit_admin_equipment_category_path(equipment_category), class: "btn btn-small btn-primary"
+                = link_to 'Delete', admin_category_path(equipment_category), confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+
+      = render partial: 'admin/categories/form', locals: { target: @new_equipment_category }
 
   .span6
-    .liner Show or Edit a category to see equipment.
+    .gasket
+      h2 Accessory Categories
+
+      table.table.table-striped
+        tr
+          th Title
+          th Units
+          th colspan="3"
+
+        - @accessory_categories.each do |accessory_category|
+          tr
+            td = accessory_category.title
+            td = accessory_category.equipment.count
+            td
+              .btn-group
+                = link_to 'Edit', edit_admin_accessory_category_path(accessory_category), class: "btn btn-small btn-primary"
+                = link_to 'Delete', admin_category_path(accessory_category), confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+
+      = render partial: 'admin/categories/form', locals: { target: @new_accessory_category }

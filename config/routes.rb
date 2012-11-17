@@ -24,7 +24,10 @@ Weber::Application.routes.draw do
 
     resources :users
 
-    resources :categories
+    resources :categories, only: [:index, :destroy]
+    resources :equipment_categories, only: [:create, :edit, :update]
+    resources :accessory_categories, only: [:create, :edit, :update]
+
     resources :equipment
 
     resources :reservations
