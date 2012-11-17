@@ -3,6 +3,8 @@ class Equipment < ActiveRecord::Base
   validates_presence_of :active, :status, :name, :category_id
 
   belongs_to :category
+  validates :category, inclusion: { in: EquipmentCategory.all }, if: "!accessory?"
+  validates :category, inclusion: { in: AccessoryCategory.all }, if: :accessory?
 
   has_many :equipment_reservations
   has_many :reservation, through: :equipment_reservations
@@ -44,6 +46,10 @@ class Equipment < ActiveRecord::Base
 
   def status
     read_attribute(:status) || STATUSES.first
+  end
+
+  def accessory?
+    accessory
   end
 
   def available_in_range?(start_at, end_at)
