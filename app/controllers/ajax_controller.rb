@@ -1,5 +1,7 @@
 class AjaxController < ApplicationController
   def reservation_tabbox
+    return if params[:start_at].blank? || params[:end_at].blank?
+
     @available = []
     @unavailable = []
 

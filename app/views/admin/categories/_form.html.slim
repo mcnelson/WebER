@@ -1,14 +1,8 @@
-= simple_form_for [:admin, @category], html: { class: "form-horizontal" } do |f|
-  = form_errors @category
+= simple_form_for [:admin, target], html: { class: "form-inline" } do |f|
+  = form_errors target
 
-  .row
-    .span6
-      .liner
-        .form-inputs
-          = f.input :title
-
-  .form-actions
-    .btn-group
-      = f.button :submit, class: "btn btn-primary"
-      = link_to 'Show', [:admin, @category], class: "btn" if @category.persisted?
-      = link_to 'Back', admin_categories_path, class: "btn"
+  .form_controls
+    .input-append
+      .control-group
+        = f.input_field :title, placeholder: "Add an #{target.class.name.underscore.humanize.titlecase}"
+        = f.button :submit, 'Add', class: "btn btn-primary"

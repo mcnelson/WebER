@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029225516) do
+ActiveRecord::Schema.define(:version => 20121116230218) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "equipment_id",                              :null => false
@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(:version => 20121029225516) do
   end
 
   create_table "categories", :force => true do |t|
-    t.string   "title",      :limit => 100, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "title",      :limit => 100,                                  :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+    t.string   "type",                      :default => "EquipmentCategory", :null => false
   end
 
   create_table "equipment", :force => true do |t|
