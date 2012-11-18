@@ -2,11 +2,14 @@ class Category < ActiveRecord::Base
   attr_accessible :title
   validates_presence_of :title
 
-  def grouped_select_options
-    [ "Test" => ::AccessoryCategory.all ]
+  def humanize_type
+    type.underscore.humanize.titlecase
   end
 
-  def pretty_type_label
-    type.underscore.humanize.titlecase
+  def self.grouped_select_options
+    {
+      ::EquipmentCategory.all => "Equipment1 Categories",
+      ::AccessoryCategory.all => "Accessory Categories"
+    }
   end
 end
