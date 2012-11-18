@@ -19,7 +19,7 @@
           h2 Accessory Dependencies
 
           = f.fields_for :accessory_dependencies do |g|
-            = g.association :accessory_equipment, collection: Equipment.accessories, label: "Accessory", label_method: :pretty_name
+            = g.association :accessory_category, collection: AccessoryCategory.all, label: "Dependant Accessory Category", hint: "Make this unit depend on any accessory within this accessory category", label_method: :title
             = g.input :optional
             = g.link_to_remove class: "btn btn-inverse btn-mini" do
               span.icon: i.icon-minus

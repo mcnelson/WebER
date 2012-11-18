@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121116230218) do
+ActiveRecord::Schema.define(:version => 20121118042639) do
 
   create_table "accessory_dependencies", :force => true do |t|
-    t.integer  "equipment_id",                              :null => false
-    t.integer  "accessory_equipment_id",                    :null => false
-    t.boolean  "optional",               :default => false, :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.integer  "equipment_id",                             :null => false
+    t.integer  "accessory_category_id",                    :null => false
+    t.boolean  "optional",              :default => false, :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   create_table "categories", :force => true do |t|
