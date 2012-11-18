@@ -8,7 +8,7 @@ class Category < ActiveRecord::Base
 
   def self.grouped_select_options
     {
-      ::EquipmentCategory.all => "Equipment1 Categories",
+      ::EquipmentCategory.all => "Equipment Categories",
       ::AccessoryCategory.all => "Accessory Categories"
     }
   end

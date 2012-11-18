@@ -3,8 +3,8 @@ class Equipment < ActiveRecord::Base
   validates_presence_of :active, :status, :name, :category_id
 
   belongs_to :category
-  validates :category, inclusion: { in: EquipmentCategory.all }, if: "!accessory?"
-  validates :category, inclusion: { in: AccessoryCategory.all }, if: :accessory?
+  validates :category, inclusion: { in: EquipmentCategory.all, message: "must be an equipment category since this unit is classified as equipment" }, if: "!accessory?"
+  validates :category, inclusion: { in: AccessoryCategory.all, message: "must be an accessory category since this unit is classified as an accessory" }, if: :accessory?
 
   has_many :equipment_reservations
   has_many :reservation, through: :equipment_reservations
