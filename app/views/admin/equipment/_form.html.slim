@@ -8,7 +8,7 @@
 
         .form-inputs
           = f.input :name
-          = f.association :category, as: :grouped_select, group_method: :all, group_label_method: :pretty_type_label
+          = f.association :category, collection: Category.grouped_select_options, as: :grouped_select, group_method: :first, group_label_method: :last
           = f.input :photo
 
           = f.input :brand
