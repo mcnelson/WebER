@@ -16,6 +16,20 @@ class ErHour < ActiveRecord::Base
     where("er_hours.id != ?", for_hour.id) if for_hour.persisted?
   }
 
+  default_scope order(:day)
+
+  def day
+    read_attribute(:day).strftime("%a").downcase
+  end
+
+  # This can deal with a String or Date
+  def day=(value)
+    write_attribute(:day, Date.parse(value)) if value.is_a? String
+    write_attribute(:day, value) if value.is_a? Date
+
+    false
+  end
+
   def weekday_with_range
     "#{day.capitalize} #{starts_at.strftime "%l:%M%P"} - #{ends_at.strftime "%l:%M%P"}"
   end
