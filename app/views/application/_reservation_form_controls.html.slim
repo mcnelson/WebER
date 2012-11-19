@@ -1,27 +1,16 @@
 .form-inputs
   .row
-    .span4
+    .span6
       .gasket
-        h2 Properties
-
         = f.input :starts_at, as: :datepicker
         = f.input :ends_at, as: :datepicker
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
-          = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
-          = f.association :user, label:"Owner", hint:"The owning user's PUNetID", label_method: :punet
+          .well
+            h2 Administrative Options
+            = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
+            = f.association :user, label:"Owner", hint:"The owning user's PUNetID", label_method: :punet
 
-    .span4
+    .span6
       .gasket
-        h2 Equipment Library
-
-        .tabs
-          ul
-            - Category.all.each do |category|
-              li = link_to category.title, ajax_reservation_tabbox_path({ category_id: category.id})
-
-            div
-
-    .span4
-      .gasket
-        h2 Items In Your Reservation
-        p more stuff
+        = fields_for :equipment_reservations do |g|
+          = f.association :equipment, collection: Equipment.live, as: :grouped_select, group_method: :first, group_label_method: :last

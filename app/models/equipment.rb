@@ -38,7 +38,8 @@ class Equipment < ActiveRecord::Base
     "overdue"
   ]
 
-  scope :accessories, lambda { where(accessory: true) }
+  scope :active, where(active: true)
+  scope :accessories, where(accessory: true)
 
   def pretty_name
     "#{name}: #{brand} #{model}"
