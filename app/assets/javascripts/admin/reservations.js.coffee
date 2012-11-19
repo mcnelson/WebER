@@ -1,5 +1,5 @@
 namespace "weber.reservations.form", (exports) ->
-  exports.init ->
+  exports.init = ->
     $ ->
       $(".controls select").chosen()
       $(".tabs").tabs()
