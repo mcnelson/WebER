@@ -12,7 +12,8 @@ class Equipment < ActiveRecord::Base
   has_many :equipment_packages
   has_many :package, through: :equipment_packages
 
-  has_many :accessory_dependencies
+  has_many :accessory_dependencies, dependent: destory
+  validates :accessory_dependencies, presence: false, if: :accessory? # Disallow accessory dependencies if accessory
   accepts_nested_attributes_for :accessory_dependencies, allow_destroy: true
 
   has_attached_file :photo,
