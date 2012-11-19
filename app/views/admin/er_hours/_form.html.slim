@@ -1,5 +1,6 @@
 = simple_form_for [:admin, @er_hour.semester, @er_hour], html: { class: 'form-horizontal'} do |f|
   = form_errors @er_hour
+  = puts @er_hour.to_yaml
 
   .row
     .span12
@@ -9,7 +10,7 @@
           = f.input :starts_at, label: "Start Time", ampm: true, minute_step: 15
           = f.input :ends_at, label: "End Time", ampm: true, minute_step: 15
           = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
-          = f.association :associated_hour, label: "Associated ER Hour", collection: @associated_hours, label_method: :weekday_with_range, hint: (@associated_hours.blank? ? "Note: No other ER hours exist for this semester yet." : "")
+          = f.association :associated_hour, label: "Associated ER Hour", collection: @er_hour.available_for_association, label_method: :weekday_with_range, hint: (@er_hour.available_for_association.blank? ? "Note: No other ER hours are currently available for association." : "")
 
   .form-actions
     .btn-group

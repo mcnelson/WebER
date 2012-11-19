@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def weekdays_for_select
-    Date::DAYNAMES.zip( Date::DAYNAMES.map { |d| d.downcase[0..2] } )
+    Date::DAYNAMES.map { |day| [day, Date.parse(day)] }
   end
 
   def js_link(label, options={})

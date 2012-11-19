@@ -6,8 +6,6 @@ class Admin::ErHoursController < AdminController
     # Nested route, so we need to tell it what semester
     @er_hour.semester = Semester.find params[:semester_id]
 
-    @associated_hours = ErHour.available_for_association(@er_hour)
-
     respond_to do |format|
       format.html
       format.json { render json: @er_hour }
@@ -16,7 +14,6 @@ class Admin::ErHoursController < AdminController
 
   def edit
     @er_hour = ErHour.find(params[:id])
-    @associated_hours = ErHour.available_for_association(@er_hour).all
   end
 
   def create
