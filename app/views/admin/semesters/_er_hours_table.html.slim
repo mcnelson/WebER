@@ -8,9 +8,9 @@
         th Ends
         th
 
-      - @semester.er_hour.each do |er_hour|
+      - @semester.er_hours.each do |er_hour|
         tr
-          td = er_hour.day.capitalize
+          td = er_hour.day_abbreviated.capitalize
           td = er_hour.starts_at.strftime "%l:%M%P"
           td = er_hour.ends_at.strftime "%l:%M%P"
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118232416) do
+ActiveRecord::Schema.define(:version => 20121119001810) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "equipment_id",                             :null => false
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20121118232416) do
     t.datetime "updated_at",         :null => false
     t.date     "day"
   end
+
+  add_index "er_hours", ["associated_hour_id"], :name => "index_er_hours_on_associated_hour_id"
 
   create_table "packages", :force => true do |t|
     t.string   "title",                  :limit => 200, :null => false

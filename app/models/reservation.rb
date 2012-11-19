@@ -24,44 +24,20 @@ class Reservation < ActiveRecord::Base
     "missed"
   ]
 
-  def starts_at_day
-    starts_at.strftime('%a')[0..2].downcase
-  end
-
-  def ends_at_day
-    ends_at.strftime('%a')[0..2].downcase
-  end
-
   def earliest_starts_at
-    er_hour = Semester
-      .for_date(starts_at).first
-      .er_hour.select { |erh| erh.day == starts_at_day }
-
-    !er_hour.empty? ? er_hour.first.starts_at : nil
+    Semester.around_date(starts_at).er_hour_around(starts_at).starts_at
   end
 
   def latest_starts_at
-    er_hour = Semester
-      .for_date(starts_at).first
-      .er_hour.select { |erh| erh.day == starts_at_day }
-
-    !er_hour.empty? ? er_hour.first.ends_at : nil
+    Semester.around_date(starts_at).er_hour_around(starts_at).ends_at
   end
 
   def earliest_ends_at
-    er_hour = Semester
-      .for_date(starts_at).first
-      .er_hour.select { |erh| erh.day == ends_at_day }
-
-    !er_hour.empty? ? er_hour.first.starts_at : nil
+    Semester.around_date(starts_at).er_hour_around(ends_at).starts_at
   end
 
   def latest_ends_at
-    er_hour = Semester
-      .for_date(starts_at).first
-      .er_hour.select { |erh| erh.day == ends_at_day }
-
-    !er_hour.empty? ? er_hour.first.ends_at : nil
+    Semester.around_date(starts_at).er_hour_around(ends_at).ends_at
   end
 
   def self.formatted_statuses

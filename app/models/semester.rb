@@ -1,15 +1,11 @@
 class Semester < ActiveRecord::Base
-  has_many :er_hour
+  has_many :er_hours, class_name: "ErHour"
 
   attr_accessible :ends_at, :starts_at
   validates_presence_of :ends_at, :starts_at
 
   scope :live, where("ends_at >= ?", Time.now)
-  scope :for_date, lambda { |date|
-    where("semesters.starts_at < ?", date)
-      .where("semesters.ends_at > ?", date)
-      .joins(:er_hour)
-  }
+  scope :around_date, lambda { |date| where("? BETWEEN starts_at AND ends_at", date) }
 
   TERM_SPLIT_MONTH = 6
 
@@ -27,5 +23,9 @@ class Semester < ActiveRecord::Base
 
   def yearterm_with_range
     "#{year.to_s} #{term} (#{starts_at.strftime "%b %e"} - #{ends_at.strftime "%b %e"})"
+  end
+
+  def er_hour_around(date)
+    er_hours.select { |erh| erh.day.wday == date.wday } || nil
   end
 end

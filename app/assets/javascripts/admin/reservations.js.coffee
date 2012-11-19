@@ -1,25 +1,27 @@
-$ ->
-  $(".controls select").chosen()
-  $(".tabs").tabs()
+namespace "weber.reservations.form", (exports) ->
+  exports.init ->
+    $ ->
+      $(".controls select").chosen()
+      $(".tabs").tabs()
 
-  # On change reservation date
-  $(".simpleform-inline-datepicker").on("select", (evt, data) ->
+      # On change reservation date
+      $(".simpleform-inline-datepicker").on("select", (evt, data) ->
 
-    # Refresh tabbox
-    $('.tabs').tabs("destroy")
+        # Refresh tabbox
+        $('.tabs').tabs("destroy")
 
-    # Update hrefs
-    $('.tabs ul li a').each ->
-      s = $(@)
-        .attr("href")
-        .split('?')
+        # Update hrefs
+        $('.tabs ul li a').each ->
+          s = $(@)
+            .attr("href")
+            .split('?')
 
-      p = $.parseParams(s[1])
+          p = $.parseParams(s[1])
 
-      p.start_at = $('[name="reservation[starts_at]"]').attr("value")
-      p.end_at = $('[name="reservation[ends_at]"]').attr("value")
+          p.start_at = $('[name="reservation[starts_at]"]').attr("value")
+          p.end_at = $('[name="reservation[ends_at]"]').attr("value")
 
-      $(@).attr("href", "#{ s[0] }?#{ $.param(p) }")
+          $(@).attr("href", "#{ s[0] }?#{ $.param(p) }")
 
-    $('.tabs').tabs()
-  )
+        $('.tabs').tabs()
+      )

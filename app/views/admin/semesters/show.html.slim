@@ -23,7 +23,7 @@ p#notice = notice
     .gasket
       h2 ER Hours
 
-      - if @semester.er_hour.present?
+      - if @semester.er_hours.present?
         table.table
           - ErHour.associated_pairs(@semester).each do |pair|
             - if pair.class == Array
