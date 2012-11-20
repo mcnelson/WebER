@@ -75,7 +75,7 @@ class Equipment < ActiveRecord::Base
 
   def self.grouped_accessory_select_options
     result = {}
-    AccessoryCategory.all.map { |category| {result[category.equipment.all] => category.title} }.flatten
+    AccessoryCategory.all.map { |category| result[category.equipment.all] = category.title }
 
     result
   end
