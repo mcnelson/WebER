@@ -13,7 +13,8 @@ class Equipment < ActiveRecord::Base
   has_many :package, through: :equipment_packages
 
   has_many :accessory_dependencies, dependent: :destroy
-  validates :accessory_dependencies, presence: false, if: :accessory? # Disallow accessory dependencies if accessory
+  has_many :accessories, through: :accessory_dependencies
+  validates_length_of :accessory_dependencies, is: 0, if: :accessory?, message: "cannot exist for an accessory, they can only be used with equipment" # UGLY! Needs validates_absence_of
   accepts_nested_attributes_for :accessory_dependencies, allow_destroy: true
 
   has_attached_file :photo,
@@ -41,8 +42,9 @@ class Equipment < ActiveRecord::Base
 
   scope :active, where(active: true)
   scope :accessories, where(accessory: true)
+  scope :equipment, where(accessory: false)
 
-  def pretty_name
+  def name_brand_model
     "#{name}: #{brand} #{model}"
   end
 
@@ -62,6 +64,20 @@ class Equipment < ActiveRecord::Base
 
     # Otherwise assume available
     true
+  end
+
+  def self.grouped_equipment_select_options
+    result = {}
+    EquipmentCategory.all.map { |category| result[category.equipment.all] = category.title }
+
+    result
+  end
+
+  def self.grouped_accessory_select_options
+    result = {}
+    AccessoryCategory.all.map { |category| {result[category.equipment.all] => category.title} }.flatten
+
+    result
   end
 
   def self.formatted_statuses
