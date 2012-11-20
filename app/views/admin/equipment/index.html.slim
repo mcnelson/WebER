@@ -16,6 +16,8 @@
     .liner.equipment-filters
       = form_tag nil, method: :get do
         .pull-right = select_tag :status, options_for_select(Equipment::formatted_statuses_for_select, params[:status]), :"data-placeholder" => "Filter by status", include_blank: true
+
+        / TODO Group this
         .pull-right = select_tag :category, options_for_select(Category.all.map { |c| [c.title, c.id] }, params[:category]), :"data-placeholder" => "Filter by category", include_blank: true
 
 .row-fluid
