@@ -13,7 +13,7 @@ class Equipment < ActiveRecord::Base
   has_many :package, through: :equipment_packages
 
   has_many :accessory_dependencies, dependent: :destroy
-  has_many :accessories, through: :accessory_dependencies
+  has_many :accessory_categories, through: :accessory_dependencies
   validates_length_of :accessory_dependencies, is: 0, if: :accessory?, message: "cannot exist for an accessory, they can only be used with equipment" # UGLY! Needs validates_absence_of
   accepts_nested_attributes_for :accessory_dependencies, allow_destroy: true
 
@@ -45,7 +45,13 @@ class Equipment < ActiveRecord::Base
   scope :equipment, where(accessory: false)
 
   def name_brand_model
-    "#{name}: #{brand} #{model}"
+    if brand.present? && model.present?
+      "#{name}: #{brand} #{model}"
+    elsif brand.present?
+      "#{brand} #{name}"
+    else
+      name
+    end
   end
 
   def status
@@ -66,16 +72,21 @@ class Equipment < ActiveRecord::Base
     true
   end
 
+  # TODO refactor me
   def self.grouped_equipment_select_options
     result = {}
-    EquipmentCategory.all.map { |category| result[category.equipment.all] = category.title }
+    EquipmentCategory.order(:title).all.each do |category|
+      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
+    end
 
     result
   end
 
   def self.grouped_accessory_select_options
     result = {}
-    AccessoryCategory.all.map { |category| result[category.equipment.all] = category.title }
+    AccessoryCategory.order(:title).all.each do |category|
+      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
+    end
 
     result
   end
