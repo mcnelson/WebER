@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @reservation], html: { class: "form-horizontal" } do |f|
+= simple_nested_form_for [:admin, @reservation], html: { class: "form-horizontal" } do |f|
   = form_errors @reservation
 
   = render partial: 'reservation_form_controls', locals: { f: f }
@@ -8,3 +8,7 @@
       = link_to "Back", admin_reservations_path, class: "btn"
       = link_to "Show", [:admin, @reservation], class: "btn" if @reservation.persisted?
       = f.button :submit, class: "btn btn-primary"
+
+  - content_for :js do
+    coffee:
+      weber.reservations.form.init()

@@ -2,6 +2,7 @@
   .row
     .span6
       .gasket
+        h2 Dates
         = f.input :starts_at, as: :datepicker
         = f.input :ends_at, as: :datepicker
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
@@ -12,5 +13,29 @@
 
     .span6
       .gasket
-        = fields_for :equipment_reservations do |g|
-          = f.association :equipment, collection: Equipment.live, as: :grouped_select, group_method: :first, group_label_method: :last
+        h2 Equipment
+        = f.fields_for :equipment_reservations do |g|
+          = g.association :equipment,
+            collection: Equipment.grouped_equipment_select_options,
+            as: :grouped_select,
+            group_method: :first,
+            group_label_method: :last,
+            label_method: :name_brand_model,
+            label: "Equipment"
+
+        = f.link_to_add :equipment_reservations, class: "btn btn-mini" do
+          span.icon: i.icon-plus
+          |  Add Equipment
+
+        = f.fields_for :accessory_reservations do |g|
+          = g.association :equipment,
+            collection: Equipment.grouped_accessory_select_options,
+            as: :grouped_select,
+            group_method: :first,
+            group_label_method: :last,
+            label_method: :name_brand_model,
+            label: "Accessory"
+
+        = f.link_to_add :accessory_reservations, class: "btn btn-mini" do
+          span.icon: i.icon-plus
+          |  Add Accessory
