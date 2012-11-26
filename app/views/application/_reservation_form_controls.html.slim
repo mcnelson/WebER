@@ -8,7 +8,7 @@
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
           .well
             h2 Administrative Options
-            = f.input :status, collection: Reservation.formatted_statuses, as: :radio_buttons
+            = f.input :status, collection: Reservation::STATUSES, as: :radio_buttons, label_method: :capitalize
             = f.association :user, label:"Owner", hint:"The owning user's PUNetID", label_method: :punet
 
     .span6

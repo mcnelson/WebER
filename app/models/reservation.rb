@@ -23,6 +23,10 @@ class Reservation < ActiveRecord::Base
     "missed"
   ]
 
+  def status
+    read_attribute(:status) || STATUSES.first
+  end
+
   def earliest_starts_at
     Semester.around_date(starts_at).er_hour_around(starts_at).starts_at
   end
@@ -37,10 +41,6 @@ class Reservation < ActiveRecord::Base
 
   def latest_ends_at
     Semester.around_date(starts_at).er_hour_around(ends_at).ends_at
-  end
-
-  def self.formatted_statuses
-    STATUSES.map { |s| s.capitalize }
   end
 
   def contains?(equipment)
