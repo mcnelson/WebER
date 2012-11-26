@@ -16,4 +16,12 @@ class AjaxController < ApplicationController
 
     render partial: "reservation_tabbox"
   end
+
+  def check_equipment_availability
+
+  end
+
+  def equipment_dependencies
+
+  end
 end

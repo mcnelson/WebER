@@ -91,10 +91,6 @@ class Equipment < ActiveRecord::Base
     result
   end
 
-  def self.formatted_statuses
-    self::STATUSES.map { |s| s.capitalize }
-  end
-
   def self.formatted_statuses_for_select
     self::STATUSES.map { |s| [s.capitalize, s] }
   end
