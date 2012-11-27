@@ -1,4 +1,4 @@
-class Equipment < ActiveRecord::Base
+class Equipment < EquipmentBase
   attr_accessible :accessory_dependencies_attributes
   validates_presence_of :name
 

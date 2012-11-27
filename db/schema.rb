@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20121127044103) do
     t.string   "type",                      :default => "EquipmentCategory", :null => false
   end
 
-  create_table "equipment", :force => true do |t|
+  create_table "equipment_bases", :force => true do |t|
     t.boolean  "active",                                :default => true,        :null => false
     t.string   "status",                 :limit => 20,                           :null => false
     t.string   "name",                   :limit => 100,                          :null => false

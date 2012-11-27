@@ -1,0 +1,36 @@
+.form-inputs
+  .row
+    .span6
+      .gasket
+        h2 Properties
+
+          = f.input :name
+          = f.association :category, collection: Category.grouped_select_options, as: :grouped_select, group_method: :first, group_label_method: :last
+          = f.input :photo
+
+          = f.input :brand
+          = f.input :model
+          = f.input :serial, label: "Serial #"
+
+          h2 Accessory Dependencies
+
+          - if f.object.class == Equipment
+            = f.fields_for :accessory_dependencies do |g|
+              = g.association :accessory_category, collection: AccessoryCategory.all, label: "Dependant Accessory Category", hint: "Make this unit depend on any accessory within this accessory category", label_method: :title
+              = g.input :optional
+              = g.link_to_remove class: "btn btn-inverse btn-mini" do
+                span.icon: i.icon-minus
+                |  Remove
+
+            = f.link_to_add :accessory_dependencies, class: "btn btn-mini" do
+              span.icon: i.icon-plus
+              |  Add
+
+    .span6
+      .gasket
+        h2 Administrative Settings
+        .form-inputs
+          = f.input :active, hint: "Available for checkout?"
+          = f.input :status, collection: Equipment::STATUSES, as: :radio_buttons, label_method: :capitalize
+          = f.input :max_reservation_period, hint: "Leave blank to use the default (#{distance_of_time_in_words Weber::Application.config.default_max_reservation_period})"
+          = f.input :notes, input_html: { rows: 2 }
