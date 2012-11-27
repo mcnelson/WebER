@@ -44,6 +44,8 @@ class Equipment < ActiveRecord::Base
   scope :accessories, where(accessory: true)
   scope :equipment, where(accessory: false)
 
+  after_initialize :default_status
+
   def name_brand_model
     if brand.present? && model.present?
       "#{name}: #{brand} #{model}"
@@ -54,8 +56,8 @@ class Equipment < ActiveRecord::Base
     end
   end
 
-  def status
-    read_attribute(:status) || STATUSES.first
+  def default_status
+    self.status ||= STATUSES.first
   end
 
   def accessory?

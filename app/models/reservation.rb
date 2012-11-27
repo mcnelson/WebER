@@ -16,6 +16,8 @@ class Reservation < ActiveRecord::Base
       .where("ends_at < ?", end_at)
   }
 
+  after_initialize :default_status
+
   STATUSES = [
     "live",
     "pending",
@@ -23,8 +25,8 @@ class Reservation < ActiveRecord::Base
     "missed"
   ]
 
-  def status
-    read_attribute(:status) || STATUSES.first
+  def default_status
+    self.status ||= STATUSES.first
   end
 
   def earliest_starts_at
