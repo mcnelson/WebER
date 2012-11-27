@@ -1,0 +1,55 @@
+- set_title("View Accessory #{ @accessory.name }")
+
+p#notice = notice
+
+.row
+  .span6
+    .liner
+      .ptable.ptable-40
+        p
+          strong Name:
+          = @accessory.name
+        p
+          strong Category:
+          = @accessory.category.title
+        p
+          strong Brand:
+          = @accessory.brand
+        p
+          strong Model:
+          = @accessory.model
+        p
+          strong Serial:
+          = @accessory.serial
+        p
+          strong Active:
+          = @accessory.active
+        p
+          strong Status:
+          = @accessory.status
+
+        - if @accessory.max_reservation_period
+          p
+            strong Max reservation period:
+            = @accessory.max_reservation_period
+
+        - if @accessory.notes.present?
+          p
+            strong Notes:
+            = simple_format @accessory.notes
+
+  .span6
+    .liner
+      .thumbnails
+        li
+          = link_to @accessory.photo(:seventwenty), class: :thumbnail do
+            = image_tag @accessory.photo(:threehundred), class: "equipment-photo", width: 300, height: 200
+
+.form-actions
+  .btn-group
+    = link_to 'Edit', edit_admin_accessory_path(@accessory), class: "btn btn-primary"
+    = link_to 'Back', admin_equipment_index_path, class: "btn"
+
+- content_for :js do
+  coffee:
+    weber.equipment.show.init()

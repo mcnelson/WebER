@@ -1,12 +1,12 @@
-= simple_nested_form_for [:admin, @equipment], html: { class: "form-horizontal" } do |f|
-  = form_errors @equipment
+= simple_nested_form_for [:admin, @accessory], html: { class: "form-horizontal" } do |f|
+  = form_errors @accessory
 
   = render partial: 'equipment_form_controls', locals: { f: f }
 
   .form-actions
     .btn-group
       = f.button :submit, class: "btn-primary"
-      = link_to 'Show', [:admin, @equipment], class: "btn" if @equipment.persisted?
+      = link_to 'Show', [:admin, @accessory], class: "btn" if @accessory.persisted?
       = link_to 'Back', admin_equipment_index_path, class: "btn"
 
 - content_for :js do

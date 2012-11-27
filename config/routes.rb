@@ -33,6 +33,7 @@ Weber::Application.routes.draw do
     resources :accessory_categories, only: [:create, :edit, :update]
 
     resources :equipment
+    resources :accessories, except: :index
 
     resources :reservations
     resources :packages

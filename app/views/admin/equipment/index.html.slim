@@ -3,7 +3,8 @@
   .span3
     .liner
       .btn-group
-        = link_to 'New Equipment', new_admin_equipment_path, class: "btn btn-small btn-primary"
+        = link_to 'New Equipment Unit', new_admin_equipment_path, class: "btn btn-small btn-primary"
+        = link_to 'New Accessory', new_admin_accessory_path, class: "btn btn-small btn-primary"
         = link_to admin_categories_path, class: "btn btn-small" do
           i.icon-share
           |  Categories...
@@ -23,7 +24,7 @@
 .row-fluid
   .span12
     .liner
-      = render partial: "table", locals: { equipmentdata: @equipment }
+      = render partial: "equipment_table", locals: { equipmentdata: @equipment }
 
 .row-fluid
   .pagination-centered

@@ -1,4 +1,4 @@
-class Accessory < ActiveRecord::Base
+class Accessory < EquipmentBase
   attr_protected :name
 
   belongs_to :accessory_category

@@ -4,6 +4,8 @@ class DropEquipmentAccessoryAddType < ActiveRecord::Migration
       t.remove :accessory
       t.string :type, null: false, default: "Equipment"
     end
+
+    rename_table :equipment, :equipment_bases
   end
 
   def down
@@ -11,5 +13,7 @@ class DropEquipmentAccessoryAddType < ActiveRecord::Migration
       t.boolean :accessory
       t.remove :type
     end
+
+    rename_table :equipment_bases, :equipment
   end
 end

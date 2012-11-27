@@ -2,6 +2,8 @@ class EquipmentBase < ActiveRecord::Base
   attr_accessible :active, :brand, :max_reservation_period, :model, :serial, :status, :category_id, :photo, :notes
   validates_presence_of :active, :status, :category_id
 
+  belongs_to :category
+
   has_many :equipment_reservations
   has_many :reservation, through: :equipment_reservations
 
@@ -47,6 +49,13 @@ class EquipmentBase < ActiveRecord::Base
     else
       name
     end
+  end
+
+  def category
+    equipment_category if self.class == Equipment
+    accessory_category if self.class == Accessory
+
+    nil
   end
 
   # TODO split into inclusive/exclusive
