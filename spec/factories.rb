@@ -22,8 +22,9 @@ FactoryGirl.define do
     active    true
     notes     "Checked out with a little thing here and a little thing there"
 
-    before :create do |e|
-      e.category = FactoryGirl.create(:equipment_category)
+    #after(:build) { |e| e.category = (e.accessory?)? FactoryGirl.create(:accessory_category) : FactoryGirl.create(:equipment_category) }
+    after(:build) do |e|
+      e.category = (e.accessory?)? FactoryGirl.create(:accessory_category) : FactoryGirl.create(:equipment_category)
     end
 
     factory :accessory do
@@ -32,10 +33,6 @@ FactoryGirl.define do
       name "HPX Battery #1"
       model "HBDS2224"
       notes ""
-
-      before :create do |e|
-        e.category = FactoryGirl.create(:accessory_category)
-      end
     end
   end
 
