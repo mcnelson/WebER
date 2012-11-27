@@ -67,4 +67,26 @@ module ApplicationHelper
 
     link_to label, path, opts
   end
+
+  def grouped_equipment_select_options
+    result = {}
+    EquipmentCategory.order(:title).all.each do |category|
+      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
+    end
+
+    result
+  end
+
+  def grouped_accessory_select_options
+    result = {}
+    AccessoryCategory.order(:title).all.each do |category|
+      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
+    end
+
+    result
+  end
+
+  def equipment_statuses_for_select
+    Equipment::STATUSES.map { |s| [s.capitalize, s] }
+  end
 end
