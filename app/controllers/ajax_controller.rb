@@ -18,7 +18,13 @@ class AjaxController < ApplicationController
   end
 
   def check_equipment_availability
+    params[:start_at]
+    params[:end_at]
+    params[:equipment_id]
 
+    respond_to do |fmt|
+      fmt.json { render json: { available: true } }
+    end
   end
 
   def equipment_dependencies
