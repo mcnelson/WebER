@@ -1,7 +1,6 @@
 include ActionDispatch::TestProcess # For fixture_file_upload
 
 FactoryGirl.define do
-
   factory :accessory_category do
     title "HPX Batteries"
   end
@@ -14,15 +13,30 @@ FactoryGirl.define do
 
   factory :equipment do
     name      "HPX #1"
-    category
-    photo     fixture_file_upload('spec/images/hpx_test_photo.jpg')
+    photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
     brand     "Panasonic"
     model     "HPX-4392"
     serial    "MB0932310111"
-    # accessory - Up to the spec
+    accessory false
 
     active    true
     notes     "Checked out with a little thing here and a little thing there"
+
+    before :create do |e|
+      e.category = FactoryGirl.create(:equipment_category)
+    end
+
+    factory :accessory do
+      accessory true
+
+      name "HPX Battery #1"
+      model "HBDS2224"
+      notes ""
+
+      before :create do |e|
+        e.category = FactoryGirl.create(:accessory_category)
+      end
+    end
   end
 
   factory :equipment_category do
@@ -31,6 +45,9 @@ FactoryGirl.define do
 
   factory :equipment_package do
     # Write me
+  end
+
+  factory :equipment_reservation do
   end
 
   factory :er_hour do
@@ -43,13 +60,31 @@ FactoryGirl.define do
     starts_at   Date.parse("Nov 12, 2012")
     ends_at     Date.parse("Nov 14, 2012")
 
-    status
+    before :create do |r|
+      r.user = FactoryGirl.create(:user)
+    end
+
+    factory :reservation_with_one_equipment do
+      after :create do |r|
+        e = FactoryGirl(:equipment)
+        FactoryGirl.create(:equipment_reservation, reservation: r, equipment: e)
+      end
+    end
   end
 
   factory :user do
-    punet                 "asdf1234"
-    pu_student_id         "0900991"
-    email                 "test@testerson.com"
+    sequence :punet do |n|
+      "asdf123#{n}"
+    end
+
+    sequence :pu_student_id do |n|
+      "090099#{n}"
+    end
+
+    sequence :email do |n|
+      "test#{n}@testerson.com"
+    end
+
     permission_level      "student"
     password              "asdf"
     password_confirmation "asdf"
