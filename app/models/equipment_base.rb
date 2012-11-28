@@ -51,13 +51,6 @@ class EquipmentBase < ActiveRecord::Base
     end
   end
 
-  def category
-    equipment_category if self.class == Equipment
-    accessory_category if self.class == Accessory
-
-    nil
-  end
-
   # TODO split into inclusive/exclusive
   def available_in_range?(start_at, end_at)
     reservation = Reservation.find_by_range(start_at, end_at)
