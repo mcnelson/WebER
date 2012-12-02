@@ -1,5 +1,5 @@
 class Equipment < EquipmentBase
-  attr_accessible :accessory_dependencies_attributes
+  attr_accessible :name, :accessory_dependencies_attributes
   validates_presence_of :name
 
   belongs_to :equipment_category, foreign_key: :category_id

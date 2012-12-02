@@ -4,27 +4,26 @@
       .gasket
         h2 Properties
 
-          = f.input :name
-          = f.association :category, collection: Category.grouped_select_options, as: :grouped_select, group_method: :first, group_label_method: :last
-          = f.input :photo
+        = f.input :name if f.object.class == Equipment
+        = f.association :category, collection: eval("#{f.object.class}Category.all")
+        = f.input :photo
 
-          = f.input :brand
-          = f.input :model
-          = f.input :serial, label: "Serial #"
+        = f.input :brand
+        = f.input :model
+        = f.input :serial, label: "Serial #"
 
+        - if f.object.class == Equipment
           h2 Accessory Dependencies
+          = f.fields_for :accessory_dependencies do |g|
+            = g.association :accessory_category, collection: AccessoryCategory.all, label: "Dependant Accessory Category", hint: "Make this unit depend on any accessory within this accessory category", label_method: :title
+            = g.input :optional
+            = g.link_to_remove class: "btn btn-inverse btn-mini" do
+              span.icon: i.icon-minus
+              |  Remove
 
-          - if f.object.class == Equipment
-            = f.fields_for :accessory_dependencies do |g|
-              = g.association :accessory_category, collection: AccessoryCategory.all, label: "Dependant Accessory Category", hint: "Make this unit depend on any accessory within this accessory category", label_method: :title
-              = g.input :optional
-              = g.link_to_remove class: "btn btn-inverse btn-mini" do
-                span.icon: i.icon-minus
-                |  Remove
-
-            = f.link_to_add :accessory_dependencies, class: "btn btn-mini" do
-              span.icon: i.icon-plus
-              |  Add
+          = f.link_to_add :accessory_dependencies, class: "btn btn-mini" do
+            span.icon: i.icon-plus
+            |  Add
 
     .span6
       .gasket
