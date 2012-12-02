@@ -10,7 +10,7 @@ class Admin::AccessoryCategoriesController < AdminController
     if @category.save
       redirect_to admin_categories_path, notice: 'Accessory category was successfully created.'
     else
-      render action: admin_edit_accessory_category_path(@category)
+      render action: "categories/edit"
     end
   end
 
@@ -20,7 +20,7 @@ class Admin::AccessoryCategoriesController < AdminController
     if @category.update_attributes(params[:accessory_category])
       redirect_to admin_categories_path, notice: 'Accessory category was successfully updated.'
     else
-      render action: admin_edit_accessory_category_path(@category)
+      render action: "categories/edit"
     end
   end
 end
