@@ -10,7 +10,7 @@ class Admin::EquipmentCategoriesController < AdminController
     if @category.save
       redirect_to admin_categories_path, notice: 'Equipment category was successfully created.'
     else
-      render action: admin_edit_equipment_category_path(@category)
+      render action: "categories/edit"
     end
   end
 
@@ -20,7 +20,7 @@ class Admin::EquipmentCategoriesController < AdminController
     if @category.update_attributes(params[:equipment_category])
       redirect_to admin_categories_path, notice: 'Equipment category was successfully updated.'
     else
-      render action: admin_edit_equipment_category_path(@category)
+      render action: "categories/edit"
     end
   end
 end
