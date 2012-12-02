@@ -35,7 +35,7 @@
         - @accessory_categories.each do |accessory_category|
           tr
             td = accessory_category.title
-            td = accessory_category.equipment.count
+            td = accessory_category.accessories.count
             td
               .btn-group
                 = link_to 'Edit', edit_admin_accessory_category_path(accessory_category), class: "btn btn-small btn-primary"
