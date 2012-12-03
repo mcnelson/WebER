@@ -1,4 +1,4 @@
-= simple_nested_form_for [:admin, @reservation], html: { class: "form-horizontal" } do |f|
+= simple_nested_form_for [:admin, @reservation], html: { class: "form-horizontal reservation-form", :"data-check_equipment_availability_path" => check_equipment_availability_path } do |f|
   = form_errors @reservation
 
   = render partial: 'reservation_form_controls', locals: { f: f }

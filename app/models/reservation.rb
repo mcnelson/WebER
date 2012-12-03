@@ -17,6 +17,7 @@ class Reservation < ActiveRecord::Base
   has_many :accessories, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Accessory", source: :equipment_base
   accepts_nested_attributes_for :equipment_reservations, :accessory_reservations
 
+  # TODO: Use BETWEEN with .end_of_day
   scope :find_by_range, lambda { |start_at, end_at|
     where("starts_at > ?", start_at)
       .where("ends_at < ?", end_at)
