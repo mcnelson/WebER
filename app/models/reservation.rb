@@ -23,7 +23,7 @@ class Reservation < ActiveRecord::Base
       .where("ends_at < ?", end_at)
   }
 
-  after_initialize :default_status
+  after_initialize :defaults
 
   STATUSES = [
     "live",
@@ -32,8 +32,12 @@ class Reservation < ActiveRecord::Base
     "missed"
   ]
 
-  def default_status
+  def defaults
     self.status ||= STATUSES.first
+
+    # TODO: Make this find next available ERHour
+    self.starts_at ||= Date.today
+    self.ends_at ||= 1.days.from_now
   end
 
   def earliest_starts_at

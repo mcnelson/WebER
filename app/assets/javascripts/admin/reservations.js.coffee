@@ -29,11 +29,13 @@ namespace "weber.reservations.form", (exports) ->
         return "accessory"
 
     check_equipment_availability = ->
-      equipment = accessories = []
+      equipment = []
+      accessories = []
+
       $(".reservation-form .reservation-equipment-rows select").each (i, item) ->
         equipment.push $(item).attr("value")
 
-      $(".reservation-form .reservation-accessory-rows select").each = (i, item) ->
+      $(".reservation-form .reservation-accessory-rows select").each (i, item) ->
         accessories.push $(item).attr("value")
 
       $.ajax ({
@@ -44,7 +46,7 @@ namespace "weber.reservations.form", (exports) ->
           equipment: equipment,
           accessories: accessories
         },
-        complete: (data, textStatus, jqXHR) ->
+        success: (data, textStatus, jqXHR) ->
           console.log("bing")
       })
 
