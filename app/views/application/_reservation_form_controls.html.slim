@@ -15,8 +15,8 @@
       .gasket
         h2 Equipment
         = f.fields_for :equipment_reservations do |g|
-          = g.association :equipment,
-            collection: grouped_equipment_select_options,
+          = g.association :equipment_base,
+            collection: grouped_equipment_bases_select_options(EquipmentCategory),
             as: :grouped_select,
             group_method: :first,
             group_label_method: :last,
@@ -28,8 +28,8 @@
           |  Add Equipment
 
         = f.fields_for :accessory_reservations do |g|
-          = g.association :equipment,
-            collection: grouped_accessory_select_options,
+          = g.association :equipment_base,
+            collection: grouped_equipment_bases_select_options(AccessoryCategory),
             as: :grouped_select,
             group_method: :first,
             group_label_method: :last,

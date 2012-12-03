@@ -68,19 +68,15 @@ module ApplicationHelper
     link_to label, path, opts
   end
 
-  def grouped_equipment_select_options
+  def grouped_equipment_bases_select_options(category_class = nil)
     result = {}
-    EquipmentCategory.order(:title).all.each do |category|
-      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
-    end
 
-    result
-  end
+    query = Category.order(:title)
+    query = query.where(type: category_class) if (category_class != nil)
 
-  def grouped_accessory_select_options
-    result = {}
-    AccessoryCategory.order(:title).all.each do |category|
-      result[category.equipment.all.sort_by { |e| e.name_brand_model }] = category.title
+    # Grab all categories
+    query.all.each do |category|
+      result[category.equipment_bases.all.sort_by { |e| e.name_brand_model }] = category.title
     end
 
     result

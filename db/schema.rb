@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121127044103) do
+ActiveRecord::Schema.define(:version => 20121203003829) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "equipment_id",                             :null => false
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20121127044103) do
   create_table "equipment_bases", :force => true do |t|
     t.boolean  "active",                                :default => true,        :null => false
     t.string   "status",                 :limit => 20,                           :null => false
-    t.string   "name",                   :limit => 100,                          :null => false
+    t.string   "name",                   :limit => 100
     t.string   "brand",                  :limit => 100
     t.string   "model",                  :limit => 100
     t.string   "serial",                 :limit => 100
