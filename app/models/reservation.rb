@@ -1,14 +1,20 @@
 class Reservation < ActiveRecord::Base
-  attr_accessible :ends_at, :starts_at, :status, :user_id, :equipment_autocomplete, :equipment_attributes, :accessory_reservations
+  attr_accessible :ends_at, :starts_at, :status, :user_id, :equipment_attributes, :accessory_reservations
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id
 
   validates_associated :user
   belongs_to :user
 
-  has_many :equipment, through: :equipment_reservations
-  has_many :equipment_reservations, conditions: {accessory: false}
-  has_many :accessory_reservations, conditions: {accessory: true}, class_name: "EquipmentReservation"
+  has_many :equipment_reservations, conditions: { equipment: { type: "Equipment" } }
+
+  # This is a virtual association, same thing as equipment reservations but only for accessories
+  has_many :accessory_reservations, class_name: "EquipmentReservation", foreign_key: :reservation_id,
+    conditions: { equipment: { type: "Accessory" } }
+
+  has_many :equipment_bases, through: :equipment_reservations
+  has_many :equipment, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Equipment"
+  has_many :accessories, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Accessory"
   accepts_nested_attributes_for :equipment_reservations, :accessory_reservations
 
   scope :find_by_range, lambda { |start_at, end_at|
