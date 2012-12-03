@@ -70,4 +70,10 @@ class ErHour < ActiveRecord::Base
 
     pairs
   end
+
+  def self.next_available(start_at)
+    # TODO: Implement me. Find the next available ERHour
+  # start_at.wday
+  # Semester.around_date(start_at)
+  end
 end
