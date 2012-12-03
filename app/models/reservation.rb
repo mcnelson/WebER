@@ -12,9 +12,9 @@ class Reservation < ActiveRecord::Base
   has_many :accessory_reservations, class_name: "EquipmentReservation", foreign_key: :reservation_id,
     conditions: { equipment: { type: "Accessory" } }
 
-  has_many :equipment_bases, through: :equipment_reservations
-  has_many :equipment, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Equipment"
-  has_many :accessories, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Accessory"
+  has_many :equipment_bases, through: :equipment_reservations, source: :equipment_base
+  has_many :equipment, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Equipment", source: :equipment_base
+  has_many :accessories, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Accessory", source: :equipment_base
   accepts_nested_attributes_for :equipment_reservations, :accessory_reservations
 
   scope :find_by_range, lambda { |start_at, end_at|
