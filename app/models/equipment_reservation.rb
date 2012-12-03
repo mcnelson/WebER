@@ -1,5 +1,5 @@
 class EquipmentReservation < ActiveRecord::Base
-  belongs_to :equipment_base, foreign_key: :equipment_id
+  belongs_to :equipment_base, class_name: "EquipmentBase", foreign_key: :equipment_id
   belongs_to :reservation
 
   validates_presence_of :equipment, :reservation
