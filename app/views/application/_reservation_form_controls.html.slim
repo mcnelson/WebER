@@ -15,7 +15,7 @@
       .gasket
         h2 Equipment
         .reservation-equipment-rows
-          = f.fields_for :equipment_reservations do |g|
+          = f.fields_for :equipment_bases_reservations do |g|
             .equipment-row
               = g.association :equipment_base,
                 collection: grouped_equipment_bases_select_options(EquipmentCategory),
@@ -26,7 +26,7 @@
                 label_method: :name_brand_model,
                 label: "Item"
 
-          = f.link_to_add :equipment_reservations, class: "btn btn-mini" do
+          = f.link_to_add :equipment_bases_reservations, class: "btn btn-mini" do
             span.icon: i.icon-plus
             |  Add Equipment
 

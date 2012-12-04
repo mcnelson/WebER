@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203003829) do
+ActiveRecord::Schema.define(:version => 20121204064952) do
 
   create_table "accessory_dependencies", :force => true do |t|
-    t.integer  "equipment_id",                             :null => false
+    t.integer  "unit_id",                                  :null => false
     t.integer  "accessory_category_id",                    :null => false
     t.boolean  "optional",              :default => false, :null => false
     t.datetime "created_at",                               :null => false
@@ -26,40 +26,6 @@ ActiveRecord::Schema.define(:version => 20121203003829) do
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.string   "type",                      :default => "EquipmentCategory", :null => false
-  end
-
-  create_table "equipment_bases", :force => true do |t|
-    t.boolean  "active",                                :default => true,        :null => false
-    t.string   "status",                 :limit => 20,                           :null => false
-    t.string   "name",                   :limit => 100
-    t.string   "brand",                  :limit => 100
-    t.string   "model",                  :limit => 100
-    t.string   "serial",                 :limit => 100
-    t.integer  "max_reservation_period"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.integer  "category_id"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
-    t.text     "notes"
-    t.string   "type",                                  :default => "Equipment", :null => false
-  end
-
-  create_table "equipment_packages", :force => true do |t|
-    t.integer  "equipment_id", :null => false
-    t.integer  "package_id",   :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "equipment_reservations", :force => true do |t|
-    t.integer  "equipment_id",   :null => false
-    t.integer  "reservation_id", :null => false
-    t.integer  "package_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
   end
 
   create_table "er_hours", :force => true do |t|
@@ -92,9 +58,43 @@ ActiveRecord::Schema.define(:version => 20121203003829) do
     t.datetime "updated_at",               :null => false
   end
 
+  create_table "reserved_units", :force => true do |t|
+    t.integer  "unit_id",        :null => false
+    t.integer  "reservation_id", :null => false
+    t.integer  "package_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "semesters", :force => true do |t|
     t.date     "starts_at",  :null => false
     t.date     "ends_at",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "units", :force => true do |t|
+    t.boolean  "active",                                :default => true,        :null => false
+    t.string   "status",                 :limit => 20,                           :null => false
+    t.string   "name",                   :limit => 100
+    t.string   "brand",                  :limit => 100
+    t.string   "model",                  :limit => 100
+    t.string   "serial",                 :limit => 100
+    t.integer  "max_reservation_period"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.integer  "category_id"
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
+    t.text     "notes"
+    t.string   "type",                                  :default => "Equipment", :null => false
+  end
+
+  create_table "units_packages", :force => true do |t|
+    t.integer  "unit_id",    :null => false
+    t.integer  "package_id", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

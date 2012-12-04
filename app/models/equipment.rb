@@ -1,4 +1,4 @@
-class Equipment < EquipmentBase
+class Equipment < Unit
   attr_accessible :name, :accessory_dependencies_attributes
   validates_presence_of :name
 

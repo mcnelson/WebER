@@ -3,6 +3,5 @@ class Package < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :equipment_packages
-  has_many :equipment, through: :equipment_packages, dependent: :restrict
+  has_and_belongs_to_many :units
 end
