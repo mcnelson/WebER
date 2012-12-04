@@ -23,7 +23,7 @@ namespace "weber.reservations.form", (exports) ->
 
     # element - The equipment row div or any parent of the control
     whichEquipmentTypeFieldset = (equipment_row) ->
-      if $(equipment_row).find("select").attr("id").indexOf("equipment_reservations") != -1
+      if $(equipment_row).find("select").attr("id").indexOf("equipment_bases_reservations") != -1
         return "equipment"
       else
         return "accessory"
@@ -47,7 +47,7 @@ namespace "weber.reservations.form", (exports) ->
           accessories: accessories
         },
         success: (data, textStatus, jqXHR) ->
-          console.log("bing")
+          
       })
 
     # $(".tabs").tabs()

@@ -6,18 +6,24 @@ class Reservation < ActiveRecord::Base
   validates_associated :user
   belongs_to :user
 
-  has_many :equipment_reservations, conditions: { equipment: { type: "Equipment" } }
+  has_many :reserved_units
+  has_many :units, through: :reserved_units
 
-  # This is a virtual association, same thing as equipment reservations but only for accessories
-  has_many :accessory_reservations, class_name: "EquipmentReservation", foreign_key: :reservation_id,
-    conditions: { equipment: { type: "Accessory" } }
+  # Join models for equipment/accessory
+  has_many :equipment_reservations, class_name: "ReservedUnit", foreign_key: :reservation_id,
+    conditions: { units: { type: "Equipment" } }
 
-  has_many :equipment_bases, through: :equipment_reservations, source: :equipment_base
-  has_many :equipment, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Equipment", source: :equipment_base
-  has_many :accessories, through: :equipment_reservations, foreign_key: :equipment_id, class_name: "Accessory", source: :equipment_base
+  has_many :accessory_reservations, class_name: "ReservedUnit", foreign_key: :reservation_id,
+    conditions: { units: { type: "Accessory" } }
+
+  # Equipment/accessories themselves
+  has_many :equipment, through: :reserved_units, foreign_key: :unit_id,
+    class_name: "Equipment", source: :unit
+  has_many :accessories, through: :reserved_units, foreign_key: :unit_id,
+    class_name: "Accessory", source: :unit
+
   accepts_nested_attributes_for :equipment_reservations, :accessory_reservations
 
-  # TODO: Use BETWEEN with .end_of_day
   scope :find_by_range, lambda { |start_at, end_at|
     where("starts_at > ?", start_at)
       .where("ends_at < ?", end_at)
@@ -58,5 +64,9 @@ class Reservation < ActiveRecord::Base
 
   def contains?(equipment)
     equipment.exists? equipment
+  end
+
+  def others_overlapping(start_at, end_at)
+    Reservation.where("id != ?", self.id).where("starts_at >= ? AND ends_at <= ?", start_at, end_at)
   end
 end

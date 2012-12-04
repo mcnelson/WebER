@@ -1,4 +1,4 @@
-class Accessory < EquipmentBase
+class Accessory < Unit
   attr_protected :name
 
   belongs_to :accessory_category, foreign_key: :category_id

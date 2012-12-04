@@ -1,14 +1,13 @@
-class EquipmentBase < ActiveRecord::Base
+class Unit < ActiveRecord::Base
   attr_accessible :active, :brand, :max_reservation_period, :model, :serial, :status, :category_id, :photo, :notes
   validates_presence_of :active, :status, :category_id
 
   belongs_to :category
 
-  has_many :equipment_reservations
-  has_many :reservation, through: :equipment_reservations
+  has_many :reserved_units
+  has_many :reservations, through: :reserved_units
 
-  has_many :equipment_packages
-  has_many :package, through: :equipment_packages
+  has_and_belongs_to_many :packages
 
   has_attached_file :photo,
     styles: {
@@ -60,5 +59,16 @@ class EquipmentBase < ActiveRecord::Base
 
     # Otherwise assume available
     true
+  end
+
+  def available_in_range_exclusive(start_at, end_at)
+    (
+    Reservation
+      .select(nil)
+      .new(starts_at: start_at, ends_at: end_at)
+      .others_overlapping
+      .joins(equipment_bases_reservations: :equipment_bases)
+      .where(equipment_bases_reservations: { equipment_bases: { equipment_id: self.id } })
+    )
   end
 end
