@@ -17,7 +17,7 @@ class AjaxController < ApplicationController
     render partial: "reservation_tabbox"
   end
 
-  def check_equipment_availability
+  def check_unit_availability
     params[:start_at]
     params[:end_at]
     params[:equipment_id]
