@@ -19,7 +19,7 @@ namespace "weber.reservations.form", (exports) ->
 
     equipmentChanged = (evt) ->
       console.log("Equipment has been changed")
-      check_equipment_availability()
+      check_unit_availability()
 
     # element - The equipment row div or any parent of the control
     whichEquipmentTypeFieldset = (equipment_row) ->
@@ -28,7 +28,7 @@ namespace "weber.reservations.form", (exports) ->
       else
         return "accessory"
 
-    check_equipment_availability = ->
+    check_unit_availability = ->
       equipment = []
       accessories = []
 
@@ -39,7 +39,7 @@ namespace "weber.reservations.form", (exports) ->
         accessories.push $(item).attr("value")
 
       $.ajax ({
-        url: $(".reservation-form").data("check_equipment_availability_path")
+        url: $(".reservation-form").data("check_unit_availability_path")
         data: {
           start_at: $("#reservation_starts_at").attr("value")
           end_at:   $("#reservation_ends_at").attr("value")
