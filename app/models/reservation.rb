@@ -47,22 +47,6 @@ class Reservation < ActiveRecord::Base
     self.ends_at ||= 1.days.from_now
   end
 
-  def earliest_starts_at
-    Semester.around_date(starts_at).er_hour_around(starts_at).starts_at
-  end
-
-  def latest_starts_at
-    Semester.around_date(starts_at).er_hour_around(starts_at).ends_at
-  end
-
-  def earliest_ends_at
-    Semester.around_date(starts_at).er_hour_around(ends_at).starts_at
-  end
-
-  def latest_ends_at
-    Semester.around_date(starts_at).er_hour_around(ends_at).ends_at
-  end
-
   def contains?(equipment)
     equipment.exists? equipment
   end

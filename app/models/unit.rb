@@ -50,13 +50,21 @@ class Unit < ActiveRecord::Base
     end
   end
 
+  # Find all reservations sharing this unit that overlap using ER hours as between points.
+  # Exclusive -- assumes a unit can be checked in & out in the same hour
   def in_reservations_in_range_exclusive(start_at, end_at)
-    Reservation.between(start_at, end_at).each do |reservation|
-      reservation.joins(:reserved_units).where(reserved_units: { unit_id: self.id })
-      if reservation.
-      reservation.starts_at
-    end
+    semester = Semester.around_date(start_at)
+    erh_lower_end_at = semester.to_er_hour_end(start_at)
+    erh_upper_start_at = semester.to_er_hour_start(end_at)
+
+    return nil if erh_lower_end_at.nil? || erh_upper_start_at.nil?
+
+    Reservation.
+      between(erh_lower_end_at, erh_upper_start_at).
+      joins(:reserved_units).where(reserved_units: { unit_id: self.id })
   end
+
+  # TODO: Write an inclusive version of above (needed, right? ... I think)
 
   def earliest_available_date
     in_reservations_in_range_exclusive(start_at, end_at)
