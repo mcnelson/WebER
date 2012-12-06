@@ -2,7 +2,7 @@ class Admin::EquipmentController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @equipment = EquipmentBase.joins(:category)
+    @equipment = Unit.joins(:category)
 
     @equipment = @equipment.where(status: params[:status]) if params[:status].present?
     @equipment = @equipment.where(category_id: params[:category]) if params[:category].present?

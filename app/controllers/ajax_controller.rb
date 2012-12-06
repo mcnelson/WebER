@@ -18,6 +18,7 @@ class AjaxController < ApplicationController
   end
 
   def check_unit_availability
+    puts params.to_yaml
     params[:start_at]
     params[:end_at]
     params[:equipment_id]

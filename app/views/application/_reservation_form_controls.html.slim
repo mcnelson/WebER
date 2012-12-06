@@ -15,10 +15,10 @@
       .gasket
         h2 Equipment
         .reservation-equipment-rows
-          = f.fields_for :equipment_bases_reservations do |g|
+          = f.fields_for :reserved_equipment do |g|
             .equipment-row
-              = g.association :equipment_base,
-                collection: grouped_equipment_bases_select_options(EquipmentCategory),
+              = g.association :unit,
+                collection: grouped_units_select_options(EquipmentCategory),
                 as: :grouped_select,
                 group_method: :first,
                 group_label_method: :last,
@@ -26,15 +26,15 @@
                 label_method: :name_brand_model,
                 label: "Item"
 
-          = f.link_to_add :equipment_bases_reservations, class: "btn btn-mini" do
+          = f.link_to_add :reserved_equipment, class: "btn btn-mini" do
             span.icon: i.icon-plus
             |  Add Equipment
 
         .reservation-accessory-rows
-          = f.fields_for :accessory_reservations do |g|
+          = f.fields_for :reserved_accessories do |g|
             .equipment-row
-              = g.association :equipment_base,
-                collection: grouped_equipment_bases_select_options(AccessoryCategory),
+              = g.association :unit,
+                collection: grouped_units_select_options(AccessoryCategory),
                 as: :grouped_select,
                 group_method: :first,
                 group_label_method: :last,
@@ -42,6 +42,6 @@
                 label_method: :name_brand_model,
                 label: "Item"
 
-          = f.link_to_add :accessory_reservations, class: "btn btn-mini" do
+          = f.link_to_add :reserved_accessories, class: "btn btn-mini" do
             span.icon: i.icon-plus
             |  Add Accessory

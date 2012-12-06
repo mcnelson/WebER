@@ -10,23 +10,24 @@ class Reservation < ActiveRecord::Base
   has_many :units, through: :reserved_units
 
   # Join models for equipment/accessory
-  has_many :equipment_reservations, class_name: "ReservedUnit", foreign_key: :reservation_id,
+  has_many :reserved_equipment, class_name: "ReservedUnit", foreign_key: :reservation_id,
     conditions: { units: { type: "Equipment" } }
 
-  has_many :accessory_reservations, class_name: "ReservedUnit", foreign_key: :reservation_id,
+  has_many :reserved_accessories, class_name: "ReservedUnit", foreign_key: :reservation_id,
     conditions: { units: { type: "Accessory" } }
 
-  # Equipment/accessories themselves
+  # Units as equipment/accessories via reserved_units
   has_many :equipment, through: :reserved_units, foreign_key: :unit_id,
     class_name: "Equipment", source: :unit
+
   has_many :accessories, through: :reserved_units, foreign_key: :unit_id,
     class_name: "Accessory", source: :unit
 
-  accepts_nested_attributes_for :equipment_reservations, :accessory_reservations
+  accepts_nested_attributes_for :reserved_equipment, :reserved_accessories
 
-  scope :find_by_range, lambda { |start_at, end_at|
-    where("starts_at > ?", start_at)
-      .where("ends_at < ?", end_at)
+  scope :between, lambda { |start_at, end_at|
+    where("starts_at > ?", start_at.start_of_day)
+    where("ends_at < ?",   end_at.end_of_day)
   }
 
   after_initialize :defaults

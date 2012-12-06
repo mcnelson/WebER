@@ -50,25 +50,19 @@ class Unit < ActiveRecord::Base
     end
   end
 
-  # TODO split into inclusive/exclusive
-  def available_in_range?(start_at, end_at)
-    reservation = Reservation.find_by_range(start_at, end_at)
-
-    # If equipment exists in overlapping reservation, return false
-    return !reservation.equipment.exists?(self) if reservation.present?
-
-    # Otherwise assume available
-    true
+  def in_reservations_in_range_exclusive(start_at, end_at)
+    Reservation.between(start_at, end_at).each do |reservation|
+      reservation.joins(:reserved_units).where(reserved_units: { unit_id: self.id })
+      if reservation.
+      reservation.starts_at
+    end
   end
 
-  def available_in_range_exclusive(start_at, end_at)
-    (
-    Reservation
-      .select(nil)
-      .new(starts_at: start_at, ends_at: end_at)
-      .others_overlapping
-      .joins(equipment_bases_reservations: :equipment_bases)
-      .where(equipment_bases_reservations: { equipment_bases: { equipment_id: self.id } })
-    )
+  def earliest_available_date
+    in_reservations_in_range_exclusive(start_at, end_at)
+  end
+
+  def suggested_available_date
+
   end
 end
