@@ -47,7 +47,7 @@ namespace "weber.reservations.form", (exports) ->
           accessories: accessories
         },
         success: (data, textStatus, jqXHR) ->
-          
+          console.log(data)
       })
 
     # $(".tabs").tabs()

@@ -18,17 +18,35 @@ class AjaxController < ApplicationController
   end
 
   def check_unit_availability
-    puts params.to_yaml
-    params[:start_at]
-    params[:end_at]
-    params[:equipment_id]
+    return render nothing: true if params_missing_any? [:start_at, :end_at]
+
+    json = []
+
+    [params[:equipment], params[:accessories]].flatten.each do |unit_id|
+      push = { available: true }
+      if Unit.find(equipment_id).in_reservations_in_range_exclusive(params[:start_at], params[:end_at])
+        push[:available] = false
+      end
+
+      json[unit_id] = push
+    end
 
     respond_to do |fmt|
-      fmt.json { render json: { available: true } }
+      fmt.json { render json: json }
     end
   end
 
   def equipment_dependencies
 
+  end
+
+  private
+
+  def params_missing_any?(array)
+    array.each do |element|
+      return true if params.has_key? element
+    end
+
+    false
   end
 end

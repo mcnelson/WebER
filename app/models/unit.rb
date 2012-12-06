@@ -67,7 +67,8 @@ class Unit < ActiveRecord::Base
   # TODO: Write an inclusive version of above (needed, right? ... I think)
 
   def earliest_available_date
-    in_reservations_in_range_exclusive(start_at, end_at)
+    # TODO: This will be a fun one
+    #in_reservations_in_range_exclusive(start_at, end_at)
   end
 
   def suggested_available_date
