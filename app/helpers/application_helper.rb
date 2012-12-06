@@ -68,7 +68,7 @@ module ApplicationHelper
     link_to label, path, opts
   end
 
-  def grouped_equipment_bases_select_options(category_class = nil)
+  def grouped_units_select_options(category_class = nil)
     result = {}
 
     query = Category.order(:title)
@@ -76,7 +76,7 @@ module ApplicationHelper
 
     # Grab all categories
     query.all.each do |category|
-      result[category.equipment_bases.all.sort_by { |e| e.name_brand_model }] = category.title
+      result[category.units.all.sort_by { |e| e.name_brand_model }] = category.title
     end
 
     result
