@@ -33,10 +33,10 @@ namespace "weber.reservations.form", (exports) ->
       accessories = []
 
       $(".reservation-form .reservation-equipment-rows select").each (i, item) ->
-        equipment.push $(item).attr("value")
+        equipment.push $(item).attr("value") if $(item).attr("value")
 
       $(".reservation-form .reservation-accessory-rows select").each (i, item) ->
-        accessories.push $(item).attr("value")
+        accessories.push $(item).attr("value") if $(item).attr("value")
 
       $.ajax ({
         url: $(".reservation-form").data("check_unit_availability_path")
