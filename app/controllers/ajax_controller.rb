@@ -20,11 +20,14 @@ class AjaxController < ApplicationController
   def check_unit_availability
     return render nothing: true if params_missing_any? [:start_at, :end_at]
 
+    start_at = params[:start_at].to_date
+    end_at = params[:end_at].to_date
+
     json = []
 
-    [params[:equipment], params[:accessories]].flatten.each do |unit_id|
+    (params[:equipment].to_a + params[:accessories].to_a).each.map { |n| n.to_i } .each do |unit_id|
       push = { available: true }
-      if Unit.find(equipment_id).in_reservations_in_range_exclusive(params[:start_at], params[:end_at])
+      if Unit.find(unit_id).in_reservations_in_range_exclusive(start_at, end_at)
         push[:available] = false
       end
 
@@ -43,9 +46,7 @@ class AjaxController < ApplicationController
   private
 
   def params_missing_any?(array)
-    array.each do |element|
-      return true if params.has_key? element
-    end
+    array.each { |v| return true unless params.has_key? v }
 
     false
   end
