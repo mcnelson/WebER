@@ -35,16 +35,18 @@ describe AjaxController do
           ends_at:   Date.parse("Nov 29, 2012") # Thursday
         )
         FactoryGirl.create(:reserved_unit, reservation: @reservation_thursday, unit: @equipment)
-      end
 
-      it 'is not available' do
         xhr :get, :check_unit_availability,
           start_at:     @reservation_tuesday.starts_at,
           end_at:       @reservation_tuesday.ends_at,
           equipment:    [@equipment.id],
           accessories:  []
 
-        puts response.body.to_yaml
+        @parsed_response = JSON.parse(response.body)
+      end
+
+      it 'is not available' do
+        @parsed_response[@equipment.id]["available"].should be_false
       end
     end
   end
