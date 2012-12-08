@@ -50,10 +50,12 @@ namespace "weber.reservations.form", (exports) ->
           console.log(data)
       })
 
+      $(".simpleform-inline-datepicker").on "select", (evt, data) ->
+        console.log("datepicker changed")
+
     # $(".tabs").tabs()
 
     # # On change reservation date
-    # $(".simpleform-inline-datepicker").on("select", (evt, data) ->
 
     #   # Refresh tabbox
     #   $('.tabs').tabs("destroy")

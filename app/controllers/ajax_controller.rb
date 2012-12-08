@@ -26,12 +26,12 @@ class AjaxController < ApplicationController
     json = []
 
     (params[:equipment].to_a + params[:accessories].to_a).each.map { |n| n.to_i } .each do |unit_id|
-      push = { available: true }
-      if Unit.find(unit_id).in_reservations_in_range_exclusive(start_at, end_at)
-        push[:available] = false
+      if (unit = Unit.find(unit_id))
+        json[unit_id] = {
+          available:  unit.in_reservations_in_range_exclusive(start_at, end_at).empty?,
+          thumb:      unit.photo.url(:thirtytwo)
+        }
       end
-
-      json[unit_id] = push
     end
 
     respond_to do |fmt|

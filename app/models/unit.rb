@@ -54,13 +54,15 @@ class Unit < ActiveRecord::Base
   # Exclusive -- assumes a unit can be checked in & out in the same hour
   def in_reservations_in_range_exclusive(start_at, end_at)
     semester = Semester.around_date(start_at).first
-    erh_lower_end_at = semester.to_er_hour_end(start_at)
-    erh_upper_start_at = semester.to_er_hour_start(end_at)
 
-    return nil if erh_lower_end_at.nil? || erh_upper_start_at.nil?
+    lower = semester.to_er_hour_end(start_at) \
+      or semester.next_er_hour(start_at).try(:ends_at)
+
+    upper = semester.to_er_hour_start(end_at) \
+      or semester.next_er_hour(end_at).try(:starts_at)
 
     Reservation.
-      between(erh_lower_end_at, erh_upper_start_at).
+      between(lower, upper).
       joins(:reserved_units).where(reserved_units: { unit_id: self.id })
   end
 
