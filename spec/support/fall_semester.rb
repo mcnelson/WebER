@@ -30,4 +30,10 @@ module FallSemester
       semester:   semester
     )
   end
+
+  def setup_test_categories
+    FactoryGirl.create(:equipment_category, title: "Cameras")
+    FactoryGirl.create(:equipment_category, title: "Tripods")
+    FactoryGirl.create(:equipment_category, title: "Audio")
+  end
 end
