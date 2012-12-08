@@ -11,6 +11,7 @@ describe AjaxController do
   describe '#check_equipment_availability' do
     before do
       setup_fall_semester_and_er_hours
+      setup_test_categories
 
       @reservation_monday = FactoryGirl.create(:reservation,
         starts_at: Date.parse("Nov 26, 2012"), # Monday
@@ -23,8 +24,8 @@ describe AjaxController do
       )
 
       @equipment = FactoryGirl.create(:equipment)
-      FactoryGirl(:equipment_reservation, reservation: @reservation_monday, equipment: @equipment)
-      FactoryGirl(:equipment_reservation, reservation: @reservation_thursday, equipment: @equipment)
+      FactoryGirl.create(:reserved_unit, reservation: @reservation_monday, unit: @equipment)
+      FactoryGirl.create(:reserved_unit, reservation: @reservation_thursday, unit: @equipment)
     end
 
     context 'with a Tuesday to Thursday range' do
@@ -33,16 +34,17 @@ describe AjaxController do
           starts_at: Date.parse("Nov 27, 2012"), # Tuesday
           ends_at:   Date.parse("Nov 29, 2012") # Thursday
         )
-        FactoryGirl.create(:equipment_reservation, reservation: @reservation_thursday, equipment: @equipment)
+        FactoryGirl.create(:reserved_unit, reservation: @reservation_thursday, unit: @equipment)
       end
 
       it 'is not available' do
-        xhr :get, :check_equipment_availability,
+        xhr :get, :check_unit_availability,
           start_at:     @reservation_tuesday.starts_at,
           end_at:       @reservation_tuesday.ends_at,
-          equipment_id: @equipment.id
+          equipment:    [@equipment.id],
+          accessories:  []
 
-        puts response.to_yaml
+        puts response.body.to_yaml
       end
     end
   end

@@ -5,35 +5,31 @@ FactoryGirl.define do
     title "HPX Batteries"
   end
 
-  # Not sure why this says a duplicate -- TODO fix me
- #factory :accessory_dependency do
- #  equipment
- #  accessory_category
- #end
-
   factory :equipment do
     name      "HPX #1"
     photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
     brand     "Panasonic"
     model     "HPX-4392"
     serial    "MB0932310111"
-    accessory false
 
     active    true
-    notes     "Checked out with a little thing here and a little thing there"
+    notes     "Broken thingamabob"
 
-    #after(:build) { |e| e.category = (e.accessory?)? FactoryGirl.create(:accessory_category) : FactoryGirl.create(:equipment_category) }
-    after(:build) do |e|
-      e.category = (e.accessory?)? FactoryGirl.create(:accessory_category) : FactoryGirl.create(:equipment_category)
-    end
+    equipment_category
+  end
 
-    factory :accessory do
-      accessory true
+  factory :accessory do
+    name "HPX Battery #1"
+    photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
 
-      name "HPX Battery #1"
-      model "HBDS2224"
-      notes ""
-    end
+    brand "Panasonic"
+    model "HBDS2224"
+    serial "750871676"
+
+    active    true
+    notes "Holds about half charge"
+
+    accessory_category
   end
 
   factory :equipment_category do
@@ -44,14 +40,13 @@ FactoryGirl.define do
     # Write me
   end
 
-  factory :equipment_reservation do
-  end
-
   factory :er_hour do
     day         Date.parse("Monday")
     starts_at   Time.parse("1:00pm")
     ends_at     Time.parse("3:00pm")
   end
+
+  factory :reserved_unit
 
   factory :reservation do
     starts_at   Date.parse("Nov 12, 2012")
