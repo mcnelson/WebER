@@ -43,13 +43,15 @@ class Semester < ActiveRecord::Base
     er_hour
   end
 
-  # Get the ER hour's start time given a Date
+  # Find the ER Hour on the given day and get the ER hour's start time
   def to_er_hour_start(date)
-    er_hour_around(date).try(:starts_at)
+    erh_time = er_hour_around(date).try(:starts_at) or return nil
+    DateTime.new(date.year, date.month, date.day, erh_time.hour, erh_time.mday, erh_time.sec).in_time_zone
   end
 
-  # Get the ER hour's end time given a Date
+  # Find the ER Hour on the given day and get the ER hour's end time
   def to_er_hour_end(date)
-    er_hour_around(date).try(:ends_at)
+    erh_time = er_hour_around(date).try(:ends_at) or return nil
+    DateTime.new(date.year, date.month, date.day, erh_time.hour, erh_time.mday, erh_time.sec).in_time_zone
   end
 end
