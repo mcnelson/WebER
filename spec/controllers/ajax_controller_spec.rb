@@ -4,14 +4,17 @@ require 'spec_helper'
 describe AjaxController do
   include FallSemester
 
+  before do
+    setup_fall_semester_and_er_hours
+    setup_test_categories
+  end
+
   describe '#reservation_tabbox' do
     pending "Unsure what this will ultimately do right now"
   end
 
   describe '#check_equipment_availability' do
     before do
-      setup_fall_semester_and_er_hours
-      setup_test_categories
 
       # Make two existing reservations w/ 1 shared unit
       @reservation_monday = FactoryGirl.create(:reservation,
@@ -57,9 +60,8 @@ describe AjaxController do
         @unit_hash["available"].should be_false
       end
     end
-  end
 
-  context 'with next week Monday to Wednesday' do
+    context 'with next week Monday to Wednesday' do
       before do
         # Attempt reservation
         @reservation_next_monday = FactoryGirl.create(:reservation,
@@ -81,6 +83,33 @@ describe AjaxController do
       it 'is available' do
         @unit_hash["available"].should be_true
       end
+    end
+
+    context 'with previous week Friday to Tuesday' do
+      before do
+        # Attempt reservation
+        @reservation_prev_tuesday = FactoryGirl.create(:reservation,
+          starts_at: Date.parse("Nov 23, 2012"), # Friday
+          ends_at:   Date.parse("Nov 27, 2012") # Following Tuesday
+        )
+        FactoryGirl.create(:reserved_unit, reservation: @reservation_prev_tuesday, unit: @equipment)
+
+        xhr :get, :check_unit_availability,
+          start_at:     @reservation_prev_tuesday.starts_at,
+          end_at:       @reservation_prev_tuesday.ends_at,
+          equipment:    [@equipment.id],
+          accessories:  []
+
+        @parsed_response = JSON.parse(response.body)
+        @unit_hash = @parsed_response[@equipment.id]
+      end
+
+      it 'is not available' do
+        @unit_hash["available"].should be_false
+      end
+
+      #it 'suggests 
+    end
   end
 
   describe '#equipment_dependencies' do
