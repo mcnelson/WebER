@@ -13,6 +13,7 @@ describe AjaxController do
       setup_fall_semester_and_er_hours
       setup_test_categories
 
+      # Make two existing reservations w/ 1 shared unit
       @reservation_monday = FactoryGirl.create(:reservation,
         starts_at: Date.parse("Nov 26, 2012"), # Monday
         ends_at:   Date.parse("Nov 28, 2012") # Wednesday
@@ -30,6 +31,7 @@ describe AjaxController do
 
     context 'with a Tuesday to Thursday range' do
       before do
+        # Attempt reservation
         @reservation_tuesday = FactoryGirl.create(:reservation,
           starts_at: Date.parse("Nov 27, 2012"), # Tuesday
           ends_at:   Date.parse("Nov 29, 2012") # Thursday
@@ -43,12 +45,42 @@ describe AjaxController do
           accessories:  []
 
         @parsed_response = JSON.parse(response.body)
+        @unit_hash = @parsed_response[@equipment.id]
+      end
+
+      it 'contains a URL to the thumb photo' do
+        @unit_hash["thumb"].should_not be_nil
+        # TODO: URL match?
       end
 
       it 'is not available' do
-        @parsed_response[@equipment.id]["available"].should be_false
+        @unit_hash["available"].should be_false
       end
     end
+  end
+
+  context 'with next week Monday to Wednesday' do
+      before do
+        # Attempt reservation
+        @reservation_next_monday = FactoryGirl.create(:reservation,
+          starts_at: Date.parse("Dec 3, 2012"), # Monday
+          ends_at:   Date.parse("Dec 5, 2012") # Wednesday
+        )
+        FactoryGirl.create(:reserved_unit, reservation: @reservation_next_monday, unit: @equipment)
+
+        xhr :get, :check_unit_availability,
+          start_at:     @reservation_next_monday.starts_at,
+          end_at:       @reservation_next_monday.ends_at,
+          equipment:    [@equipment.id],
+          accessories:  []
+
+        @parsed_response = JSON.parse(response.body)
+        @unit_hash = @parsed_response[@equipment.id]
+      end
+
+      it 'is available' do
+        @unit_hash["available"].should be_true
+      end
   end
 
   describe '#equipment_dependencies' do
