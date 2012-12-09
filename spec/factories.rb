@@ -64,18 +64,22 @@ FactoryGirl.define do
     end
   end
 
+  sequence :punet do |n|
+    "asdf123#{n}"
+  end
+
+  sequence :pu_student_id do |n|
+    "090099#{n}"
+  end
+
+  sequence :email do |n|
+    "test#{n}@testerson.com"
+  end
+
   factory :user do
-    sequence :punet do |n|
-      "asdf123#{n}"
-    end
-
-    sequence :pu_student_id do |n|
-      "090099#{n}"
-    end
-
-    sequence :email do |n|
-      "test#{n}@testerson.com"
-    end
+    punet
+    pu_student_id
+    email
 
     permission_level      "student"
     password              "asdf"
