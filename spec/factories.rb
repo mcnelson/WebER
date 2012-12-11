@@ -19,7 +19,6 @@ FactoryGirl.define do
   end
 
   factory :accessory do
-    name "HPX Battery #1"
     photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
 
     brand "Panasonic"
