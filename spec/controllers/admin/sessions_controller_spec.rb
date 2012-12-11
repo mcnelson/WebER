@@ -1,29 +1,45 @@
 require 'spec_helper'
 
 describe SessionsController do
-  pending "Write me please"
-# context 'with a valid user session' do
-#   before do
-#     @u = Factory(:user)
-#     session[:user_id] = @u.id
-#   end
+  context 'with a valid user session' do
+    before do
+      signin_as("student")
+    end
 
-#   describe "POST create" do
-#     it "redirects" do
-#       post :create, { punet: @u.punet, password: @u.
-#       it {should_not redirect_to(signin_path)}
-#     end
-#   end
-# end
+    describe "GET new" do
+      it "redirects" do
+        get :new, {}
+        response.should redirect_to(root_url)
+      end
+    end
+  end
 
-# context 'with a nil user session' do
-#   before do
-#     u = Factory(:user)
-#     session[:user_id] = nil
-#   end
+  context 'with a nil user session' do
+    before do
+      @plaintext_password = "rawrz"
+      @user = FactoryGirl.create(:user, password: @plaintext_password, password_confirmation: @plaintext_password)
+      session[:user_id] = nil
+    end
 
-#   it "redirects to the sign-in page" do
-#     .should redirect_to(signin_path)
-#   end
-# end
+    describe "GET new" do
+      it "does not redirect" do
+        get :new, {}
+        response.should_not redirect_to(root_url)
+      end
+    end
+
+    describe "POST create" do
+      it "rejects incorrect login information" do
+        post :create, { punet: @user.punet, password: "notcorrect" }
+        flash[:alert].should =~ /incorrect password/i
+      end
+
+      it "accepts correct login information" do
+        post :create, { punet: @user.punet, password: @plaintext_password }
+        flash[:notice].should =~ /welcome back/i
+        flash[:alert].should be_blank
+        response.should be_redirect
+      end
+    end
+  end
 end
