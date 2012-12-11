@@ -65,11 +65,11 @@ FactoryGirl.define do
   end
 
   sequence :punet do |n|
-    "asdf%4d" % n
+    "asdf%04d" % n
   end
 
   sequence :pu_student_id do |n|
-    "%7d" % n
+    "%07d" % n
   end
 
   sequence :email do |n|
