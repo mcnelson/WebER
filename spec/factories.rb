@@ -69,7 +69,7 @@ FactoryGirl.define do
   end
 
   sequence :pu_student_id do |n|
-    "090099#{n}"
+    "%7d" % n
   end
 
   sequence :email do |n|
