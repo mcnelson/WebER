@@ -7,7 +7,7 @@ describe Admin::EquipmentController do
   end
 
   before do
-    signin_as_admin
+    signin_as("admin")
     @equipment_category = FactoryGirl.create(:equipment_category)
   end
 

@@ -6,7 +6,7 @@ describe Admin::ReservationsController do
   end
 
   before do
-    signin_as_admin
+    signin_as("admin")
   end
 
   describe "GET index" do
