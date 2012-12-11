@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(:version => 20121204064952) do
     t.datetime "updated_at",                            :null => false
   end
 
+  create_table "packages_units", :force => true do |t|
+    t.integer  "unit_id",    :null => false
+    t.integer  "package_id", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "reservations", :force => true do |t|
     t.date     "starts_at",                :null => false
     t.date     "ends_at",                  :null => false
@@ -90,13 +97,6 @@ ActiveRecord::Schema.define(:version => 20121204064952) do
     t.datetime "updated_at",                                                     :null => false
     t.text     "notes"
     t.string   "type",                                  :default => "Equipment", :null => false
-  end
-
-  create_table "units_packages", :force => true do |t|
-    t.integer  "unit_id",    :null => false
-    t.integer  "package_id", :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
