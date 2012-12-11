@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates_presence_of :punet, :pu_student_id, :email, :permission_level
   validates_presence_of :password, :password_confirmation, on: :create
 
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   has_secure_password
 
