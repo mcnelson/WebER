@@ -9,24 +9,15 @@ namespace "weber.reservations.form", (exports) ->
       $(".controls select").chosen()
 
       $(document).on('nested:fieldAdded', (evt) ->
-        fieldset_type = whichEquipmentTypeFieldset(evt.target)
-
+        # TODO: Trigger unit rows changed on field added & changed.
         $(evt.field).find('select')
           .chosen()
-          .on("change", null, { accessory: (fieldset_type == "accessory") }, equipmentChanged)
+          .on("change", unitRowsChanged)
       )
 
-
-    equipmentChanged = (evt) ->
+    unitRowsChanged = (evt) ->
       console.log("Equipment has been changed")
       check_unit_availability()
-
-    # element - The equipment row div or any parent of the control
-    whichEquipmentTypeFieldset = (equipment_row) ->
-      if $(equipment_row).find("select").attr("id").indexOf("reserved_units") != -1
-        return "equipment"
-      else
-        return "accessory"
 
     check_unit_availability = ->
       equipment = []
