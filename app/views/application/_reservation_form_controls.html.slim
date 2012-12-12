@@ -16,7 +16,8 @@
         h2 Equipment
         .reservation-equipment-rows
           = f.fields_for :reserved_equipment do |g|
-            .equipment-row
+            .unit-row.equipment-row
+              .unit-thumb
               = g.association :unit,
                 collection: grouped_units_select_options(EquipmentCategory),
                 as: :grouped_select,
@@ -32,7 +33,8 @@
 
         .reservation-accessory-rows
           = f.fields_for :reserved_accessories do |g|
-            .equipment-row
+            .unit-row.accessory-row
+              .unit-thumb
               = g.association :unit,
                 collection: grouped_units_select_options(AccessoryCategory),
                 as: :grouped_select,
