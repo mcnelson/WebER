@@ -7,15 +7,20 @@ namespace "weber.reservations.form", (exports) ->
   exports.init = ->
     $ ->
       $(".controls select").chosen()
+      $(".simpleform-inline-datepicker").datepicker("option", "beforeShowDay", (date) ->
+        day = date.getDay()
+        [!(day == 0 || day == 6), "", "Not available on weekend"]
+      )
 
-      $(document).on('nested:fieldAdded', (evt) ->
-        # TODO: Trigger unit rows changed on field added & changed.
-        $(evt.field).find('select')
+      $(document).on('nested:fieldAdded', (event) ->
+        unitRowsChanged()
+
+        $(event.field).find('select')
           .chosen()
           .on("change", unitRowsChanged)
       )
 
-    unitRowsChanged = (evt) ->
+    unitRowsChanged = (event) ->
       console.log("Equipment has been changed")
       check_unit_availability()
 
@@ -38,10 +43,13 @@ namespace "weber.reservations.form", (exports) ->
           accessories: accessories
         },
         success: (data, textStatus, jqXHR) ->
-          console.log(data)
+          for unit in data
+            target = $(".unit-row select[value=#{unit.id}]")
+            $(target).closest(".unit-row").children(".unit-thumb").
+              attr("src", unit.thumb)
       })
 
-      $(".simpleform-inline-datepicker").on "select", (evt, data) ->
+      $(".simpleform-inline-datepicker").on "select", (event, data) ->
         console.log("datepicker changed")
 
     # $(".tabs").tabs()

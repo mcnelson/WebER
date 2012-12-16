@@ -14,10 +14,12 @@
     .span6
       .gasket
         h2 Equipment
-        .reservation-equipment-rows
+        .reservation-equipment-rows.well
           = f.fields_for :reserved_equipment do |g|
             .unit-row.equipment-row
-              .unit-thumb
+              = image_tag unit_row_image_tag(g), class: "unit-thumb"
+              = g.link_to_remove class: "btn btn-inverse btn-mini" do
+                span.icon: i.icon-remove
               = g.association :unit,
                 collection: grouped_units_select_options(EquipmentCategory),
                 as: :grouped_select,
@@ -31,10 +33,12 @@
             span.icon: i.icon-plus
             |  Add Equipment
 
-        .reservation-accessory-rows
+        .reservation-accessory-rows.well
           = f.fields_for :reserved_accessories do |g|
             .unit-row.accessory-row
-              .unit-thumb
+              = image_tag unit_row_image_tag(g), class: "unit-thumb"
+              = g.link_to_remove class: "btn btn-inverse btn-mini" do
+                span.icon: i.icon-remove
               = g.association :unit,
                 collection: grouped_units_select_options(AccessoryCategory),
                 as: :grouped_select,

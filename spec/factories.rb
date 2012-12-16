@@ -61,6 +61,15 @@ FactoryGirl.define do
         FactoryGirl.create(:equipment_reservation, reservation: r, equipment: e)
       end
     end
+
+    factory :reservation_with_five_equipment do
+      after :create do |r|
+        5.times do
+          e = FactoryGirl(:equipment)
+          FactoryGirl.create(:equipment_reservation, reservation: r, equipment: e)
+        end
+      end
+    end
   end
 
   sequence :punet do |n|

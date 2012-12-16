@@ -6,14 +6,39 @@
 .reservations_show {
   .unit-row {
     min-height: 40px;
+    border-top: solid 1px #CCC;
     margin-bottom: 10px;
+    padding: 2px 0;
+    vertical-align: middle;
+    border-bottom: solid 1px #CCC;
 
-    .control-group {
-      margin-bottom: 5px;
+    -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0, .1);
+    -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0, .1);
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0, .1);
+
+    .unit-thumb {
+      width: 40px;
+      height: 40px;
+      float: left;
+      margin-right: 10px;
     }
 
-    .pull-left img {
-      margin-right: 10px;
+    .control-group {
+      margin-bottom: 0px;
+
+      .controls {
+        margin-top: 7px;
+        margin-left: 65px;
+      }
+
+      .control-label {
+        display: none;
+      }
+    }
+
+    .remove_nested_fields {
+      float: right;
+      margin: 9px;
     }
 
     h2 {
