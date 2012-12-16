@@ -11,7 +11,6 @@ gem "paperclip", "~> 3.0"       # Paperclip (Attach images to models)
 gem 'kaminari'                  # Pagination
 gem 'later_dude', '>= 0.3.1'    # Calendar rendering
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
-gem 'turn', '< 0.8.3'           # Alternative runners for MiniTest
 
 group :assets do
   gem 'jquery-rails'            # JQuery
@@ -30,6 +29,7 @@ end
 group :test do
   gem 'factory_girl'            # Specs
   gem 'factory_girl_rails'      # Specs
+  gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
 end
 
 group :production do
