@@ -27,9 +27,11 @@ class AjaxController < ApplicationController
 
     (params[:equipment].to_a + params[:accessories].to_a).each.map { |n| n.to_i } .each do |unit_id|
       if (unit = Unit.find(unit_id))
-        json[unit_id] = {
+        json << {
+          id:         unit.id,
           available:  unit.in_reservations_in_range_exclusive(start_at, end_at).empty?,
-          thumb:      unit.photo.url(:thirtytwo)
+          thumb:      unit.photo.url(:forty),
+          medium:     unit.photo.url(:twosixty)
         }
       end
     end
