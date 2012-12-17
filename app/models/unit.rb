@@ -67,12 +67,12 @@ class Unit < ActiveRecord::Base
       between(lower, upper).
       joins(:reserved_units).where(reserved_units: { unit_id: self.id })
   end
-
   # TODO: Write an inclusive version of above (needed, right? ... I think)
 
   def earliest_available_date
-    # TODO: This will be a fun one
-    #in_reservations_in_range_exclusive(start_at, end_at)
+    Semester.current.er_hour_around(
+      Reservation.containing_unit(self).order("ends_at DESC")
+    )
   end
 
   def suggested_available_date
