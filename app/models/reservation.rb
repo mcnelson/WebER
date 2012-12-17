@@ -1,5 +1,5 @@
 class Reservation < ActiveRecord::Base
-  attr_accessible :ends_at, :starts_at, :status, :user_id, :equipment_attributes, :accessory_reservations
+  attr_accessible :ends_at, :starts_at, :status, :user_id, :reserved_equipment_attributes, :reserved_accessories_attributes
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id
 
@@ -42,9 +42,9 @@ class Reservation < ActiveRecord::Base
   def defaults
     self.status ||= STATUSES.first
 
-    # TODO: Make this find next available ERHour
-    self.starts_at ||= Date.today
-    self.ends_at ||= 1.days.from_now
+    current_semester = Semester.current
+    self.starts_at = current_semester.next_er_hour(Date.today).day
+    self.ends_at   = current_semester.next_er_hour(starts_at + 2.days).day
   end
 
   def contains?(equipment)

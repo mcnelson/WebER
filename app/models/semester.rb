@@ -36,7 +36,7 @@ class Semester < ActiveRecord::Base
     er_hour = nil
     begin
       idate = idate.tomorrow
-      er_hour = er_hour_around(idate.wday)
+      er_hour = er_hour_around(idate)
 
     end while er_hour.nil? && idate < ends_at
 
@@ -53,5 +53,9 @@ class Semester < ActiveRecord::Base
   def to_er_hour_end(date)
     erh_time = er_hour_around(date).try(:ends_at) or return nil
     DateTime.new(date.year, date.month, date.day, erh_time.hour, erh_time.mday, erh_time.sec).in_time_zone
+  end
+
+  def self.current
+    Semester.around_date(Date.today).first
   end
 end
