@@ -32,13 +32,12 @@ class Semester < ActiveRecord::Base
   # Find an er hour given a date. If no er hour on the given date, goes forward
   # to find the next hour. I.e. given a Friday, iterates to Monday and returns that
   def next_er_hour(date)
-    idate = date
+    idate = date.clone
     er_hour = nil
-    begin
-      idate = idate.tomorrow
-      er_hour = er_hour_around(idate)
 
-    end while er_hour.nil? && idate < ends_at
+    while (er_hour = er_hour_around(idate)) == nil && idate < ends_at
+      idate = idate.tomorrow
+    end
 
     er_hour
   end

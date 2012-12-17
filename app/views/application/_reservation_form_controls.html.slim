@@ -1,15 +1,10 @@
-.row-fluid
-  .span12
-    .liner
-      .form-errors
-
 .form-inputs
   .row
     .span6
       .gasket
-        h2 Dates
-        = f.input :starts_at, as: :datepicker
-        = f.input :ends_at, as: :datepicker
+        h2 Timeframe
+        = f.input :starts_at, as: :datepicker, label: "Check out date"
+        = f.input :ends_at, as: :datepicker, label: "Check in date"
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
           .well
             h2 Administrative Options
