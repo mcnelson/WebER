@@ -25,18 +25,21 @@ namespace "weber.reservations.form", (exports) ->
       )
 
     unitRowsChanged = (event) ->
+      # Put data-unit_id on the .equipment-row
+      $(".reservation-equipment-rows .equipment-row").each (i, row) ->
+        $(row).data("unit_id", $(row).find("select").attr("value"))
+
       check_unit_availability()
 
     check_unit_availability = ->
       # Build IDs into each array
       equipment = []
       accessories = []
+      $(".reservation-form .reservation-equipment-rows .unit-row").each (i, row) ->
+        equipment.push $(row).data("unit_id") if $(row).data("unit_id")
 
-      $(".reservation-form .reservation-equipment-rows select").each (i, item) ->
-        equipment.push $(item).attr("value") if $(item).attr("value")
-
-      $(".reservation-form .reservation-accessory-rows select").each (i, item) ->
-        accessories.push $(item).attr("value") if $(item).attr("value")
+      $(".reservation-form .reservation-accessory-rows .unit-row").each (i, row) ->
+        accessories.push $(row).data("unit_id") if $(row).data("unit_id")
 
       # Make the request
       $.ajax ({

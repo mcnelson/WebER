@@ -57,22 +57,33 @@ class Unit < ActiveRecord::Base
   def in_reservations_in_range_exclusive(start_at, end_at)
     semester = Semester.around_date(start_at).first
 
-    lower = semester.to_er_hour_end(start_at) \
-      or semester.next_er_hour(start_at).try(:ends_at)
-
-    upper = semester.to_er_hour_start(end_at) \
-      or semester.next_er_hour(end_at).try(:starts_at)
-
     Reservation.
-      between(lower, upper).
+      between(semester.to_er_hour_end(start_at), semester.to_er_hour_start(end_at)).
       joins(:reserved_units).where(reserved_units: { unit_id: self.id })
   end
   # TODO: Write an inclusive version of above (needed, right? ... I think)
 
   def earliest_available_date
-    Semester.current.er_hour_around(
-      Reservation.containing_unit(self).order("ends_at DESC")
-    )
+    range = [
+      Date.today,
+      (Date.today + Weber::Application.config.default_max_reservation_period)
+    ]
+
+    begin
+      reservation = in_reservations_in_range_exclusive(range[0], range[1])
+        order("ends_at DESC").
+        limit(1).
+        first
+
+      if reservation.present?
+        if range[0] == reservation.ends_at # Should never happen
+          raise "Equipment#in_reservations_in_range_exclusive returned out-of-range reservation"
+        end
+
+        range[0] = reservation.ends_at
+        range[1] = (reservation.ends_at + Weber::Application.config.default_max_reservation_period)
+      end
+    end while reservation.present?
   end
 
   def suggested_available_date

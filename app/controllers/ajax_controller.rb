@@ -28,7 +28,7 @@ class AjaxController < ApplicationController
     unit_ids = equipment_ids + accessory_ids
 
     return if unit_ids.blank?
-
+    debugger
     if start_at > end_at
       json[:date_error] = "The start date is after the end date."
     else
@@ -42,8 +42,6 @@ class AjaxController < ApplicationController
           }
         end
       end
-
-      debugger
 
       # Iterate equipment and find accessory it depends on in current reservation. If
       # missing, add to
