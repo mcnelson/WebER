@@ -1,7 +1,8 @@
 class Reservation < ActiveRecord::Base
   attr_accessible :ends_at, :starts_at, :status, :user_id, :reserved_equipment_attributes, :reserved_accessories_attributes
 
-  validates_presence_of :ends_at, :starts_at, :status, :user_id, :reserved_equipment, :reserved_accessories
+  validates_presence_of :ends_at, :starts_at, :status, :user_id
+  validate :equipment_or_accessory
 
   validates_associated :user
   belongs_to :user
@@ -25,6 +26,11 @@ class Reservation < ActiveRecord::Base
     where("ends_at < ?",   end_at.end_of_day)
   }
 
+  scope :containing_unit, lambda { |unit|
+    joins(:reserved_units)
+    where({ reserved_units: { unit_id: unit.id } })
+  }
+
   after_initialize :defaults
 
   STATUSES = [
@@ -40,6 +46,12 @@ class Reservation < ActiveRecord::Base
     current_semester = Semester.current
     self.starts_at = current_semester.next_er_hour(Date.today).day
     self.ends_at   = current_semester.next_er_hour(starts_at + 2.days).day
+  end
+
+  def equipment_or_accessory
+    if reserved_equipment.blank? && reserved_accessories.blank?
+      errors[:base] << "Reservation must have at least one equipment unit or accessory."
+    end
   end
 
   def contains?(equipment)
