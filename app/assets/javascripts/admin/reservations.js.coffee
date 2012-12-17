@@ -63,9 +63,9 @@ namespace "weber.reservations.form", (exports) ->
 
               # Set class if unavilable
               if !data.available
-                $(target).addClass("unit-unavailable")
+                $(target).children(".control-group").addClass("error")
               else
-                $(target).removeClass("unit-unavailable")
+                $(target).children(".control-group").removeClass("error")
 
               # Set availability
               any_unavailable = true if !unit.available

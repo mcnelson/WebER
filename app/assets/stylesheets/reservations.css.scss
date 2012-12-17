@@ -1,9 +1,4 @@
-.admin_reservations_new,
-.admin_reservations_edit,
-.admin_reservations_show,
-.reservations_new,
-.reservations_edit,
-.reservations_show {
+.admin_reservations {
   .unit-row {
     min-height: 40px;
     border-top: solid 1px #CCC;
@@ -11,11 +6,6 @@
     padding: 2px 0;
     vertical-align: middle;
     border-bottom: solid 1px #CCC;
-
-    &.unit-unavailable {
-      background: rgba(203, 0, 0, .1);
-      border-color: rgba(205, 0, 0, .3);
-    }
 
     -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0, .1);
     -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0, .1);
@@ -30,6 +20,16 @@
 
     .control-group {
       margin-bottom: 0px;
+
+      &.error {
+        background: rgba(255, 0, 0, .1);
+
+        a.chzn-single {
+          box-shadow: 0 0 0px 1px red;
+          -webkit-box-shadow: 0 0 0px 1px red;
+          -moz-box-shadow: 0 0 0px 1px red;
+        }
+      }
 
       .controls {
         margin-top: 7px;

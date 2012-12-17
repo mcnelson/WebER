@@ -1,29 +1,24 @@
 class Reservation < ActiveRecord::Base
   attr_accessible :ends_at, :starts_at, :status, :user_id, :reserved_equipment_attributes, :reserved_accessories_attributes
 
-  validates_presence_of :ends_at, :starts_at, :status, :user_id
+  validates_presence_of :ends_at, :starts_at, :status, :user_id, :reserved_equipment, :reserved_accessories
 
   validates_associated :user
   belongs_to :user
 
-  has_many :reserved_units
+  has_many :reserved_units, dependent: :destroy
+  has_many :reserved_equipment
+  has_many :reserved_accessories
   has_many :units, through: :reserved_units
 
-  # Join models for equipment/accessory
-  has_many :reserved_equipment, class_name: "ReservedUnit", foreign_key: :reservation_id,
-    conditions: { units: { type: "Equipment" } }
-
-  has_many :reserved_accessories, class_name: "ReservedUnit", foreign_key: :reservation_id,
-    conditions: { units: { type: "Accessory" } }
-
   # Units as equipment/accessories via reserved_units
-  has_many :equipment, through: :reserved_units, foreign_key: :unit_id,
+  has_many :equipment, through: :reserved_equipment, foreign_key: :unit_id,
     class_name: "Equipment", source: :unit
 
-  has_many :accessories, through: :reserved_units, foreign_key: :unit_id,
+  has_many :accessories, through: :reserved_accessories, foreign_key: :unit_id,
     class_name: "Accessory", source: :unit
 
-  accepts_nested_attributes_for :reserved_equipment, :reserved_accessories
+  accepts_nested_attributes_for :reserved_equipment, :reserved_accessories, allow_destroy: true
 
   scope :between, lambda { |start_at, end_at|
     where("starts_at > ?", start_at.beginning_of_day)

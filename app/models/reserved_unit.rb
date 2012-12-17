@@ -1,6 +1,6 @@
 class ReservedUnit < ActiveRecord::Base
-  attr_accessible :unit_id, :reservation_id
-  validates_presence_of :unit_id, :reservation_id
+  attr_accessible :unit_id
+  validates_presence_of :unit_id
 
   belongs_to :unit
   belongs_to :reservation

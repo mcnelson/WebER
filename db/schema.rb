@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204064952) do
+ActiveRecord::Schema.define(:version => 20121217173423) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "unit_id",                                  :null => false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20121204064952) do
     t.integer  "package_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "type",           :null => false
   end
 
   create_table "semesters", :force => true do |t|
