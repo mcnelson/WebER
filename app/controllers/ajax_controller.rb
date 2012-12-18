@@ -33,7 +33,6 @@ class AjaxController < ApplicationController
       else
         unit_ids.each do |unit_id|
           if (unit = Unit.find(unit_id))
-            debugger
             json[:units] << {
               id:         unit.id,
               available:  unit.in_reservations_in_range_exclusive(start_at, end_at).any?,

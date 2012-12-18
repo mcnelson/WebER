@@ -22,8 +22,10 @@ class Reservation < ActiveRecord::Base
   accepts_nested_attributes_for :reserved_equipment, :reserved_accessories, allow_destroy: true
 
   scope :between, lambda { |start_at, end_at|
-    where("starts_at > ?", start_at.beginning_of_day)
-    where("ends_at < ?",   end_at.end_of_day)
+    where("starts_at >= ? AND ends_at <= ?",
+      start_at.beginning_of_day,
+      end_at.end_of_day
+    )
   }
 
   scope :containing_unit, lambda { |unit|
