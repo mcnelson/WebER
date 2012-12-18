@@ -27,41 +27,41 @@ class AjaxController < ApplicationController
     accessory_ids = params[:accessories].to_a.map!(&:to_i)
     unit_ids = equipment_ids + accessory_ids
 
-    return if unit_ids.blank?
-    debugger
-    if start_at > end_at
-      json[:date_error] = "The start date is after the end date."
-    else
-      unit_ids.each do |unit_id|
-        if (unit = Unit.find(unit_id))
-          json[:units] << {
-            id:         unit.id,
-            available:  unit.in_reservations_in_range_exclusive(start_at, end_at).empty?,
-            thumb:      unit.photo.url(:forty),
-            medium:     unit.photo.url(:twosixty)
-          }
+    if unit_ids.present?
+      if start_at > end_at
+        json[:date_error] = "The start date is after the end date."
+      else
+        unit_ids.each do |unit_id|
+          if (unit = Unit.find(unit_id))
+            debugger
+            json[:units] << {
+              id:         unit.id,
+              available:  unit.in_reservations_in_range_exclusive(start_at, end_at).any?,
+              thumb:      unit.photo.url(:forty),
+              medium:     unit.photo.url(:twosixty)
+            }
+          end
         end
-      end
 
-      # Iterate equipment and find accessory it depends on in current reservation. If
-      # missing, add to
-      checked_accessories = accessory_ids.clone
-      equipment_ids.each do |equipment_id|
-        equipment = Equipment.find(equipment_id)
-        equipment.accessory_dependencies.each do |accessory_dependency|
+        # Iterate equipment and find accessory it depends on in current reservation. If
+        # missing, add to
+        checked_accessories = accessory_ids.clone
+        equipment_ids.each do |equipment_id|
+          equipment = Equipment.find(equipment_id)
+          equipment.accessory_dependencies.each do |accessory_dependency|
 
-          accessory_dependency.accessory_category.accessories.each do |accessory|
-            if checked_accessories.include? accessory.id
-              checked_accessories.delete(accessory.id)
+            accessory_dependency.accessory_category.accessories.each do |accessory|
+              if checked_accessories.include? accessory.id
+                checked_accessories.delete(accessory.id)
 
-            elsif accessory_dependency.optional?
-              json[:suggested_accessories] << { unit_id: equipment_id, accessory: accessory }
+              elsif accessory_dependency.optional?
+                json[:suggested_accessories] << { unit_id: equipment_id, accessory: accessory }
 
-            else
-              json[:needed_accessories] << { unit_id: equipment_id, accessory: accessory }
+              else
+                json[:needed_accessories] << { unit_id: equipment_id, accessory: accessory }
+              end
             end
           end
-
         end
       end
     end

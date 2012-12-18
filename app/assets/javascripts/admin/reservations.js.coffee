@@ -57,7 +57,7 @@ namespace "weber.reservations.form", (exports) ->
           else
             any_unavailable = false
 
-            for unit in data
+            for unit in data.units
               target = $(".unit-row select[value=#{unit.id}]")
 
               # Set image
@@ -65,10 +65,10 @@ namespace "weber.reservations.form", (exports) ->
                 attr("src", unit.thumb)
 
               # Set class if unavilable
-              if !data.available
-                $(target).children(".control-group").addClass("error")
+              if !unit.available
+                $(target).closest(".control-group").addClass("error")
               else
-                $(target).children(".control-group").removeClass("error")
+                $(target).closest(".control-group").removeClass("error")
 
               # Set availability
               any_unavailable = true if !unit.available
