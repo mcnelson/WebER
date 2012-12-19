@@ -1,11 +1,11 @@
 table.table.table-striped.table-condensed
   tr
     th colspan="2" = sortable "name"
-    th = sortable "status"
-    th = sortable "category"
-    th = sortable "brand"
-    th = sortable "model"
-    th = sortable "serial"
+    th = sortable :status
+    th = sortable :category
+    th = sortable :brand
+    th = sortable :model
+    th = sortable :serial
     th colspan="3"
 
   - equipmentdata.each do |equipment|

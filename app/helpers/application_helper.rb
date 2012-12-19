@@ -25,33 +25,33 @@ module ApplicationHelper
   end
 
   def sortable(column, title = nil)
-    title ||= column.titleize
+    title ||= column.to_s.titleize
 
     link_class = ""
     link_href = ""
     link_inner = ""
 
-    if column == sort_column
+    if column.to_s == sort_column.to_s
       case sort_direction
         when "asc"
           link_class = "current asc"
           link_href = params.merge sort: column, direction: "desc", page: nil
-          link_inner = "#{ column }<i class=\"icon-chevron-up\"></i>"
+          link_inner = "#{ title }<i class=\"icon-chevron-up\"></i>"
 
         when "desc"
           link_class = "current desc"
           link_href = nil # self
-          link_inner = "#{ column }<i class=\"icon-chevron-down\"></i>"
+          link_inner = "#{ title }<i class=\"icon-chevron-down\"></i>"
 
         else
           link_class = ""
           link_href = params.merge sort: column, direction: "asc", page: nil
-          link_inner = "#{ column }"
+          link_inner = "#{ title }"
       end
     else
       link_class = ""
       link_href = params.merge sort: column, direction: "asc", page: nil
-      link_inner = "#{ column }"
+      link_inner = "#{ title }"
     end
 
 
