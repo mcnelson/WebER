@@ -35,7 +35,7 @@ class AjaxController < ApplicationController
           if (unit = Unit.find(unit_id))
             json[:units] << {
               id:         unit.id,
-              available:  unit.in_reservations_in_range_exclusive(start_at, end_at).any?,
+              available:  !unit.in_reservations_in_range_exclusive(start_at, end_at).any?,
               thumb:      unit.photo.url(:forty),
               medium:     unit.photo.url(:twosixty)
             }
