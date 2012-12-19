@@ -6,6 +6,7 @@ class ErHour < ActiveRecord::Base
   belongs_to :semester
 
   validates_presence_of :day, :starts_at, :ends_at, :semester_id
+  validate :once_per_weekday_per_semester
   validates_uniqueness_of :associated_hour_id, allow_blank: true, message: "has already been associated"
 
   scope :in_semester, lambda { |semester|
@@ -16,6 +17,12 @@ class ErHour < ActiveRecord::Base
   scope :live, joins(:semester).where("er_hours.ends_at >= ? AND semesters.ends_at >= ?", Time.now, Time.now)
 
   default_scope order(:day)
+
+  def once_per_weekday_per_semester
+    if semester.er_hours.select { |er_hour| er_hour.day.wday == self.day.wday } .any?
+      errors[:day] << "is already present in the semester. There can only be one ER hour per day in a semester."
+    end
+  end
 
   def day_abbreviated
     read_attribute(:day).strftime("%a").downcase

@@ -21,11 +21,17 @@ class Reservation < ActiveRecord::Base
 
   accepts_nested_attributes_for :reserved_equipment, :reserved_accessories, allow_destroy: true
 
-  scope :between, lambda { |start_at, end_at|
-    where("starts_at >= ? AND ends_at <= ?",
-      start_at.beginning_of_day,
-      end_at.end_of_day
-    )
+  scope :between, lambda { |lower, upper|
+    where("starts_at > ? AND ends_at < ?", lower, upper)
+  }
+
+  scope :overlapping, lambda { |lower, upper|
+    where("(starts_at >= ? AND ends_at <= ?)
+          OR (starts_at < ? AND ? < ends_at)
+          OR (starts_at < ? AND ? < ends_at)",
+          lower, upper,
+          lower, lower,
+          upper, upper)
   }
 
   scope :containing_unit, lambda { |unit|
@@ -45,9 +51,9 @@ class Reservation < ActiveRecord::Base
   def defaults
     self.status ||= STATUSES.first
 
-    current_semester = Semester.current
-    self.starts_at = current_semester.next_er_hour(Date.today).day
-    self.ends_at   = current_semester.next_er_hour(starts_at + 2.days).day
+    current_semester = Semester.current if starts_at.nil? && ends_at.nil?
+    self.starts_at ||= current_semester.next_er_hour(Date.today).day
+    self.ends_at   ||= current_semester.next_er_hour(starts_at + 2.days).day
   end
 
   def equipment_or_accessory
