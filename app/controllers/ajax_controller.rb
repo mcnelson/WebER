@@ -21,6 +21,7 @@ class AjaxController < ApplicationController
     return raise "Missing date parameters" if params_missing_any? [:start_at, :end_at]
     json = { units: [], date_error: "", needed_accessories: [], suggested_accessories: [] }
 
+    current_reservation_id = params[:reservation_id].to_i # If editing
     start_at = params[:start_at].to_date
     end_at = params[:end_at].to_date
     equipment_ids = params[:equipment].to_a.map!(&:to_i)
@@ -28,14 +29,18 @@ class AjaxController < ApplicationController
     unit_ids = equipment_ids + accessory_ids
 
     if unit_ids.present?
-      if start_at > end_at
-        json[:date_error] = "The start date is after the end date."
+      if start_at >= end_at
+        json[:date_error] = "The check-out date must be before the check-in date."
       else
         unit_ids.each do |unit_id|
           if (unit = Unit.find(unit_id))
+            overlapping_reservations = unit.
+              in_reservations_in_range_exclusive(start_at, end_at).
+              where("reservations.id != ?", current_reservation_id)
+
             json[:units] << {
               id:         unit.id,
-              available:  !unit.in_reservations_in_range_exclusive(start_at, end_at).any?,
+              available:  !overlapping_reservations.any?,
               thumb:      unit.photo.url(:forty),
               medium:     unit.photo.url(:twosixty)
             }

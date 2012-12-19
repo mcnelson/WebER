@@ -16,6 +16,10 @@ namespace "weber.reservations.form", (exports) ->
       )
       $(".simpleform-inline-datepicker").on "select", unitRowsChanged
 
+      $(".unit-row select")
+        .chosen()
+        .on("change", unitRowsChanged)
+
       $(document).on('nested:fieldAdded', (event) ->
         unitRowsChanged()
 
@@ -85,7 +89,7 @@ namespace "weber.reservations.form", (exports) ->
       exports.set_form_valid(!text.length)
 
       if text.length
-        text = "<strong>Your reservation is currently invalid and you cannot proceed:</strong> #{text}"
+        text = "<strong>There are currently problems with your reservation:</strong> #{text}"
         $(".form-errors").first().append(
           $('<div class="alert alert-error date-error"></div>').
             html(text).
