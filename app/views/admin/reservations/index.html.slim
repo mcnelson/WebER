@@ -1,23 +1,39 @@
 - set_title("Listing Reservations")
 
-table.table.table-striped
-  tr
-    th Starts at
-    th Ends at
-    th Status
-    th
-    th
-    th
+.row-fluid
+  .pagination-centered
+    = paginate @reservations
 
-  - @reservations.each do |reservation|
-    tr
-      td = reservation.starts_at
-      td = reservation.ends_at
-      td = reservation.status
-      td = link_to 'Show', [:admin, reservation]
-      td = link_to 'Edit', edit_admin_reservation_path(reservation)
-      td = link_to 'Delete', [:admin, reservation], confirm: 'Are you sure?', method: :delete
 
-br
+.row-fluid
+  .span12
+    .liner
+      table.table.table-striped
+        tr
+          th = sortable :starts_at, "Start Date"
+          th = sortable :ends_at, "End Date"
+          th = sortable :status
+          th = sortable :user, "Owner"
+          th Contents
+          th
 
-= link_to 'New Reservation', new_admin_reservation_path
+        - @reservations.each do |reservation|
+          tr
+            td = reservation.starts_at.strftime("%D")
+            td = reservation.ends_at.strftime("%D")
+            td = reservation.status.capitalize
+            td = reservation.user.punet
+            td
+              span.badge.badge-info = "#{reservation.equipment.count}E"
+              |  
+              span.badge = "#{reservation.accessories.count}A"
+
+            td
+              .btn-group
+                = link_to 'Show', [:admin, reservation], class: "btn btn-small"
+                = link_to 'Edit', edit_admin_reservation_path(reservation), class: "btn btn-small btn-primary"
+                = link_to 'Delete', [:admin, reservation], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+
+.row-fluid
+  .pagination-centered
+    = paginate @reservations

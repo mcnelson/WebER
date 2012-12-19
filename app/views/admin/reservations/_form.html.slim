@@ -1,4 +1,4 @@
-= simple_nested_form_for [:admin, @reservation], html: { class: "form-horizontal reservation-form", :"data-check_unit_availability_path" => check_unit_availability_path } do |f|
+= simple_nested_form_for [:admin, @reservation], html: { class: "form-horizontal reservation-form", :"data-check_unit_availability_path" => check_unit_availability_path(@reservation.id) } do |f|
   .row-fluid
     .span12
       .liner

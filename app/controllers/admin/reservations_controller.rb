@@ -1,6 +1,15 @@
 class Admin::ReservationsController < AdminController
+  helper_method :sort_column, :sort_direction
 
   def index
+    @reservations = Reservation.joins(:user)
+
+    if sort_column == "user"
+      @reservations = @reservations.order("users.punet" + sort_direction)
+    else
+      @reservations = @reservations.order(sort_column + " " + sort_direction)
+    end
+
     @reservations = Reservation.page params[:page]
   end
 
@@ -41,5 +50,13 @@ class Admin::ReservationsController < AdminController
     @reservation.destroy
 
     redirect_to admin_reservations_path
+  end
+
+  def sort_column
+    params[:sort] || "starts_at"
+  end
+
+  def sort_direction
+    params[:direction] || "desc"
   end
 end
