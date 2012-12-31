@@ -14,9 +14,7 @@ Weber::Application.routes.draw do
   resources :reservations
 
   controller :ajax do
-    get :reservation_tabbox
-    get "ajax/reservation/:reservation_id/status", action: :check_unit_availability, as: :check_unit_availability
-    get :equipment_dependencies
+    get "ajax/reservation-check(/:reservation_id)", action: :check_unit_availability, as: :check_unit_availability
   end
 
   namespace :admin do
