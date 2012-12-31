@@ -29,8 +29,8 @@ namespace "weber.reservations.form", (exports) ->
       )
 
     unitRowsChanged = (event) ->
-      # Put data-unit_id on the .equipment-row
-      $(".reservation-equipment-rows .equipment-row").each (i, row) ->
+      # Put data-unit_id on the rows
+      $(".unit-row").each (i, row) ->
         $(row).data("unit_id", $(row).find("select").attr("value"))
 
       check_unit_availability()
