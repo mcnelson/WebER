@@ -21,7 +21,7 @@
           tr
             td = reservation.starts_at.strftime("%D")
             td = reservation.ends_at.strftime("%D")
-            td = reservation.status.capitalize
+            td = reservation_row_status reservation.status
             td = reservation.user.punet
             td
               span.badge.badge-info = "#{reservation.equipment.count}E"

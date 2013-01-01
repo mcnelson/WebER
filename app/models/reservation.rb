@@ -1,8 +1,13 @@
 class Reservation < ActiveRecord::Base
+  include ActionView::Helpers # Wah wah wahhhh
+
   attr_accessible :ends_at, :starts_at, :status, :user_id, :reserved_equipment_attributes, :reserved_accessories_attributes
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id
+
   validate :equipment_or_accessory
+  validate :lead_time, on: :create
+  validate :units_max_period, on: :create
 
   validates_associated :user
   belongs_to :user
@@ -41,24 +46,40 @@ class Reservation < ActiveRecord::Base
 
   after_initialize :defaults
 
-  STATUSES = [
-    "live",
-    "pending",
-    "archived",
-    "missed"
-  ]
+  STATUSES = ["live", "pending", "archived", "missed"]
+  STATUS_BOOTSTRAP_COLORS = ["info", "warning", "", "default"]
 
   def defaults
-    self.status ||= STATUSES.first
-
-    current_semester = Semester.current if starts_at.nil? && ends_at.nil?
-    self.starts_at ||= current_semester.next_er_hour(Date.today).day
-    self.ends_at   ||= current_semester.next_er_hour(starts_at + 2.days).day
+    self.status     ||= STATUSES.first
+    self.starts_at  ||= Semester.current.next_er_hour(Date.today).date
+    self.ends_at    ||= Semester.current.next_er_hour(Date.today + 2.days).date
   end
 
   def equipment_or_accessory
     if reserved_equipment.blank? && reserved_accessories.blank?
       errors[:base] << "Reservation must have at least one equipment unit or accessory."
+    end
+  end
+
+  def lead_time
+    # Use er hour time to now to afford the possiblity of using more granular time in config
+    given_lead_time = (Semester.current.to_er_hour_start(starts_at) - DateTime.now).abs
+
+    # start date less than minimum lead time
+    if (given_lead_time < Weber::Application.config.reservation_min_lead_time)
+      errors[:starts_at] << "must be #{distance_of_time_in_words(Weber::Application.config.reservation_min_lead_time)} from now"
+
+    # start date greater than max lead time
+    elsif (given_lead_time > Weber::Application.config.reservation_max_lead_time)
+      errors[:starts_at] << "must be #{distance_of_time_in_words(Weber::Application.config.reservation_max_lead_time)} from now"
+    end
+  end
+
+  def units_max_period
+    units.each do |unit|
+      if (start_at.to_i - end_at.to_i).abs > unit.max_reservation_period
+        unit.errors[:base] << "cannot be reserved for more than #{distance_of_time_in_words(unit.max_reservation_period)}"
+      end
     end
   end
 

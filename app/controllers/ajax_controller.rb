@@ -19,18 +19,24 @@ class AjaxController < ApplicationController
 
   def check_unit_availability
     return raise "Missing date parameters" if params_missing_any? [:start_at, :end_at]
-    json = { units: [], date_error: "", needed_accessories: [], suggested_accessories: [] }
+    json = { units: [], error_html: "", needed_accessories: [], suggested_accessories: [] }
 
-    current_reservation_id = params[:reservation_id].to_i # If editing
-    start_at = params[:start_at].to_date
-    end_at = params[:end_at].to_date
-    equipment_ids = params[:equipment].to_a.map!(&:to_i)
-    accessory_ids = params[:accessories].to_a.map!(&:to_i)
-    unit_ids = equipment_ids + accessory_ids
+    current_reservation_id  = params[:reservation_id].to_i # If editing
+    start_at                = params[:start_at].to_date
+    end_at                  = params[:end_at].to_date
+    length_in_seconds       = (start_at.to_i - end_at.to_i).abs
+    equipment_ids           = params[:equipment].to_a.map!(&:to_i)
+    accessory_ids           = params[:accessories].to_a.map!(&:to_i)
+    unit_ids                = equipment_ids + accessory_ids
 
     if unit_ids.present?
+      @errors = []
+
       if start_at >= end_at
-        json[:date_error] = "The check-out date must be before the check-in date."
+        @errors << "The check-out date must be before the check-in date."
+        json[:error_html] = render_to_string "ajax/reservation_top_errors"
+      elsif start_at < 3.days.from_now
+        json[:date_error] = "The check-out date must be 
       else
         unit_ids.each do |unit_id|
           if (unit = Unit.find(unit_id))
@@ -38,9 +44,13 @@ class AjaxController < ApplicationController
               in_reservations_in_range_exclusive(start_at, end_at).
               where("reservations.id != ?", current_reservation_id)
 
+            maxperiod_exceeded = length_in_seconds > unit.max_reservation_period
+
             json[:units] << {
               id:         unit.id,
+              error:      overlapping_reservations.any? || maxperiod_exceeded,
               available:  !overlapping_reservations.any?,
+              loo_long:   maxperiod_exceeded,
               thumb:      unit.photo.url(:forty),
               medium:     unit.photo.url(:twosixty)
             }
