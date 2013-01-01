@@ -31,7 +31,7 @@ namespace "weber.reservations.form", (exports) ->
         .chosen()
         .on("change", unitRowsChanged)
 
-      $(document).on('nested:fieldAdded', (event) ->
+      $(document).on('nested:fieldAdded nested:fieldRemoved', (event) ->
         unitRowsChanged()
 
         $(event.field).find('select')
@@ -48,13 +48,8 @@ namespace "weber.reservations.form", (exports) ->
 
     check_unit_availability = ->
       # Build IDs into each array
-      equipment = []
-      accessories = []
-      $(".reservation-form .reservation-equipment-rows .unit-row").each (i, row) ->
-        equipment.push $(row).data("unit_id") if $(row).data("unit_id")
-
-      $(".reservation-form .reservation-accessory-rows .unit-row").each (i, row) ->
-        accessories.push $(row).data("unit_id") if $(row).data("unit_id")
+      equipment = accessories = []
+      unit_id_arrays(equipment, accessories)
 
       # Make the request
       $.ajax ({
@@ -107,24 +102,10 @@ namespace "weber.reservations.form", (exports) ->
             append( $('<button type="button" class="close" data-dismiss="alert">&times;</button>') )
         )
 
-    # $(".tabs").tabs()
+   # Get arrays of active unit IDs from rows
+   unit_id_arrays = (equipment, accessories) ->
+    $(".equipment-row:visible").each (i, row) ->
+      equipment.push $(row).data("unit_id") if $(row).data("unit_id")
 
-    # # On change reservation date
-
-    #   # Refresh tabbox
-    #   $('.tabs').tabs("destroy")
-
-    #   # Update hrefs
-    #   $('.tabs ul li a').each ->
-    #     s = $(@)
-    #       .attr("href")
-    #       .split('?')
-
-    #     p = $.parseParams(s[1])
-
-    #     p.start_at = $('[name="reservation[starts_at]"]').attr("value")
-    #     p.end_at = $('[name="reservation[ends_at]"]').attr("value")
-
-    #     $(@).attr("href", "#{ s[0] }?#{ $.param(p) }")
-
-    #   $('.tabs').tabs()
+    $(".accessory-row:visible").each (i, row) ->
+      accessories.push $(row).data("unit_id") if $(row).data("unit_id")
