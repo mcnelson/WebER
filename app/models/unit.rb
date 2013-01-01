@@ -41,6 +41,10 @@ class Unit < ActiveRecord::Base
     self.status ||= STATUSES.first
   end
 
+  def max_reservation_period
+    read_attribute(:max_reservation_period) || Weber::Application.config.default_max_reservation_period
+  end
+
   def name_brand_model
     if brand.present? && model.present?
       "#{name}: #{brand} #{model}"
