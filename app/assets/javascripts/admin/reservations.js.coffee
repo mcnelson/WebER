@@ -5,7 +5,18 @@ namespace "weber.reservations.form", (exports) ->
     return if exports.form_valid == set
 
     exports.form_valid = set
-    $('.form-actions input[type=submit]').attr("disabled", !set)
+
+    if set # Valid
+      $('input[type=submit].btn').
+        removeClass('btn-inverse').
+        addClass('btn-primary')
+      $('.pending-reservation-warning').hide()
+
+    else # Invalid
+      $('input[type=submit].btn').
+        removeClass('btn-primary').
+        addClass('btn-inverse')
+      $('.pending-reservation-warning').show()
 
   exports.init = ->
     $ ->

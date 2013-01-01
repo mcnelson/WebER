@@ -61,4 +61,14 @@
       font-size: 0.8em;
     }
   }
+
+  .pending-reservation-warning {
+    display: none;
+    margin-right: 15%;
+
+    .alert {
+      border: solid 1px #555;
+      color: #726B39;
+    }
+  }
 }
