@@ -8,6 +8,7 @@ class Reservation < ActiveRecord::Base
   validate :equipment_or_accessory
   validate :lead_time, on: :create
   validate :units_max_period, on: :create
+  validate :conflicting_units
 
   validates_associated :user
   belongs_to :user
@@ -67,11 +68,11 @@ class Reservation < ActiveRecord::Base
 
     # start date less than minimum lead time
     if (given_lead_time < Weber::Application.config.reservation_min_lead_time)
-      errors[:starts_at] << "must be #{distance_of_time_in_words(Weber::Application.config.reservation_min_lead_time)} from now"
+      errors[:starts_at] << "must be at least #{distance_of_time_in_words(Weber::Application.config.reservation_min_lead_time)} from now"
 
     # start date greater than max lead time
     elsif (given_lead_time > Weber::Application.config.reservation_max_lead_time)
-      errors[:starts_at] << "must be #{distance_of_time_in_words(Weber::Application.config.reservation_max_lead_time)} from now"
+      errors[:starts_at] << "must be no more than #{distance_of_time_in_words(Weber::Application.config.reservation_max_lead_time)} from now"
     end
   end
 
@@ -83,11 +84,19 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def contains?(equipment)
-    equipment.exists? equipment
+  def conflicting_units
+    units.each do |unit|
+      overlapping_reservations = unit.
+        in_reservations_in_range_exclusive(starts_at, ends_at).
+        where("reservations.id != ?", id)
+
+      if overlapping_reservations.any?
+        unit.errors[:base] << "conflicts with #{pluralize(overlapping_reservations.count, "reservation")}"
+      end
+    end
   end
 
-  def others_overlapping(start_at, end_at)
-    Reservation.where("id != ?", self.id).where("starts_at >= ? AND ends_at <= ?", start_at, end_at)
+  def contains?(equipment)
+    equipment.exists? equipment
   end
 end
