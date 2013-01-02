@@ -19,6 +19,7 @@ class AjaxController < ApplicationController
 
   def check_unit_availability
     return raise "Missing date parameters" if params_missing_any? [:start_at, :end_at]
+
     json = { units: [], error_html: "", needed_accessories: [], suggested_accessories: [] }
 
     current_reservation_id  = params[:reservation_id].to_i # If editing
@@ -30,13 +31,12 @@ class AjaxController < ApplicationController
     unit_ids                = equipment_ids + accessory_ids
 
     if unit_ids.present?
-      @errors = []
-
       if start_at >= end_at
         @errors << "The check-out date must be before the check-in date."
-        json[:error_html] = render_to_string "ajax/reservation_top_errors"
+        json[:error_html] = render_to_string "form_errors", locals: { object: }
       elsif start_at < 3.days.from_now
-        json[:date_error] = "The check-out date must be 
+        json[:error_html] = render_to_string "form_errors", locals: { object: }
+        @errors << "The check-out date must be "
       else
         unit_ids.each do |unit_id|
           if (unit = Unit.find(unit_id))

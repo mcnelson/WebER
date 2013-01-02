@@ -28,10 +28,16 @@ class Admin::ReservationsController < AdminController
   def create
     @reservation = Reservation.new(params[:reservation])
 
-    if @reservation.save
-      redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
-    else
-      render action: "new"
+    respond_to do |format|
+      format.html do
+        if @reservation.save
+          redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
+        else
+          render action: "new"
+        end
+      end
+
+      format.js { @reservation.valid? }
     end
   end
 

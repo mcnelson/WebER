@@ -1,0 +1,7 @@
+- if object.errors.any?
+  .gasket
+    .alert.alert-warning
+      strong = "Please correct the following:"
+      ul
+        - object.errors.full_messages.each do |message|
+          li = message
