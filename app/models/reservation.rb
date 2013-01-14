@@ -5,6 +5,7 @@ class Reservation < ActiveRecord::Base
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id
 
+  validate :date_chronology, on: :create
   validate :equipment_or_accessory
   validate :lead_time, on: :create
   validate :units_max_period, on: :create
@@ -53,13 +54,18 @@ class Reservation < ActiveRecord::Base
   def defaults
     self.status     ||= STATUSES.first
     self.starts_at  ||= Semester.current.next_er_hour(Date.today).date
-    self.ends_at    ||= Semester.current.next_er_hour(Date.today + 2.days).date
+    self.ends_at    ||= Semester.current.next_er_hour(starts_at + 2.days).date
   end
 
   def equipment_or_accessory
     if reserved_equipment.blank? && reserved_accessories.blank?
       errors[:base] << "Reservation must have at least one equipment unit or accessory."
     end
+  end
+
+  def date_chronology
+    return errors[:starts_at] << "must be in the future" if starts_at < Date.today
+    errors[:ends_at] << "must be after the check-out date" if starts_at >= ends_at
   end
 
   def lead_time

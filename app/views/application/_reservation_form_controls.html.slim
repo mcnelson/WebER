@@ -3,8 +3,8 @@
     .span6
       .gasket
         h2 Timeframe
-        = f.input :starts_at, as: :datepicker, label: "Check out date"
-        = f.input :ends_at, as: :datepicker, label: "Check in date"
+        = f.input :starts_at, as: :datepicker
+        = f.input :ends_at, as: :datepicker
         - if current_user.workstudy? && controller.class == Admin::ReservationsController
           .well
             h2 Administrative Options

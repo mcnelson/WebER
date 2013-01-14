@@ -1,9 +1,4 @@
-- set_title("Listing Reservations")
-
-.row-fluid
-  .pagination-centered
-    = paginate @reservations
-
+- set_title("Your Reservations")
 
 .row-fluid
   .span12
@@ -13,27 +8,18 @@
           th = sortable :starts_at, "Check-out"
           th = sortable :ends_at, "Check-in"
           th = sortable :status
-          th = sortable :user, "Owner"
           th Contents
-          th
+          th View
 
         - @reservations.each do |reservation|
           tr
             td = reservation.starts_at.strftime("%D")
             td = reservation.ends_at.strftime("%D")
             td = reservation_row_status reservation.status
-            td = reservation.user.punet
             td
               span.badge.badge-info = "#{reservation.equipment.count}E"
               |  
               span.badge = "#{reservation.accessories.count}A"
 
             td
-              .btn-group
-                = link_to 'Show', [:admin, reservation], class: "btn btn-small"
-                = link_to 'Edit', edit_admin_reservation_path(reservation), class: "btn btn-small btn-primary"
-                = link_to 'Delete', [:admin, reservation], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
-
-.row-fluid
-  .pagination-centered
-    = paginate @reservations
+              = link_to 'View', reservation, class: "btn btn-small"

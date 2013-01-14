@@ -1,5 +1,6 @@
 class Admin::ReservationsController < AdminController
   helper_method :sort_column, :sort_direction
+  helper LaterDude::CalendarHelper
 
   def index
     @reservations = Reservation.joins(:user)
@@ -10,7 +11,7 @@ class Admin::ReservationsController < AdminController
       @reservations = @reservations.order(sort_column + " " + sort_direction)
     end
 
-    @reservations = Reservation.page params[:page]
+    @reservations = @reservations.page params[:page]
   end
 
   def show
@@ -18,7 +19,10 @@ class Admin::ReservationsController < AdminController
   end
 
   def new
-    @reservation = Reservation.new
+    @reservation = Reservation.new(
+      starts_at: Semester.current.next_er_hour(2.days.from_now).starts_at,
+      user_id: current_user.id
+    )
   end
 
   def edit
@@ -37,17 +41,38 @@ class Admin::ReservationsController < AdminController
         end
       end
 
-      format.js { @reservation.valid? }
+      format.js do
+        if params[:commit] && @reservation.save
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
+        else
+          @reservation.valid?
+          render action: "update_form"
+        end
+      end
     end
   end
 
   def update
     @reservation = Reservation.find(params[:id])
+    @reservation.assign_attributes(params[:reservation])
 
-    if @reservation.update_attributes(params[:reservation])
-      redirect_to [:admin, @reservation], notice: 'Reservation was successfully updated.'
-    else
-      render action: "edit"
+    respond_to do |format|
+      format.html do
+        if @reservation.save(params[:reservation])
+          redirect_to [:admin, @reservation], notice: 'Reservation was successfully updated.'
+        else
+          render action: "edit"
+        end
+      end
+
+      format.js do
+        if params[:commit] && @reservation.save(params[:reservation])
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully updated.'
+        else
+          @reservation.valid?
+          render action: "update_form"
+        end
+      end
     end
   end
 
