@@ -2,4 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes: 
+      reservation:
+        starts_at: "Check-out date"
+        ends_at: "Check-in date"

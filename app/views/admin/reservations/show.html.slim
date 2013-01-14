@@ -2,19 +2,29 @@
 
 p#notice = notice
 
-p
-  strong Owner:
-  = @reservation.user.punet
-p
-  strong Starts at:
-  = @reservation.starts_at
-p
-  strong Ends at:
-  = @reservation.ends_at
-p
-  strong Status:
-  = @reservation.status
+.row-fluid
+  .span4
+    .liner
+      .ptable.ptable-40
+        p
+          strong Owner:
+          = @reservation.user.punet
+        p
+          strong Starts at:
+          = @reservation.starts_at.strftime("%b %e")
+        p
+          strong Ends at:
+          = @reservation.ends_at.strftime("%b %e")
+        p
+          strong Status:
+          = @reservation.status
 
-= link_to 'Edit', edit_admin_reservation_path(@reservation)
-'|
-= link_to 'Back', admin_reservations_path
+  .span8
+    .liner
+      = render partial: "equipment_table", locals: { equipment: @reservation.equipment }
+
+
+.form-actions
+  .btn-group
+    = link_to 'Edit', edit_admin_reservation_path(@reservation), class: "btn btn-primary"
+    = link_to 'Back', admin_reservations_path, class: "btn"

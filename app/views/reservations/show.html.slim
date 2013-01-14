@@ -1,0 +1,18 @@
+- set_title("View Reservation")
+
+p#notice = notice
+
+p
+  strong Owner:
+  = @reservation.user.punet
+p
+  strong Starts at:
+  = @reservation.starts_at
+p
+  strong Ends at:
+  = @reservation.ends_at
+p
+  strong Status:
+  = @reservation.status
+
+= link_to 'Back', root_path

@@ -1,4 +1,4 @@
-= simple_nested_form_for [:admin, @reservation], remote: true, html: { class: "form-horizontal reservation-form" } do |f|
+= simple_nested_form_for @reservation, remote: true, html: { class: "form-horizontal reservation-form" } do |f|
   .row-fluid
     .span12
       .liner
@@ -17,8 +17,8 @@
           p This reservation currently has conflicts or other problems. Please check the errors at the top of the form to resolve them. If you have special conditions or arrangements with the equipment room staff, you can still submit the reservation but it will require additional approval.
 
     .btn-group
-      = link_to "Back", admin_reservations_path, class: "btn"
-      = link_to "Show", [:admin, @reservation], class: "btn" if @reservation.persisted?
+      = link_to "Back", root_path, class: "btn"
+
       .input-append
         - if @reservation.valid?
           = f.button :submit, class: "btn btn-primary"

@@ -1,3 +1,4 @@
+.reservations,
 .admin_reservations {
   .unit-row {
     min-height: 40px;
@@ -63,7 +64,6 @@
   }
 
   .pending-reservation-warning {
-    display: none;
     margin-right: 15%;
 
     .alert {

@@ -13,10 +13,10 @@ html
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          = image_tag "logo.png", width: 192, height: 50, class: "logo"
+          = link_to root_path do
+            = image_tag "logo.png", width: 192, height: 50, class: "logo"
           ul.nav
-            li: a href="#" Hello?
-            li: a href="#" Hello?
+            li = nav_link_to "Admin", admin_equipment_index_path if current_user.admin?
 
           .pull-right
             = user_bar

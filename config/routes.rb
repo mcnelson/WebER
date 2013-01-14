@@ -1,5 +1,5 @@
 Weber::Application.routes.draw do
-  root to: "Dashboards#index"
+  root to: "Reservations#index"
 
   controller :sessions do
     get :signin, action: :new
@@ -7,14 +7,14 @@ Weber::Application.routes.draw do
     delete :signout, action: :destroy
   end
 
-  controller :dashboards do
-    get :index
-  end
-
-  resources :reservations
+  resources :reservations, except: [:edit, :update, :destroy]
 
   namespace :admin do
-    #root to: "Dashboards#admin_index"
+    root to: "Admin::Dashboards#index"
+
+    controller :dashboards do
+      get :index
+    end
 
     resources :semesters do
       resources :er_hours, except: [:index, :show]
