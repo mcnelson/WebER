@@ -1,22 +1,25 @@
 namespace "weber.reservations.form", (exports) ->
   exports.init = ->
     $ ->
-      setupFormControls()
-      $("select").on "change", heartbeat
-      $(document).on 'nested:fieldAdded nested:fieldRemoved', heartbeat
+      exports.setupFormControls()
 
-    # Makes datepickers, chosens
-    setupFormControls = ->
-      $(".controls select").chosen()
+  # Makes datepickers, chosens
+  exports.setupFormControls = ->
+    $(document).
+      unbind('nested:fieldAdded nested:fieldRemoved').
+      on('nested:fieldAdded nested:fieldRemoved', exports.heartbeat)
 
-      $(".simpleform-inline-datepicker").
-        datepicker().
-        datepicker("option", "beforeShowDay", (date) ->
+    $("select").unbind("change").on("change", exports.heartbeat).chosen()
+
+    $(".simpleform-inline-datepicker").
+      datepicker({
+        beforeShowDay: (date) ->
           [!(date.getDay() == 0 || date.getDay() == 6), "", "Not available on weekend"]
-        )
+      })
 
-      $(".simpleform-inline-datepicker").on "select", heartbeat
+    $(".datepicker-input").on "select", ->
+      console.log("test")
 
-    heartbeat = (event) ->
-      console.log("bo-boop")
-      $(".reservation-form").submit().on "ajax:complete", setupFormControls
+  exports.heartbeat = (event) ->
+    console.log("bo-boop")
+    $(".reservation-form").submit().on "ajax:complete", exports.setupFormControls

@@ -13,10 +13,6 @@ Weber::Application.routes.draw do
 
   resources :reservations
 
-  controller :ajax do
-    get "ajax/reservation-check(/:reservation_id)", action: :check_unit_availability, as: :check_unit_availability
-  end
-
   namespace :admin do
     #root to: "Dashboards#admin_index"
 

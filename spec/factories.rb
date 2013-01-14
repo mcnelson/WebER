@@ -95,7 +95,7 @@ FactoryGirl.define do
   end
 
   factory :semester do
-    starts_at   Date.parse("Oct 24, 2012")
-    ends_at     Date.parse("Dec 14, 2012")
+    starts_at   Date.parse("January 1, #{Date.today.year}")
+    ends_at     Date.parse("December 31, #{Date.today.year}")
   end
 end
