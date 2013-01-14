@@ -1,5 +1,5 @@
 $ ->
-  $(".simpleform-inline-datepicker").datepicker({
+  $(".auto-datepickers .simpleform-inline-datepicker").datepicker({
     onSelect: (datetext, inst) ->
       $(@).children('input').attr("value", datetext)
         .trigger ('select')
@@ -7,5 +7,5 @@ $ ->
     dateFormat: "yy/mm/dd"
   })
 
-  $(".simpleform-inline-datepicker").each ->
+  $(".auto-datepickers .simpleform-inline-datepicker").each ->
     $(@).datepicker("setDate", $(@).children('input').attr("value"))
