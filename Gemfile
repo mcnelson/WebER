@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'            # Where it all begins
 
+gem 'therubyracer'              # Exec JS
+gem 'less-rails'                # LESS Stylesheets
 gem 'pg'                        # PostgreSQL
 gem 'twitter-bootstrap-rails'   # Twitter Bootstrap
 gem 'slim-rails'                # Slim
@@ -14,7 +16,6 @@ gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
 group :assets do
   gem 'jquery-rails'            # JQuery
-  gem 'less-rails'              # LESS Stylesheets
   gem 'sass-rails', '~> 3.2.3'  # Syntactically Awesome Stylesheets
   gem 'coffee-rails', '~> 3.2.1'# CoffeeScript
   gem 'uglifier', '>= 1.0.3'    # JS Compression
@@ -33,6 +34,5 @@ group :test do
 end
 
 group :production do
-  gem 'therubyracer'            # Exec JS
   gem 'passenger'               # Apache deployment
 end
