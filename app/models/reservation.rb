@@ -5,10 +5,11 @@ class Reservation < ActiveRecord::Base
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id
 
-  validate :date_chronology, on: :create
-  validate :equipment_or_accessory
-  validate :lead_time, on: :create
+  validate :date_chronology,  on: :create
+  validate :lead_time,        on: :create
   validate :units_max_period, on: :create
+
+  validate :equipment_or_accessory
   validate :conflicting_units
 
   validates_associated :user
