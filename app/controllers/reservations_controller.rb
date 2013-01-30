@@ -1,5 +1,7 @@
 class ReservationsController < ApplicationController
   before_filter :require_student
+  before_filter :require_current_semester, only: :new
+
   helper_method :sort_column, :sort_direction
 
   def index

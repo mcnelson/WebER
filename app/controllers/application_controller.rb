@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     render_403
   end
 
+  def require_current_semester
+    render_no_current_semester if Semester.current.nil?
+  end
+
   private
 
   def current_user
@@ -44,6 +48,10 @@ class ApplicationController < ActionController::Base
 
   def render_403
     render file: "public/403", format: :html, status: 404, layout: nil
+  end
+
+  def render_no_current_semester
+    render action: "no_current_semester", status: 500, layout: "smallcenter"
   end
 
   helper_method :current_user
