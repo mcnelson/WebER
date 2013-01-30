@@ -19,7 +19,8 @@ namespace "weber.reservations.form", (exports) ->
         # Initialize datepicker
         $(".simpleform-inline-datepicker").datepicker({
           beforeShowDay: (date) ->
-            [!(date.getDay() == 0 || date.getDay() == 6), "", "Not available on weekend"]
+            valid_er_hour_dates = $('#before_show_day_data').data('er_hour_days')
+            [($.inArray($.datepicker.formatDate('dd/mm/yy', date), valid_er_hour_dates) != -1), "", "Not available on weekend"]
 
           onSelect: (datetext, inst) ->
             $(@).children('input').attr("value", datetext).trigger ('select')
