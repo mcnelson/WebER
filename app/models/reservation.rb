@@ -71,7 +71,8 @@ class Reservation < ActiveRecord::Base
 
   def lead_time
     # Use er hour time to now to afford the possiblity of using more granular time in config
-    given_lead_time = (Semester.current.to_er_hour_start(starts_at) - DateTime.now).abs
+    outdate = Semester.current.to_er_hour_start(starts_at) or starts_at
+    given_lead_time = (outdate - DateTime.now).abs
 
     # start date less than minimum lead time
     if (given_lead_time < Weber::Application.config.reservation_min_lead_time)
