@@ -19,7 +19,7 @@ class ErHour < ActiveRecord::Base
   default_scope order(:day)
 
   def once_per_weekday_per_semester
-    if semester.er_hours.select { |er_hour| er_hour.day.wday == self.day.wday } .any?
+    if semester.er_hours.select { |er_hour| er_hour != self && er_hour.day.wday == self.day.wday } .any?
       errors[:day] << "is already present in the semester. There can only be one ER hour per day in a semester."
     end
   end
