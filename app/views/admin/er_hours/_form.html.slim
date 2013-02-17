@@ -6,10 +6,10 @@
       .liner
         .form-inputs
           = f.input :day, collection: weekdays_for_select
-          = f.input :starts_at, label: "Start Time", ampm: true, minute_step: 15
-          = f.input :ends_at, label: "End Time", ampm: true, minute_step: 15
+          = f.input :starts_at, ampm: true, minute_step: 15
+          = f.input :ends_at, ampm: true, minute_step: 15
           = f.association :semester, as: :radio_buttons, collection: Semester.live, label_method: :yearterm
-          = f.association :associated_hour, label: "Associated ER Hour", collection: @er_hour.available_for_association, label_method: :weekday_with_range, hint: (@er_hour.available_for_association.blank? ? "Note: No other ER hours are currently available for association." : "")
+          = f.association :checkin_hour, collection: @er_hour.available_for_association, label_method: :weekday_with_range, hint: (@er_hour.available_for_association.blank? ? "Note: No other ER hours are currently available for association." : "")
 
   .form-actions
     .btn-group

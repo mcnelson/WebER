@@ -1,13 +1,12 @@
 class ErHour < ActiveRecord::Base
-  attr_accessible :day, :ends_at, :starts_at, :semester_id, :associated_hour_id
+  attr_accessible :day, :ends_at, :starts_at, :semester_id, :checkin_hour_id
 
-  has_one :associated_hour, class_name: "ErHour"
-  belongs_to :associated_hour, class_name: "ErHour"
+  has_one :checkin_hour, class_name: "ErHour"
+  belongs_to :checkin_hour, class_name: "ErHour"
   belongs_to :semester
 
   validates_presence_of :day, :starts_at, :ends_at, :semester_id
   validate :once_per_weekday_per_semester
-  validates_uniqueness_of :associated_hour_id, allow_blank: true, message: "has already been associated"
 
   scope :in_semester, lambda { |semester|
     joins(:semester)
@@ -40,13 +39,13 @@ class ErHour < ActiveRecord::Base
     "#{day_abbreviated.capitalize} #{starts_at.strftime "%l:%M%P"} - #{ends_at.strftime "%l:%M%P"}"
   end
 
-  def find_associated_hour
-    return associated_hour if associated_hour.present?
-    ErHour.find_by_associated_hour_id(id)
+  def find_checkin_hour
+    return checkin_hour if checkin_hour.present?
+    ErHour.find_by_checkin_hour_id(id)
   end
 
   def available_for_association
-   other_hours_in_semester.reject { |er_hour| er_hour.find_associated_hour.present? && er_hour != self.associated_hour }
+   other_hours_in_semester.reject { |er_hour| er_hour.find_checkin_hour.present? && er_hour != self.checkin_hour}
   end
 
   def other_hours_in_semester
@@ -63,7 +62,7 @@ class ErHour < ActiveRecord::Base
     # on the left and check in hour on the right, and add it to set
     while set.size > 0
       left = set.first
-      right = left.find_associated_hour
+      right = left.find_checkin_hour
 
       if right.present?
         pairs << [left, right].sort_by! { |o| o.day.wday } # Sort by weekday number

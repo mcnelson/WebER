@@ -7,3 +7,8 @@ en:
       reservation:
         starts_at: "Check-out date"
         ends_at: "Check-in date"
+
+      er_hour:
+        checkin_hour: "Associated check-in hour"
+        starts_at: "ER opening time"
+        ends_at: "ER closing time"
