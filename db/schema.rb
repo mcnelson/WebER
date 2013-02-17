@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217173423) do
+ActiveRecord::Schema.define(:version => 20130217190403) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "unit_id",                                  :null => false
@@ -29,16 +29,16 @@ ActiveRecord::Schema.define(:version => 20121217173423) do
   end
 
   create_table "er_hours", :force => true do |t|
-    t.time     "starts_at",          :null => false
-    t.time     "ends_at",            :null => false
-    t.integer  "semester_id",        :null => false
-    t.integer  "associated_hour_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.time     "starts_at",       :null => false
+    t.time     "ends_at",         :null => false
+    t.integer  "semester_id",     :null => false
+    t.integer  "checkin_hour_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.date     "day"
   end
 
-  add_index "er_hours", ["associated_hour_id"], :name => "index_er_hours_on_associated_hour_id"
+  add_index "er_hours", ["checkin_hour_id"], :name => "index_er_hours_on_associated_hour_id"
 
   create_table "packages", :force => true do |t|
     t.string   "title",                  :limit => 200, :null => false
