@@ -17,7 +17,7 @@
         .pull-right = link_to 'Add ER Hour', new_admin_semester_er_hour_path(@semester), class: "btn btn-primary"
         h2 ER Hours
 
-        = render 'er_hours_table'
+        = render partial: 'er_hours_table', locals: { show_controls: true }
 
   .form-actions
     .row-fluid
