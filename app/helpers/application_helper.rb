@@ -13,7 +13,9 @@ module ApplicationHelper
   end
 
   def weekdays_for_select
-    Date::DAYNAMES.map { |day| [day, Date.parse(day)] }
+    Date::DAYNAMES.each_with_index.map do |dayname, wday|
+      [dayname, wday]
+    end
   end
 
   def js_link(label, options={})

@@ -24,17 +24,8 @@ p#notice = notice
       h2 ER Hours
 
       - if @semester.er_hours.present?
-        table.table
-          - ErHour.associated_pairs(@semester).each do |pair|
-            - if pair.class == Array
-              tr
-                td = pair.first.weekday_with_range
-                td: i.icon-arrow-right
-                td = pair.second.weekday_with_range
-            - else
-              tr
-                td colspan="2"
-                  = "#{pair.weekday_with_range} (Unassociated)"
+        = render partial: 'er_hours_table', locals: { show_controls: false }
+
       - else
         span.label.strong No ER hours defined yet.
 

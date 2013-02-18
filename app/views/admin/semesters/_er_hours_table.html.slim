@@ -6,17 +6,22 @@
         th Day
         th Starts
         th Ends
-        th
+
+        - if show_controls
+          th
 
       - @semester.er_hours.each do |er_hour|
         tr
-          td = er_hour.day_abbreviated.capitalize
+          td
+            = wday_abbreviated(er_hour.wday)
+            = association_arrow(er_hour.checkin_hour)
           td = er_hour.starts_at.strftime "%l:%M%P"
           td = er_hour.ends_at.strftime "%l:%M%P"
 
-          td
-            .btn-group
-              = link_to edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-mini btn-primary" do
-                i.icon-pencil
-              = link_to [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-mini btn-inverse" do
-                i.icon-remove
+          - if show_controls
+            td
+              .btn-group
+                = link_to edit_admin_semester_er_hour_path(er_hour.semester, er_hour), class: "btn btn-mini btn-primary" do
+                  i.icon-pencil
+                = link_to [:admin, er_hour.semester, er_hour], confirm: 'Are you sure?', method: :delete, class: "btn btn-mini btn-inverse" do
+                  i.icon-remove

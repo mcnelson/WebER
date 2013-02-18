@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130217190403) do
+ActiveRecord::Schema.define(:version => 20130217220531) do
 
   create_table "accessory_dependencies", :force => true do |t|
     t.integer  "unit_id",                                  :null => false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20130217190403) do
     t.integer  "checkin_hour_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.date     "day"
+    t.integer  "wday"
   end
 
   add_index "er_hours", ["checkin_hour_id"], :name => "index_er_hours_on_associated_hour_id"
