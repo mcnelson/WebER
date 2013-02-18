@@ -5,9 +5,14 @@ class ReservationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @reservations = current_user.reservations.
+    @all_reservations = current_user.reservations.
       order(sort_column + " " + sort_direction).
       page params[:page]
+
+    @due_reservations = current_user.reservations.
+      where("ends_at > ? AND ends_at < ?", Date.today, Date.today + 2.days).
+      order("ends_at ASC").
+      limit(5)
   end
 
   def show

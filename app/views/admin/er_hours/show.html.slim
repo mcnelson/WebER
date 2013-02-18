@@ -12,11 +12,11 @@ p#notice = notice
 
         p
           strong Starts at:
-          = @er_hour.starts_at.strftime "%l:%M%P"
+          = @er_hour.starts_at.to_s(:ampm)
 
         p
           strong Ends at:
-          = @er_hour.ends_at.strftime "%l:%M%P"
+          = @er_hour.ends_at.to_s(:ampm)
 
   .span6
     .liner

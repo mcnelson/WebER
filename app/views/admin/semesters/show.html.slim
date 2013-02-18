@@ -13,11 +13,11 @@ p#notice = notice
 
         p
           strong Begins:
-          = @semester.starts_at.strftime("%b %e")
+          = @semester.starts_at.to_s(:monthday)
 
         p
           strong Ends:
-          = @semester.ends_at.strftime("%b %e")
+          = @semester.ends_at.to_s(:monthday)
 
   .span6
     .gasket
