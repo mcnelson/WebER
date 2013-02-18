@@ -1,25 +1,14 @@
 - set_title("Your Reservations")
 
+- if @due_reservations.any?
+  .row-fluid
+    .span12
+      .gasket
+        h2 Due Soon
+        = render partial: "table", locals: { reservations: @due_reservations }
+
 .row-fluid
   .span12
-    .liner
-      table.table.table-striped
-        tr
-          th = sortable :starts_at, "Check-out"
-          th = sortable :ends_at, "Check-in"
-          th = sortable :status
-          th Contents
-          th View
-
-        - @reservations.each do |reservation|
-          tr
-            td = reservation.starts_at.strftime("%D")
-            td = reservation.ends_at.strftime("%D")
-            td = reservation_row_status reservation.status
-            td
-              span.badge.badge-info = "#{reservation.equipment.count}E"
-              |  
-              span.badge = "#{reservation.accessories.count}A"
-
-            td
-              = link_to 'View', reservation, class: "btn btn-small"
+    .gasket
+      h2 All Reservations
+      = render partial: "table", locals: { reservations: @all_reservations }

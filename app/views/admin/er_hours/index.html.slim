@@ -17,8 +17,8 @@
       - @er_hours.each do |er_hour|
         tr
           td = er_hour.day.capitalize
-          td = er_hour.starts_at.strftime "%l:%M%P"
-          td = er_hour.ends_at.strftime "%l:%M%P"
+          td = er_hour.starts_at.to_s(:ampm)
+          td = er_hour.ends_at.to_s(:ampm)
 
           td
             .btn-group

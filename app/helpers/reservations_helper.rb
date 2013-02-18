@@ -16,6 +16,7 @@ module ReservationsHelper
 
     days = []
     semester.starts_at.upto(semester.ends_at) do |idate|
+      # This date format is tuned to JQuery Datepicker
       days << idate.strftime("%d/%m/%Y") unless semester.er_hour_on_day(idate).nil?
     end
 
