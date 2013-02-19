@@ -10,7 +10,7 @@ table.table.table-striped
     tr
       td = reservation.starts_at
       td = reservation.ends_at
-      td = reservation_row_status reservation.status
+      td = reservation_pretty_status reservation.status
       td
         span.badge.badge-info = "#{reservation.equipment.count}E"
         |  

@@ -1,5 +1,25 @@
 .reservations,
 .admin_reservations {
+  .start-here {
+    display: inline;
+    margin-right: 1.1em;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #aaa;
+    font-size: 0.9em;
+
+    i {
+      margin-left: 0.4em;
+    }
+  }
+
+  .emphasize-time {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
   .unit-row {
     min-height: 40px;
     border-top: solid 1px #CCC;

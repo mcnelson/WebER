@@ -4,7 +4,7 @@ module ReservationsHelper
     "/assets/noimage.jpg"
   end
 
-  def reservation_row_status(status)
+  def reservation_pretty_status(status)
     color = Reservation::STATUS_BOOTSTRAP_COLORS[Reservation::STATUSES.index(status)]
     label_class = (color) ? "label label-#{color}" : ""
     content_tag :span, status.capitalize, class: label_class

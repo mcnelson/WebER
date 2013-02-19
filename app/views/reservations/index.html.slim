@@ -8,7 +8,18 @@
         = render partial: "table", locals: { reservations: @due_reservations }
 
 .row-fluid
-  .span12
+  .span4
     .gasket
       h2 All Reservations
+  .span8
+    .liner.pull-right
+      .start-here
+        | Need some equipment? Start right here 
+        i.icon-forward
+
+      = link_to "Create Reservation", new_reservation_path, :class => "btn btn-info"
+
+.row-fluid
+  .span12
+    .gasket
       = render partial: "table", locals: { reservations: @all_reservations }
