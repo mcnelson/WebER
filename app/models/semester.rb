@@ -26,7 +26,7 @@ class Semester < ActiveRecord::Base
   end
 
   def er_hour_on_day(date)
-    er_hours.select { |erh| erh.day.wday == date.wday } .first || nil
+    er_hours.select { |erh| erh.wday == date.wday } .first || nil
   end
 
   # Find an er hour given a date. If no er hour on the given date, goes forward

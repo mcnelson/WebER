@@ -2,17 +2,57 @@
 
 p#notice = notice
 
-p
-  strong Owner:
-  = @reservation.user.punet
-p
-  strong Starts at:
-  = @reservation.starts_at
-p
-  strong Ends at:
-  = @reservation.ends_at
-p
-  strong Status:
-  = @reservation.status
+.row-fluid
+  .span4
+    .gasket
+      h2 Details
+      .ptable.ptable-40
+        p
+          strong Reservation #:
+          = @reservation.id
+        p
+          strong Check Out:
+          = @reservation.starts_at.to_s(:weekday_monthday)
+        p
+          strong Check In:
+          = @reservation.ends_at.to_s(:weekday_monthday)
+        p
+          strong Status:
+          = reservation_pretty_status(@reservation.status)
 
-= link_to 'Back', root_path
+  .span8
+    .liner
+      = render partial: "equipment_table", locals: { equipment: @reservation.equipment, show_controls: false }
+
+- er_hour = Semester.around_date(@reservation.starts_at).first.er_hour_on_day(@reservation.starts_at)
+.row-fluid
+  .span4
+    .gasket
+      h2 Checking Out
+      p
+        | Go to the equipment room (ER) during the hours below on 
+        strong = wday_abbreviated(er_hour.wday)
+        | . You may show up at any time, but please don't be late.
+
+      .gasket
+        .well
+          .emphasize-time
+            = er_hour.starts_at.to_s(:ampm)
+            |  
+            i.icon-minus
+            = er_hour.ends_at.to_s(:ampm)
+          = @reservation.starts_at.to_date
+
+  .span4
+    .gasket
+      h2 Location
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tortor vitae nunc vulputate a interdum turpis dapibus. Sed hendrerit molestie viverra. Vivamus venenatis ipsum vitae sapien ultricies tincidunt.
+
+  .span4
+    .gasket
+      h2 Some Policy
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tortor vitae nunc vulputate a interdum turpis dapibus. Sed hendrerit molestie viverra. Vivamus venenatis ipsum vitae sapien ultricies tincidunt.
+
+.form-actions
+  .btn-group
+    = link_to 'Back', root_path, class: "btn"
