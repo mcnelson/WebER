@@ -31,7 +31,7 @@ class Admin::ReservationsController < AdminController
     @reservation = Reservation.find(params[:id])
   end
 
-  def create
+  def create # TODO: Make functional
     @reservation = Reservation.new(params[:reservation])
 
     respond_to do |format|
@@ -45,6 +45,10 @@ class Admin::ReservationsController < AdminController
 
       format.js do
         if params[:commit] && @reservation.save
+          @reservation.invalid_override = true
+          @reservation.valid?
+          @reservation.save!
+
           render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
         else
           @reservation.valid?

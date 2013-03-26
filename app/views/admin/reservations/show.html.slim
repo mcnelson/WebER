@@ -21,7 +21,7 @@ p#notice = notice
 
   .span8
     .liner
-      = render partial: "equipment_table", locals: { equipment: @reservation.equipment }
+      = render partial: "equipment_table", locals: { equipment: @reservation.equipment, show_controls: true }
 
 
 .form-actions
