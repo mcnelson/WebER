@@ -24,7 +24,8 @@ end
 group :development do
   gem 'rspec-rails'             # Specs
   gem 'rails-erd'               # Model diagramer
-  gem 'debugger'                # Debugging
+  gem 'pry'                     # Debugging
+  gem 'pry-debugger'            # Debugging
 end
 
 group :test do
