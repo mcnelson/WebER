@@ -38,7 +38,11 @@ class ReservationsController < ApplicationController
       end
 
       format.js do
-        if params[:commit] && @reservation.save
+        if params[:commit]
+          @reservation.invalid_override = true
+          @reservation.valid?
+          @reservation.save!
+
           render js: "window.location = '#{reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
         else
           @reservation.valid?

@@ -1,7 +1,10 @@
 class DatepickerInput < SimpleForm::Inputs::Base
   def input
     template.content_tag :div, class: 'simpleform-inline-datepicker' do
-      @builder.hidden_field(attribute_name, value: @builder.object.send(attribute_name).to_s, class: 'datepicker-input')
+      attr = @builder.object.send(attribute_name)
+      value = attr.respond_to?(:strftime) ? attr.strftime("%Y/%m/%d") : attr.to_s
+
+      @builder.hidden_field(attribute_name, value: value, class: 'datepicker-input')
     end
   end
 
