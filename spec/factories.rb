@@ -40,7 +40,7 @@ FactoryGirl.define do
   end
 
   factory :er_hour do
-    day         Date.parse("Monday")
+    wday        1
     starts_at   Time.parse("1:00pm")
     ends_at     Time.parse("3:00pm")
   end
@@ -95,7 +95,7 @@ FactoryGirl.define do
   end
 
   factory :semester do
-    starts_at   Date.parse("January 1, #{Date.today.year}")
-    ends_at     Date.parse("December 31, #{Date.today.year}")
+    starts_at   Date.today.at_beginning_of_year
+    ends_at     Date.today.at_end_of_year
   end
 end
