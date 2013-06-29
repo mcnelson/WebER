@@ -1,23 +1,33 @@
 require 'spec_helper'
 
 describe Semester do
+  include FallSemester
+
+  def date_on_wday(wday)
+    Date.parse(Date::DAYS_INTO_WEEK.key(wday - 1).to_s) # Naughty
+  end
+
   describe '#next_er_hour' do
-    context 'on the weekend' do
-      it 'returns a SpecificErHour on Monday' do
-        @semester = FactoryGirl.create(:semester_with_er_hours, starts_at: Date.parse("Jan 1, 2013"), ends_at: Date.parse("Jan 20, 2013"))
+    let!(:semester) { semester_with_test_er_hours(:build) }
 
-        @semester.stub(:er_hour_on_day).
-          with(Date.parse("Jan 13, 2013")) { nil } # Sunday
+    it 'returns a SpecificErHour' do
+      semester.next_er_hour(date_on_wday(1)).should be_instance_of ErHour::SpecificErHour
+    end
 
-        @semester.stub(:er_hour_on_day).
-          with(Date.parse("Jan 14, 2013")) { FactoryGirl.build(:er_hour, day: Date.parse("Monday")) }
+    it 'returns Friday given Friday' do
+      semester.next_er_hour(date_on_wday(5)).date.wday.should eq(5)
+    end
 
-        specific_er_hour = @semester.next_er_hour(Date.parse("Jan 13, 2013"))
+    it 'returns Monday given Saturday' do
+      semester.next_er_hour(date_on_wday(6)).date.wday.should eq(1)
+    end
 
-        specific_er_hour.should_not be_nil
-        specific_er_hour.should be_instance_of ErHour::SpecificErHour
-        specific_er_hour.date.should == Date.parse("Jan 14, 2013")
-      end
+    it 'returns Monday given Sunday' do
+      semester.next_er_hour(date_on_wday(7)).date.wday.should eq(1)
+    end
+
+    it 'returns Wednesday given Wednesday' do
+      semester.next_er_hour(date_on_wday(3)).date.wday.should eq(3)
     end
   end
 end
