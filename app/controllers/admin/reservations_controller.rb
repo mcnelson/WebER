@@ -1,5 +1,4 @@
 class Admin::ReservationsController < AdminController
-  helper_method :sort_column, :sort_direction
   before_filter :require_current_semester, only: :new
 
   helper LaterDude::CalendarHelper
@@ -91,9 +90,5 @@ class Admin::ReservationsController < AdminController
 
   def sort_column
     params[:sort] || "starts_at"
-  end
-
-  def sort_direction
-    params[:direction] || "desc"
   end
 end

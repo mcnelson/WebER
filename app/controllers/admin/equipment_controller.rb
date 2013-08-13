@@ -1,6 +1,4 @@
 class Admin::EquipmentController < AdminController
-  helper_method :sort_column, :sort_direction
-
   def index
     @equipment = Unit.joins(:category)
 
@@ -83,9 +81,5 @@ class Admin::EquipmentController < AdminController
 
   def sort_column
     params[:sort] || "name"
-  end
-
-  def sort_direction
-    params[:direction] || "asc"
   end
 end
