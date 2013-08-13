@@ -11,10 +11,25 @@ table.table.table-striped.table-condensed
 
   - equipment.each do |equipment|
     tr class="#{ "error" if ["damaged", "overdue"].include? equipment.status }"
-      td = link_to image_tag(equipment.photo(:thirtytwo), width: 32, height: 32), [:admin, equipment]
-      td = link_to equipment.name, [:admin, equipment]
+      td
+        - if show_controls
+          = link_to image_tag(equipment.photo(:thirtytwo), width: 32, height: 32), [:admin, equipment]
+        - else
+          = image_tag(equipment.photo(:thirtytwo), width: 32, height: 32)
+
+      td
+        - if show_controls
+          = link_to equipment.name, [:admin, equipment]
+        - else
+          = equipment.name
+
       td = equipment.status
-      td = link_to equipment.category.title, [:admin, equipment.category]
+      td
+        - if show_controls
+          = link_to equipment.category.title, [:admin, equipment.category]
+        - else
+          = equipment.category.title
+
       td = equipment.brand
       td = equipment.model
       td = equipment.serial
