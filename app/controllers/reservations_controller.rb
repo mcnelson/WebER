@@ -2,8 +2,6 @@ class ReservationsController < ApplicationController
   before_filter :require_student
   before_filter :require_current_semester, only: :new
 
-  helper_method :sort_column, :sort_direction
-
   def index
     @all_reservations = current_user.reservations.
       order(sort_column + " " + sort_direction).
@@ -50,13 +48,5 @@ class ReservationsController < ApplicationController
         end
       end
     end
-  end
-
-  def sort_column
-    params[:sort] || "starts_at"
-  end
-
-  def sort_direction
-    params[:direction] || "desc"
   end
 end

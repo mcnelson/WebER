@@ -30,42 +30,6 @@ module ApplicationHelper
     render partial: "user_bar"
   end
 
-  def sortable(column, title = nil)
-    title ||= column.to_s.titleize
-
-    link_class = ""
-    link_href = ""
-    link_inner = ""
-
-    if column.to_s == sort_column.to_s
-      case sort_direction
-        when "asc"
-          link_class = "current asc"
-          link_href = params.merge sort: column, direction: "desc", page: nil
-          link_inner = "#{ title }<i class=\"icon-chevron-up\"></i>"
-
-        when "desc"
-          link_class = "current desc"
-          link_href = nil # self
-          link_inner = "#{ title }<i class=\"icon-chevron-down\"></i>"
-
-        else
-          link_class = ""
-          link_href = params.merge sort: column, direction: "asc", page: nil
-          link_inner = "#{ title }"
-      end
-    else
-      link_class = ""
-      link_href = params.merge sort: column, direction: "asc", page: nil
-      link_inner = "#{ title }"
-    end
-
-
-    link_to link_href, { class: link_class} do
-      link_inner.html_safe
-    end
-  end
-
   def nav_link_to(label, path, opts={})
     p = Rails.application.routes.recognize_path path
 
@@ -90,5 +54,40 @@ module ApplicationHelper
 
   def equipment_statuses_for_select
     Equipment::STATUSES.map { |s| [s.capitalize, s] }
+  end
+
+  def sortable(column, title = nil)
+    title ||= column.to_s.titleize
+
+    link_class = ""
+    link_href = ""
+    link_inner = ""
+
+    if column.to_s == sort_column.to_s
+      case sort_direction
+        when "asc"
+          link_class = "current asc"
+          link_href = params.merge sort: column, direction: "desc", page: nil
+          link_inner = "#{ title }<i class=\"icon-chevron-up\"></i>"
+
+        when "desc"
+          link_class = "current desc"
+          link_href = params.merge sort: column, direction: "asc", page: nil
+          link_inner = "#{ title }<i class=\"icon-chevron-down\"></i>"
+
+        else
+          link_class = ""
+          link_href = nil
+          link_inner = "#{ title }"
+      end
+    else
+      link_class = ""
+      link_href = params.merge sort: column, direction: "asc", page: nil
+      link_inner = "#{ title }"
+    end
+
+    link_to link_href, { class: link_class} do
+      link_inner.html_safe
+    end
   end
 end

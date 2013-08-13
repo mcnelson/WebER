@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  helper_method :current_user, :sort_column, :sort_direction
+
   protect_from_forgery
 
   def require_student
@@ -30,6 +32,14 @@ class ApplicationController < ActionController::Base
     render_no_current_semester if Semester.current.nil?
   end
 
+  def sort_column
+    params[:sort] or raise "No sort column default defined"
+  end
+
+  def sort_direction
+    params[:direction] || "desc"
+  end
+
   private
 
   def current_user
@@ -53,6 +63,4 @@ class ApplicationController < ActionController::Base
   def render_no_current_semester
     render action: "no_current_semester", status: 500, layout: "smallcenter"
   end
-
-  helper_method :current_user
 end
