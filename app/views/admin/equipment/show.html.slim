@@ -31,7 +31,7 @@ p#notice = notice
         - if @equipment.max_reservation_period
           p
             strong Max reservation period:
-            = @equipment.max_reservation_period
+            = distance_of_time_in_words @equipment.max_reservation_period
 
         - if @equipment.notes.present?
           p
