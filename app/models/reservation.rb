@@ -98,13 +98,15 @@ class Reservation < ActiveRecord::Base
 
   def conflicting_units
     return if invalid_overriding?
-    units.each do |unit|
-      overlapping_reservations = unit.
-        in_reservations_in_range_exclusive(starts_at, ends_at).
-        where("reservations.id != ?", id)
+
+    (reserved_equipment + reserved_accessories).select {|ru| ru.valid? } .each do |reserved_unit|
+      overlapping_reservations = reserved_unit.unit.
+        in_reservations_in_range_exclusive(starts_at, ends_at).tap do |relation|
+          relation = relation.where("reservations.id != ?", id) if id.present?
+        end
 
       if overlapping_reservations.any?
-        unit.errors[:base] << "conflicts with #{pluralize(overlapping_reservations.count, "reservation")}"
+        errors[:base] << "#{reserved_unit.unit.name} conflicts with #{pluralize(overlapping_reservations.count, "reservation")}"
       end
     end
   end

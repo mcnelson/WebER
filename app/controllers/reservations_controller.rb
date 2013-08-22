@@ -49,4 +49,8 @@ class ReservationsController < ApplicationController
       end
     end
   end
+
+  def sort_column
+    params[:sort] || "starts_at"
+  end
 end
