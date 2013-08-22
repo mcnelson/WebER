@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def sort_column
-    params[:sort] or raise "No sort column default defined"
+    params[:sort] || "id"
   end
 
   def sort_direction
