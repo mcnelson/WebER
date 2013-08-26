@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def require_student
     # Login if no user
     return redirect_to signin_path if current_user.nil?
-    return if current_user.workstudy?
+    return if current_user.student?
 
     # Kick out otherwise
     render_403
