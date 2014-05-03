@@ -22,10 +22,12 @@ group :assets do
 end
 
 group :development do
+  gem 'zeus'                    # Fast startup
   gem 'rspec-rails'             # Specs
   gem 'rails-erd'               # Model diagramer
   gem 'pry'                     # Debugging
-  gem 'pry-debugger'            # Debugging
+  gem 'pry-rails'               # Debugging
+  gem 'pry-byebug'              # Debugging
 end
 
 group :test do
