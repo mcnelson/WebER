@@ -15,9 +15,10 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: weber_development
+  database: weber
   pool: 5
   username: weber
+  password: weber
   min_messages: warning
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -44,7 +45,7 @@ test:
   database: weber_test
   pool: 5
   username: weber
-  password:
+  password: weber
 
 production:
   adapter: postgresql
@@ -53,3 +54,4 @@ production:
   pool: 5
   username: weber
   min_messages: warning
+  password: weber
