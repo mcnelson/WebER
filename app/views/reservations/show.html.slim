@@ -37,10 +37,10 @@ p#notice = notice
       .gasket
         .well
           .emphasize-time
-            = er_hour.starts_at.to_s(:ampm)
+            = l er_hour.starts_at, format: :ampm
             |  
             i.icon-minus
-            = er_hour.ends_at.to_s(:ampm)
+            = l er_hour.ends_at, format: :ampm
           = @reservation.starts_at.to_date
 
   .span4
