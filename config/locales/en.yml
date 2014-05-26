@@ -1,6 +1,3 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
   activerecord:
     attributes: 
@@ -13,3 +10,15 @@ en:
         ends_at: "ER closing time"
         checkin_hour: "Associated check-in hour"
         wday: "Weekday"
+
+  time:
+    formats:
+      dmy:         "%-m/%-d/%Y"
+      dmy_ampm:    "%-m/%-d/%Y %l:%M%P"
+      ampm:        "%l:%M%P"
+
+  date:
+    formats:
+      dmy:              "%-m/%-d/%Y"
+      weekday_monthday: "%a, %b %e"
+      monthday:         "%b %e"

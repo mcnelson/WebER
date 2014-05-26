@@ -22,7 +22,7 @@ class Semester < ActiveRecord::Base
   end
 
   def yearterm_with_range
-    "#{year.to_s} #{term} (#{starts_at.to_s(:monthday)} - #{ends_at.to_s(:monthday)})"
+    "#{year.to_s} #{term} (#{I18n.localize(starts_at, format: :monthday)} - #{I18n.localize(ends_at, format: :monthday)})"
   end
 
   def er_hour_on_day(date)
