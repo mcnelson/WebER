@@ -98,7 +98,7 @@ describe Admin::SemestersController do
       it "redirects to the semester" do
         semester = Semester.create! valid_attributes
         put :update, {:id => semester.to_param, :semester => valid_attributes}
-        response.should redirect_to([:admin, semester])
+        response.should render_template("edit")
       end
     end
 
