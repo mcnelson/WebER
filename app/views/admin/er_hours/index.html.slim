@@ -17,8 +17,8 @@
       - @er_hours.each do |er_hour|
         tr
           td = er_hour.day.capitalize
-          td = er_hour.starts_at.to_s(:ampm)
-          td = er_hour.ends_at.to_s(:ampm)
+          td = l er_hour.starts_at, format: :ampm
+          td = l er_hour.ends_at, format: :ampm
 
           td
             .btn-group

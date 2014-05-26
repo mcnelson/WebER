@@ -15,8 +15,8 @@
           td
             = wday_abbreviated(er_hour.wday)
             = association_arrow(er_hour.checkin_hour)
-          td = er_hour.starts_at.to_s(:ampm)
-          td = er_hour.ends_at.to_s(:ampm)
+          td = l er_hour.starts_at, format: :ampm
+          td = l er_hour.ends_at, format: :ampm
 
           - if show_controls
             td

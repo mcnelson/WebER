@@ -26,7 +26,7 @@ class ErHour < ActiveRecord::Base
   end
 
   def weekday_with_range
-    "#{wday_abbreviated(wday)} #{starts_at.to_s(:ampm)} - #{ends_at.to_s(:ampm)}"
+    "#{wday_abbreviated(wday)} #{I18n.localize(starts_at, format: :ampm)} - #{I18n.localize(ends_at, format: :ampm)}"
   end
 
   def find_checkin_hour
