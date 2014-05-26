@@ -12,10 +12,10 @@ p#notice = notice
           = @reservation.id
         p
           strong Check Out:
-          = @reservation.starts_at.to_s(:weekday_monthday)
+          = l @reservation.starts_at, format: :weekday_monthday
         p
           strong Check In:
-          = @reservation.ends_at.to_s(:weekday_monthday)
+          = l @reservation.ends_at, format: :weekday_monthday
         p
           strong Status:
           = reservation_pretty_status(@reservation.status)

@@ -11,10 +11,10 @@ p#notice = notice
           = @reservation.user.punet
         p
           strong Starts at:
-          = @reservation.starts_at.to_s(:monthday)
+          = l @reservation.starts_at, format: :monthday
         p
           strong Ends at:
-          = @reservation.ends_at.to_s(:monthday)
+          = l @reservation.ends_at, format: :monthday
         p
           strong Status:
           = @reservation.status

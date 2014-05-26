@@ -19,7 +19,7 @@
           tr
             td = semester.year
             td = semester.term
-            td = semester.starts_at.to_s(:monthday) + " - " + semester.ends_at.to_s(:monthday)
+            td = "#{l(semester.starts_at, format: :monthday)} - #{l(semester.ends_at, format: :monthday)}"
             td
               .btn-group
                 = link_to 'Show', [:admin, semester], class: "btn btn-small"
