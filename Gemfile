@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'            # Where it all begins
+gem 'rails', '3.2.18'           # Where it all begins
 
 gem 'therubyracer'              # Exec JS
 gem 'less-rails'                # LESS Stylesheets
@@ -9,16 +9,16 @@ gem 'twitter-bootstrap-rails'   # Twitter Bootstrap
 gem 'slim-rails'                # Slim
 gem 'simple_form'               # SimpleForm (form processing)
 gem 'nested_form'               # Form controls for has many relationships
-gem "paperclip", "~> 3.0"       # Paperclip (Attach images to models)
+gem "paperclip"                 # Paperclip (Attach images to models)
 gem 'kaminari'                  # Pagination
 gem 'later_dude', '>= 0.3.1'    # Calendar rendering
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
 group :assets do
   gem 'jquery-rails'            # JQuery
-  gem 'sass-rails', '~> 3.2.3'  # Syntactically Awesome Stylesheets
-  gem 'coffee-rails', '~> 3.2.1'# CoffeeScript
-  gem 'uglifier', '>= 1.0.3'    # JS Compression
+  gem 'sass-rails'              # Syntactically Awesome Stylesheets
+  gem 'coffee-rails'            # CoffeeScript
+  gem 'uglifier'                # JS Compression
 end
 
 group :development do
