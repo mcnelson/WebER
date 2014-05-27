@@ -125,7 +125,7 @@ describe Admin::EquipmentController do
 
   describe "DELETE destroy" do
     it "destroys the requested equipment" do
-      equipment = Equipment.create! valid_attributes
+      equipment = Equipment.create!(valid_attributes)
       expect {
         delete :destroy, {:id => equipment.to_param}
       }.to change(Equipment, :count).by(-1)

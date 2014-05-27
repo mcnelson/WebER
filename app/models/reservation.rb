@@ -54,8 +54,8 @@ class Reservation < ActiveRecord::Base
 
   def defaults
     self.status     ||= STATUSES.first
-    self.starts_at  ||= Semester.current.next_er_hour(Date.today).date
-    self.ends_at    ||= Semester.current.next_er_hour(starts_at + 2.days).date
+    self.starts_at  ||= Semester.current.next_er_hour(Date.today).to_date
+    self.ends_at    ||= Semester.current.next_er_hour(starts_at + 2.days).to_date
   end
 
   def equipment_or_accessory
