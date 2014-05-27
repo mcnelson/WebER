@@ -1,4 +1,7 @@
 require 'spec_helper'
+
+include FallSemester
+
 describe Admin::ReservationsController do
   def valid_attributes
     @user = FactoryGirl.create(:user)
@@ -7,11 +10,12 @@ describe Admin::ReservationsController do
 
   before do
     signin_as("admin")
+    semester_with_test_er_hours
   end
 
   describe "POST create" do
     it 'creates a new reservation' do
-      post :create, { reservation: valid_attributes }
+      post :create, {reservation: valid_attributes}
       assigns(:reservation).should be_a(Reservation)
       assigns(:reservation).should be_persisted
     end

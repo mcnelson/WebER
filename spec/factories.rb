@@ -1,5 +1,3 @@
-include ActionDispatch::TestProcess # For fixture_file_upload
-
 FactoryGirl.define do
   factory :accessory_category do
     title "HPX Batteries"
@@ -7,7 +5,6 @@ FactoryGirl.define do
 
   factory :equipment do
     name      "HPX #1"
-    photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
     brand     "Panasonic"
     model     "HPX-4392"
     serial    "MB0932310111"
@@ -19,8 +16,6 @@ FactoryGirl.define do
   end
 
   factory :accessory do
-    photo     { fixture_file_upload('spec/images/hpx_test_photo.jpg') }
-
     brand "Panasonic"
     model "HBDS2224"
     serial "750871676"
