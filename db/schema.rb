@@ -9,109 +9,116 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130217220531) do
+ActiveRecord::Schema.define(version: 20140531195616) do
 
-  create_table "accessory_dependencies", :force => true do |t|
-    t.integer  "unit_id",                                  :null => false
-    t.integer  "accessory_category_id",                    :null => false
-    t.boolean  "optional",              :default => false, :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "accessory_dependencies", force: true do |t|
+    t.integer  "unit_id",                               null: false
+    t.integer  "accessory_category_id",                 null: false
+    t.boolean  "optional",              default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
-  create_table "categories", :force => true do |t|
-    t.string   "title",      :limit => 100,                                  :null => false
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
-    t.string   "type",                      :default => "EquipmentCategory", :null => false
+  create_table "categories", force: true do |t|
+    t.string   "title",      limit: 100,                               null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "type",                   default: "EquipmentCategory", null: false
   end
 
-  create_table "er_hours", :force => true do |t|
-    t.time     "starts_at",       :null => false
-    t.time     "ends_at",         :null => false
-    t.integer  "semester_id",     :null => false
+  create_table "er_hours", force: true do |t|
+    t.time     "starts_at",       null: false
+    t.time     "ends_at",         null: false
+    t.integer  "semester_id",     null: false
     t.integer  "checkin_hour_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "wday"
   end
 
-  add_index "er_hours", ["checkin_hour_id"], :name => "index_er_hours_on_associated_hour_id"
+  add_index "er_hours", ["checkin_hour_id"], name: "index_er_hours_on_associated_hour_id", using: :btree
 
-  create_table "packages", :force => true do |t|
-    t.string   "title",                  :limit => 200, :null => false
+  create_table "packages", force: true do |t|
+    t.string   "title",                  limit: 200, null: false
     t.integer  "max_reservation_period"
-    t.integer  "user_id",                               :null => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.integer  "user_id",                            null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
-  create_table "packages_units", :force => true do |t|
-    t.integer  "unit_id",    :null => false
-    t.integer  "package_id", :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "packages_units", force: true do |t|
+    t.integer  "unit_id",    null: false
+    t.integer  "package_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "reservations", :force => true do |t|
-    t.date     "starts_at",                :null => false
-    t.date     "ends_at",                  :null => false
-    t.string   "status",     :limit => 30, :null => false
+  create_table "reservations", force: true do |t|
+    t.date     "starts_at",             null: false
+    t.date     "ends_at",               null: false
+    t.string   "status",     limit: 30, null: false
     t.text     "notes"
-    t.integer  "user_id",                  :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.integer  "user_id",               null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  create_table "reserved_units", :force => true do |t|
-    t.integer  "unit_id",        :null => false
-    t.integer  "reservation_id", :null => false
+  create_table "reserved_units", force: true do |t|
+    t.integer  "unit_id",        null: false
+    t.integer  "reservation_id", null: false
     t.integer  "package_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "type",           :null => false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "type",           null: false
   end
 
-  create_table "semesters", :force => true do |t|
-    t.date     "starts_at",  :null => false
-    t.date     "ends_at",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "semesters", force: true do |t|
+    t.date     "starts_at",  null: false
+    t.date     "ends_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "units", :force => true do |t|
-    t.boolean  "active",                                :default => true,        :null => false
-    t.string   "status",                 :limit => 20,                           :null => false
-    t.string   "name",                   :limit => 100
-    t.string   "brand",                  :limit => 100
-    t.string   "model",                  :limit => 100
-    t.string   "serial",                 :limit => 100
+  create_table "units", force: true do |t|
+    t.boolean  "active",                             default: true,        null: false
+    t.string   "status",                 limit: 20,                        null: false
+    t.string   "name",                   limit: 100
+    t.string   "brand",                  limit: 100
+    t.string   "model",                  limit: 100
+    t.string   "serial",                 limit: 100
     t.integer  "max_reservation_period"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "category_id"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.text     "notes"
-    t.string   "type",                                  :default => "Equipment", :null => false
+    t.string   "type",                               default: "Equipment", null: false
   end
 
-  create_table "users", :force => true do |t|
-    t.boolean  "active",                         :default => true
-    t.string   "punet",            :limit => 8,                    :null => false
+  create_table "users", force: true do |t|
+    t.boolean  "active",                      default: true
+    t.string   "punet",            limit: 8,                 null: false
     t.integer  "pu_student_id"
-    t.integer  "strikes",                        :default => 0
-    t.boolean  "can_reserve",                    :default => true
+    t.integer  "strikes",                     default: 0
+    t.boolean  "can_reserve",                 default: true
     t.text     "notes"
     t.string   "password_digest"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.string   "email",                                            :null => false
-    t.string   "permission_level", :limit => 50,                   :null => false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "email",                                      null: false
+    t.string   "permission_level", limit: 50,                null: false
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["pu_student_id"], name: "index_users_on_pu_student_id", unique: true, using: :btree
+  add_index "users", ["punet"], name: "index_users_on_punet", unique: true, using: :btree
 
 end

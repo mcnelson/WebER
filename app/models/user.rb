@@ -1,13 +1,12 @@
 class User < ActiveRecord::Base
   PERMISSION_LEVELS = %w(student workstudy admin)
 
-  validates_uniqueness_of :pu_student_id, :punet, :email
-  validates_presence_of :punet, :pu_student_id, :email, :permission_level
-  validates_presence_of :password, :password_confirmation, on: :create
-
-  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-
   has_secure_password
+
+  validates :pu_student_id, :punet, :email, uniqueness: true
+  validates :punet, :pu_student_id, :email, :permission_level, :password, presence: true
+  validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}
+  validates :password_confirmation, on: :create, presence: true
 
   has_many :reservations, dependent: :restrict_with_error
   has_many :packages, dependent: :restrict_with_error
