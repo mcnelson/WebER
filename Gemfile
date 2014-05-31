@@ -6,7 +6,7 @@ gem 'therubyracer'              # Exec JS
 gem 'less-rails'                # LESS Stylesheets
 gem 'pg'                        # PostgreSQL
 gem 'twitter-bootstrap-rails'   # Twitter Bootstrap
-gem 'slim-rails'                # Slim
+gem 'slim-rails', '~> 0.1.2'
 gem 'simple_form'               # SimpleForm (form processing)
 gem 'nested_form'               # Form controls for has many relationships
 gem "paperclip", "~> 4.1"       # Paperclip (Attach images to models)
