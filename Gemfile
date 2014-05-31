@@ -20,6 +20,7 @@ gem 'uglifier'                # JS Compression
 
 group :development do
   gem "spring"
+  gem "spring-commands-rspec"
   gem 'rails-erd'               # Model diagramer
   gem 'pry'                     # Debugging
   gem 'pry-rails'               # Debugging
