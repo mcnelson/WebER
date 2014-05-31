@@ -1,5 +1,4 @@
 class Unit < ActiveRecord::Base
-  attr_accessible :active, :brand, :max_reservation_period, :model, :serial, :status, :category_id, :photo, :notes
   validates_presence_of :active, :status, :category_id
 
   belongs_to :category

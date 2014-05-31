@@ -1,8 +1,6 @@
 class Admin::ReservationsController < AdminController
   before_filter :require_current_semester, only: :new
 
-  helper LaterDude::CalendarHelper
-
   def index
     @reservations = Reservation.joins(:user)
 

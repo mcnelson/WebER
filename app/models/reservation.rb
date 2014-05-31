@@ -1,7 +1,6 @@
 class Reservation < ActiveRecord::Base
   include ActionView::Helpers # Wah wah wahhhh
 
-  attr_accessible :ends_at, :starts_at, :status, :user_id, :reserved_equipment_attributes, :reserved_accessories_attributes
   attr_accessor :invalid_override
 
   validates_presence_of :ends_at, :starts_at, :status, :user_id, unless: :invalid_overriding?

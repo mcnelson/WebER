@@ -1,8 +1,6 @@
 class ErHour < ActiveRecord::Base
   include ErHoursHelper
 
-  attr_accessible :wday, :ends_at, :starts_at, :semester_id, :checkin_hour_id
-
   has_one :checkin_hour, class_name: "ErHour"
   belongs_to :checkin_hour, class_name: "ErHour"
   belongs_to :semester
