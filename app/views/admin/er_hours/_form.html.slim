@@ -10,7 +10,10 @@
           = f.input :ends_at, ampm: true, minute_step: 15
 
           - semester_er_hours = ErHour.in_semester(@er_hour.semester)
-          = f.association :checkin_hour, collection: semester_er_hours, label_method: :weekday_with_range, hint: (semester_er_hours.blank? ? "Note: No other ER hours are currently available for association." : "")
+          = f.association :checkin_hour,
+            collection:   semester_er_hours,
+            label_method: :weekday_with_range,
+            hint:         (semester_er_hours.blank? ? "Note: No other ER hours are currently available for association." : "")
 
   .form-actions
     .btn-group

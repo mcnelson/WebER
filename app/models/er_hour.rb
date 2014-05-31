@@ -1,12 +1,11 @@
 class ErHour < ActiveRecord::Base
   include ErHoursHelper
 
-  has_one :checkin_hour, class_name: "ErHour"
-  belongs_to :checkin_hour, class_name: "ErHour"
-  belongs_to :semester
-
   validates_presence_of :wday, :starts_at, :ends_at, :semester_id
   validate :once_per_weekday_per_semester
+
+  belongs_to :checkin_hour, class_name: "ErHour"
+  belongs_to :semester
 
   scope :in_semester, lambda { |semester|
     joins(:semester)
@@ -16,22 +15,17 @@ class ErHour < ActiveRecord::Base
   scope :live, joins(:semester).where("er_hours.ends_at >= ? AND semesters.ends_at >= ?", Time.now, Time.now)
 
   def once_per_weekday_per_semester
-    if semester.er_hours.select { |er_hour| er_hour != self && er_hour.wday == self.wday } .any?
+    if semester && semester.er_hours.select { |h| h != self && h.wday == self.wday } .present?
       errors[:wday] << "is already present in the semester. There can only be one ER hour per weekday in a semester."
     end
   end
 
+  def wday_name
+    Date::DAYNAMES[wday][0...3]
+  end
+
   def weekday_with_range
-    "#{wday_abbreviated(wday)} #{I18n.localize(starts_at, format: :ampm)} - #{I18n.localize(ends_at, format: :ampm)}"
-  end
-
-  def find_checkin_hour
-    return checkin_hour if checkin_hour.present?
-    ErHour.find_by_checkin_hour_id(id)
-  end
-
-  def other_hours_in_semester
-    semester.er_hours.where("id != ?", id)
+    "#{wday_name} #{I18n.localize(starts_at, format: :ampm)} - #{I18n.localize(ends_at, format: :ampm)}"
   end
 
   private

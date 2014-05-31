@@ -205,7 +205,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   coffee-rails (~> 4.0.0)
-  factory_girl
+  factory_girl (~> 4.4.0)
   factory_girl_rails
   jquery-rails
   kaminari
