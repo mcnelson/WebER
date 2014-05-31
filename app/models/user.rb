@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :active, :can_reserve, :notes, :pu_student_id, :punet, :strikes, :password, :password_confirmation, :email, :permission_level
+  PERMISSION_LEVELS = %w(student workstudy admin)
+
+  attr_accessible :active, :can_reserve, :notes, :pu_student_id, :punet, :strikes, :password,
+    :password_confirmation, :email, :permission_level
 
   validates_uniqueness_of :pu_student_id, :punet, :email
   validates_presence_of :punet, :pu_student_id, :email, :permission_level
@@ -14,19 +17,7 @@ class User < ActiveRecord::Base
 
   scope :active_users, where(active: true)
 
-  after_initialize :create_permission_methods
-
-  PERMISSION_LEVELS = [
-    "student",
-    "workstudy",
-    "admin"
-  ]
-
-  def create_permission_methods
-    PERMISSION_LEVELS.each_with_index do |pl, i|
-      self.class.send :define_method, "#{pl}?" do
-        (PERMISSION_LEVELS.index(permission_level) >= i)
-      end
-    end
+  PERMISSION_LEVELS.each do |l|
+    define_method("#{l}?") { permission_level == l }
   end
 end
