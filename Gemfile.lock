@@ -66,7 +66,6 @@ GEM
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    later_dude (0.3.3)
     less (2.5.1)
       commonjs (~> 0.2.7)
     less-rails (2.5.0)
@@ -199,10 +198,9 @@ DEPENDENCIES
   factory_girl_rails
   jquery-rails
   kaminari
-  later_dude (>= 0.3.1)
   less-rails
   nested_form
-  paperclip
+  paperclip (~> 4.1)
   passenger
   pg
   pry

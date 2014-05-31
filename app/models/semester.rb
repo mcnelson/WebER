@@ -1,7 +1,6 @@
 class Semester < ActiveRecord::Base
   has_many :er_hours, class_name: "ErHour"
 
-  attr_accessible :ends_at, :starts_at
   validates_presence_of :ends_at, :starts_at
 
   scope :live, where("ends_at >= ?", Time.now)

@@ -1,9 +1,6 @@
 class User < ActiveRecord::Base
   PERMISSION_LEVELS = %w(student workstudy admin)
 
-  attr_accessible :active, :can_reserve, :notes, :pu_student_id, :punet, :strikes, :password,
-    :password_confirmation, :email, :permission_level
-
   validates_uniqueness_of :pu_student_id, :punet, :email
   validates_presence_of :punet, :pu_student_id, :email, :permission_level
   validates_presence_of :password, :password_confirmation, on: :create

@@ -9,9 +9,8 @@ gem 'twitter-bootstrap-rails'   # Twitter Bootstrap
 gem 'slim-rails'                # Slim
 gem 'simple_form'               # SimpleForm (form processing)
 gem 'nested_form'               # Form controls for has many relationships
-gem "paperclip"                 # Paperclip (Attach images to models)
+gem "paperclip", "~> 4.1"       # Paperclip (Attach images to models)
 gem 'kaminari'                  # Pagination
-gem 'later_dude', '>= 0.3.1'    # Calendar rendering
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
 gem 'jquery-rails'            # JQuery
