@@ -10,7 +10,7 @@
         - if show_controls
           th
 
-      - @semester.er_hours.each do |er_hour|
+      - @semester.er_hours.order("wday ASC").each do |er_hour|
         tr
           td
             = wday_abbreviated(er_hour.wday)

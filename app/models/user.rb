@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  has_many :reservations, dependent: :restrict
-  has_many :packages, dependent: :restrict
+  has_many :reservations, dependent: :restrict_with_error
+  has_many :packages, dependent: :restrict_with_error
 
   scope :active_users, where(active: true)
 

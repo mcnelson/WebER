@@ -1,5 +1,4 @@
 class Admin::ErHoursController < AdminController
-
   def new
     @er_hour = ErHour.new
 
