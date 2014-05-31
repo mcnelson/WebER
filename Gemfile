@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.18'           # Where it all begins
+gem 'rails', '4.0.0'           # Where it all begins
 
 gem 'therubyracer'              # Exec JS
 gem 'less-rails'                # LESS Stylesheets
@@ -14,12 +14,10 @@ gem 'kaminari'                  # Pagination
 gem 'later_dude', '>= 0.3.1'    # Calendar rendering
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
-group :assets do
-  gem 'jquery-rails'            # JQuery
-  gem 'sass-rails'              # Syntactically Awesome Stylesheets
-  gem 'coffee-rails'            # CoffeeScript
-  gem 'uglifier'                # JS Compression
-end
+gem 'jquery-rails'            # JQuery
+gem 'sass-rails'              # Syntactically Awesome Stylesheets
+gem 'coffee-rails'            # CoffeeScript
+gem 'uglifier'                # JS Compression
 
 group :development do
   gem 'zeus'                    # Fast startup
