@@ -13,7 +13,7 @@
       - @semester.er_hours.order("wday ASC").each do |er_hour|
         tr
           td
-            = wday_abbreviated(er_hour.wday)
+            = er_hour.wday_name
             = association_arrow(er_hour.checkin_hour)
           td = l er_hour.starts_at, format: :ampm
           td = l er_hour.ends_at, format: :ampm
