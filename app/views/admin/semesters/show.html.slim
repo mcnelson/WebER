@@ -23,7 +23,7 @@ p#notice = notice
     .gasket
       h2 ER Hours
 
-      - if @semester.er_hours.present?
+      - if @semester.er_hours.order("wday ASC").present?
         = render partial: 'er_hours_table', locals: { show_controls: false }
 
       - else

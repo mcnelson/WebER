@@ -15,8 +15,6 @@ class ErHour < ActiveRecord::Base
 
   scope :live, joins(:semester).where("er_hours.ends_at >= ? AND semesters.ends_at >= ?", Time.now, Time.now)
 
-  default_scope order(:wday)
-
   def once_per_weekday_per_semester
     if semester.er_hours.select { |er_hour| er_hour != self && er_hour.wday == self.wday } .any?
       errors[:wday] << "is already present in the semester. There can only be one ER hour per weekday in a semester."
