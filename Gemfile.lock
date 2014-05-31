@@ -220,7 +220,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails-erd
   rspec-rails (~> 3.0.0.rc1)
-  sass-rails (~> 4.0.0.rc1)
+  sass-rails (~> 4.0.0)
   shoulda-matchers
   simple_form
   slim-rails
