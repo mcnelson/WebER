@@ -23,7 +23,6 @@ end
 
 group :development do
   gem 'zeus'                    # Fast startup
-  gem 'rspec-rails'             # Specs
   gem 'rails-erd'               # Model diagramer
   gem 'pry'                     # Debugging
   gem 'pry-rails'               # Debugging
@@ -31,9 +30,11 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-rails'             # Specs
   gem 'factory_girl'            # Specs
   gem 'factory_girl_rails'      # Specs
   gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
+  gem 'shoulda-matchers'
 end
 
 group :production do
