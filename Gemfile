@@ -13,7 +13,7 @@ gem 'kaminari'                  # Pagination
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
 gem 'jquery-rails'
-gem 'sass-rails',   '~> 4.0.0.rc1'
+gem 'sass-rails',   '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier'
 gem 'slim-rails'
