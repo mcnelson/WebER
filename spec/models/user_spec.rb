@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User do
+  it { is_expected.to have_many(:reservations) }
+
   it 'has permission predicate methods' do
     u = User.new(permission_level: 'student')
     expect(u).to be_student

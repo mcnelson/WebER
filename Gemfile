@@ -28,7 +28,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'             # Specs
+  gem 'rspec-rails', '~> 3.0.0.rc1'
   gem 'factory_girl'            # Specs
   gem 'factory_girl_rails'      # Specs
   gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
