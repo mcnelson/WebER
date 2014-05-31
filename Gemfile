@@ -6,17 +6,17 @@ gem 'therubyracer'              # Exec JS
 gem 'less-rails'                # LESS Stylesheets
 gem 'pg'                        # PostgreSQL
 gem 'twitter-bootstrap-rails'   # Twitter Bootstrap
-gem 'slim-rails', '~> 0.1.2'
 gem 'simple_form'               # SimpleForm (form processing)
 gem 'nested_form'               # Form controls for has many relationships
 gem "paperclip", "~> 4.1"       # Paperclip (Attach images to models)
 gem 'kaminari'                  # Pagination
 gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
 
-gem 'jquery-rails'            # JQuery
+gem 'jquery-rails'
 gem 'sass-rails',   '~> 4.0.0.rc1'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'uglifier'                # JS Compression
+gem 'uglifier'
+gem 'slim-rails'
 
 group :development do
   gem "spring"
