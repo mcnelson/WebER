@@ -1,16 +1,13 @@
-
 require 'spec_helper'
 
 describe SessionsController do
-  context 'with a valid user session' do
-    before do
-      signin_as("student")
-    end
+  context 'user is already logged in' do
+    before { signin_as("student") }
 
-    describe "GET new" do
+    describe "#new" do
       it "redirects" do
-        get :new, {}
-        response.should redirect_to(root_url)
+        get :new
+        expect(response).to redirect_to(root_url)
       end
     end
   end
