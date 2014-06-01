@@ -1,1 +1,1 @@
-bin/spring rspec $3
+bin/rspec $3

@@ -19,8 +19,8 @@ gem 'uglifier'
 gem 'slim-rails'
 
 group :development do
-  gem "spring"
-  gem "spring-commands-rspec"
+  #gem "spring"  TODO: Try again later, pretty janky still
+  #gem "spring-commands-rspec"
   gem 'rails-erd'               # Model diagramer
   gem 'pry'                     # Debugging
   gem 'pry-rails'               # Debugging
