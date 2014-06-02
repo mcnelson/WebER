@@ -1,5 +1,5 @@
 Weber::Application.routes.draw do
-  get '/' => 'reservations#index'
+  get '/' => 'reservations#index', as: :root
 
   controller :sessions do
     get :signin, action: :new
@@ -10,7 +10,7 @@ Weber::Application.routes.draw do
   resources :reservations, except: [:edit, :update, :destroy]
 
   namespace :admin do
-    get '/' => 'dashboards#index'
+    get '/' => 'dashboards#index', as: :admin_root
 
     controller :dashboards do
       get :index
