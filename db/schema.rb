@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531195616) do
+ActiveRecord::Schema.define(version: 20140621034959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,17 +104,17 @@ ActiveRecord::Schema.define(version: 20140531195616) do
   end
 
   create_table "users", force: true do |t|
-    t.boolean  "active",                      default: true
-    t.string   "punet",            limit: 8,                 null: false
+    t.boolean  "active",                     default: true
+    t.string   "punet",            limit: 8,                null: false
     t.integer  "pu_student_id"
-    t.integer  "strikes",                     default: 0
-    t.boolean  "can_reserve",                 default: true
+    t.integer  "strikes",                    default: 0
+    t.boolean  "can_reserve",                default: true
     t.text     "notes"
     t.string   "password_digest"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "email",                                      null: false
-    t.string   "permission_level", limit: 50,                null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "email",                                     null: false
+    t.integer  "permission_level",           default: 2,    null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

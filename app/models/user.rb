@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   scope :active_users, where(active: true)
 
-  PERMISSION_LEVELS.each do |l|
-    define_method("#{l}?") { permission_level == l }
+  PERMISSION_LEVELS.each.with_index do |name, i|
+    define_method("#{name}?") { permission_level >= i }
   end
 end
