@@ -1,15 +1,33 @@
 require 'spec_helper'
 
 describe User do
-  it 'has permission predicate methods' do
-    u = User.new(permission_level: 'student')
-    expect(u).to be_student
+  describe'#student?' do
+    subject { User.new(permission_level: 0) }
+    specify {
+      expect(subject).to be_student
+      expect(subject).to_not be_workstudy
+      expect(subject).to_not be_admin
+    }
+  end
 
-    u = User.new(permission_level: 'workstudy')
-    expect(u).to be_workstudy
+  describe '#workstudy?' do
+    subject { User.new(permission_level: 1) }
 
-    u = User.new(permission_level: 'admin')
-    expect(u).to be_admin
+    specify {
+      expect(subject).to be_student
+      expect(subject).to be_workstudy
+      expect(subject).to_not be_admin
+    }
+  end
+
+  describe '#admin?' do
+    subject { User.new(permission_level: 2) }
+
+    specify {
+      expect(subject).to be_student
+      expect(subject).to be_workstudy
+      expect(subject).to be_admin
+    }
   end
 
   it { is_expected.to have_secure_password }
