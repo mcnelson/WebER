@@ -30,6 +30,28 @@ describe User do
     }
   end
 
+  describe '#permission_name' do
+    context "student" do
+      subject { User.new(permission_level: 0) }
+      specify { expect(subject.permission_name).to eql("student") }
+    end
+
+    context "workstudy" do
+      subject { User.new(permission_level: 1) }
+      specify { expect(subject.permission_name).to eql("workstudy") }
+    end
+
+    context "admin" do
+      subject { User.new(permission_level: 2) }
+      specify { expect(subject.permission_name).to eql("admin") }
+    end
+
+    context "unknown" do
+      subject { User.new(permission_level: 9001) }
+      specify { expect(subject.permission_name).to eql("(unk.)") }
+    end
+  end
+
   it { is_expected.to have_secure_password }
 
   describe 'validations' do

@@ -84,7 +84,7 @@ FactoryGirl.define do
     pu_student_id
     email
 
-    permission_level      "student"
+    permission_level      0
     password              "asdf"
     password_confirmation "asdf"
   end
