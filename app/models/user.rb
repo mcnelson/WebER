@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   PERMISSION_LEVELS.each.with_index do |name, i|
     define_method("#{name}?") { permission_level >= i }
   end
+
+  def permission_name
+    PERMISSION_LEVELS.fetch(permission_level) { "(unk.)" }
+  end
 end
