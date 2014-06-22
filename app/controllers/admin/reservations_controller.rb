@@ -2,15 +2,15 @@ class Admin::ReservationsController < AdminController
   before_filter :require_current_semester, only: :new
 
   def index
-    @reservations = Reservation.joins(:user)
+    @reservations = Reservation.joins(:user).tap do |r|
+      if sort_column == "user"
+        r = r.order("users.punet #{sort_direction}")
+      else
+        r = r.order("#{sort_column} #{sort_direction}")
+      end
 
-    if sort_column == "user"
-      @reservations = @reservations.order("users.punet" + sort_direction)
-    else
-      @reservations = @reservations.order(sort_column + " " + sort_direction)
+      r = r.page(params[:page])
     end
-
-    @reservations = @reservations.page params[:page]
   end
 
   def show

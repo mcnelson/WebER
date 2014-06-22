@@ -45,26 +45,7 @@ FactoryGirl.define do
   factory :reservation do
     starts_at   1.day.from_now
     ends_at     3.days.from_now
-
-    before :create do |r|
-      r.user = FactoryGirl.create(:user)
-    end
-
-    factory :reservation_with_one_equipment do
-      after :create do |r|
-        e = FactoryGirl(:equipment)
-        FactoryGirl.create(:equipment_reservation, reservation: r, equipment: e)
-      end
-    end
-
-    factory :reservation_with_five_equipment do
-      after :create do |r|
-        5.times do
-          e = FactoryGirl(:equipment)
-          FactoryGirl.create(:equipment_reservation, reservation: r, equipment: e)
-        end
-      end
-    end
+    user
   end
 
   sequence :punet do |n|
