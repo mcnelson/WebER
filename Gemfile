@@ -10,7 +10,7 @@ gem 'simple_form'               # SimpleForm (form processing)
 gem 'nested_form'               # Form controls for has many relationships
 gem "paperclip", "~> 4.1"       # Paperclip (Attach images to models)
 gem 'kaminari'                  # Pagination
-gem 'bcrypt-ruby', '~> 3.0.0'   # BCrypt for has_secure_password
+gem 'bcrypt-ruby', '~> 3.1.2'   # BCrypt for has_secure_password
 
 gem 'jquery-rails'
 gem 'sass-rails',   '~> 4.0.0'
