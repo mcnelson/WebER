@@ -1,5 +1,5 @@
 class Admin::ReservationsController < AdminController
-  before_filter :require_current_semester, only: :new
+  before_filter :require_current_semester, only: %w(new create)
 
   def index
     @reservations = Reservation.joins(:user).tap do |r|
