@@ -2,11 +2,24 @@ require 'spec_helper'
 
 describe Admin::ReservationsController, type: :controller do
   include SemestersSupport
-
-  let!(:current_semester) { semester_with_test_er_hours }
   before { signin_as("admin") }
 
+  describe "#index" do
+    let!(:reservation) do
+      build(:reservation).tap do |r|
+        r.equipment << create(:equipment)
+        r.save!
+      end
+    end
+
+    it "displays sortable/paginated reservations" do
+      get :index
+      expect(assigns(:reservations)).to include(reservation)
+    end
+  end
+
   describe "#create" do
+    let!(:current_semester) { semester_with_test_er_hours }
     let(:reservation_owner) { create(:user) }
     let(:equipment) { create(:equipment) }
     let(:attrs) do
