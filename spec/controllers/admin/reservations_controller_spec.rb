@@ -64,4 +64,24 @@ describe Admin::ReservationsController, type: :controller do
       expect(assigns(:reservation)).to be_persisted
     end
   end
+
+  describe '#update' do
+    let(:current_reserved_unit) { reservation_with_one_unit.reserved_units.first }
+    let(:new_equipment) { create(:equipment) }
+    let(:attrs) do
+      attributes_for(:reservation).merge(
+        reserved_equipment_attributes: {
+          current_reserved_unit.id => {unit_id: current_reserved_unit.unit_id},
+          "0"                      => {unit_id: new_equipment.id},
+        },
+      )
+    end
+
+    it 'updates the given reservation' do
+      put :update, id: reservation_with_one_unit, reservation: attrs
+      reservation_with_one_unit.reload
+      expect(reservation_with_one_unit.equipment_ids).to include(current_reserved_unit.unit_id)
+      expect(reservation_with_one_unit.equipment_ids).to include(new_equipment.id)
+    end
+  end
 end
