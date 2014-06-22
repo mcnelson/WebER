@@ -95,7 +95,7 @@ class Admin::ReservationsController < AdminController
       permit(
         %w(starts_at ends_at status notes user_id),
         reserved_equipment_attributes: %w(unit_id _destroy),
-        reserved_accessroy_attributes: %w(unit_id _destroy),
+        reserved_accessory_attributes: %w(unit_id _destroy),
       )
   end
 end
