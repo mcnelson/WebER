@@ -18,22 +18,20 @@ class Admin::ReservationsController < AdminController
   end
 
   def new
-    @reservation = Reservation.new(
-      starts_at: Semester.current.next_er_hour(2.days.from_now).starts_at,
-      user_id: current_user.id
-    )
+    @reservation = current_user.reservations.build
   end
 
   def edit
     @reservation = Reservation.find(params[:id])
   end
 
-  def create # TODO: Make functional
-    @reservation = Reservation.new(params[:reservation])
+  def create
+    @reservation = Reservation.new(reservation_params)
 
     respond_to do |format|
       format.html do
-        if @reservation.save
+        require 'pry'; binding.pry;
+        if @reservation.save!
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
         else
           render action: "new"
@@ -46,7 +44,8 @@ class Admin::ReservationsController < AdminController
           @reservation.valid?
           @reservation.save!
 
-          render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';",
+            notice: 'Reservation was successfully created.'
         else
           @reservation.valid?
           render action: "update_form"
@@ -57,11 +56,11 @@ class Admin::ReservationsController < AdminController
 
   def update
     @reservation = Reservation.find(params[:id])
-    @reservation.assign_attributes(params[:reservation])
+    @reservation.assign_attributes(reservation_params)
 
     respond_to do |format|
       format.html do
-        if @reservation.save(params[:reservation])
+        if @reservation.save(reservation_params)
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully updated.'
         else
           render action: "edit"
@@ -69,7 +68,7 @@ class Admin::ReservationsController < AdminController
       end
 
       format.js do
-        if params[:commit] && @reservation.save(params[:reservation])
+        if params[:commit] && @reservation.save(reservation_params)
           render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully updated.'
         else
           @reservation.valid?
@@ -86,7 +85,13 @@ class Admin::ReservationsController < AdminController
     redirect_to admin_reservations_path
   end
 
+  private
+
   def sort_column
     params[:sort] || "starts_at"
+  end
+
+  def reservation_params
+    params.require(:reservation).permit(%w(starts_at ends_at status notes user_id))
   end
 end

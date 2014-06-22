@@ -1,3 +1,3 @@
 class ReservedEquipment < ReservedUnit
-  belongs_to :equipment, conditions: { type: "Equipment" }
+  belongs_to :equipment, -> { where(type: "Equipment") }
 end

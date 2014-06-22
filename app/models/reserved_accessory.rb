@@ -1,3 +1,3 @@
 class ReservedAccessory < ReservedUnit
-  belongs_to :accessory, conditions: { type: "Accessory" }
+  belongs_to :accessory, -> { where(type: "Accessory") }
 end

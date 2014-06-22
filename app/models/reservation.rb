@@ -52,9 +52,7 @@ class Reservation < ActiveRecord::Base
   STATUS_BOOTSTRAP_COLORS = ["info", "warning", "", "default"]
 
   def defaults
-    self.status     ||= STATUSES.first
-    self.starts_at  ||= Semester.current.next_er_hour(Date.today).to_date
-    self.ends_at    ||= Semester.current.next_er_hour(starts_at + 2.days).to_date
+    self.status ||= STATUSES.first
   end
 
   def equipment_or_accessory
