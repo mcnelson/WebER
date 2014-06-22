@@ -1,16 +1,14 @@
 class Reservation < ActiveRecord::Base
   include ActionView::Helpers # Wah wah wahhhh
 
-  attr_accessor :invalid_override
+  attr_accessor :run_date_validations
 
-  validates_presence_of :ends_at, :starts_at, :status, :user_id, unless: :invalid_overriding?
-
-  validate :date_chronology,  on: :create
-  validate :lead_time,        on: :create
-  validate :units_max_period, on: :create
-
+  validate :ends_at, :starts_at, :status, :user_id, presence: true
+  validate :date_chronology,   if: :run_date_validations
+  validate :lead_time,         if: :run_date_validations
+  validate :units_max_period,  if: :run_date_validations
+  validate :conflicting_units, if: :run_date_validations
   validate :equipment_or_accessory
-  validate :conflicting_units
 
   belongs_to :user
 
@@ -56,20 +54,23 @@ class Reservation < ActiveRecord::Base
   end
 
   def equipment_or_accessory
-    return if invalid_overriding?
     if reserved_equipment.blank? && reserved_accessories.blank?
       errors[:base] << "Reservation must have at least one equipment unit or accessory."
     end
   end
 
+  def valid_dates?
+    self.run_date_validations = true
+    valid?
+    self.run_date_validations = false
+  end
+
   def date_chronology
-    return if invalid_overriding?
-    return errors[:starts_at] << "must be in the future" if starts_at < Date.today
+    errors[:starts_at] << "must be in the future" if starts_at < Date.today
     errors[:ends_at] << "must be after the check-out date" if starts_at >= ends_at
   end
 
   def lead_time
-    return if invalid_overriding?
     # Use er hour time to now to afford the possiblity of using more granular time in config
     outdate = Semester.current.to_er_hour_start(starts_at) or starts_at
     given_lead_time = (outdate - DateTime.now).abs
@@ -85,7 +86,6 @@ class Reservation < ActiveRecord::Base
   end
 
   def units_max_period
-    return if invalid_overriding?
     units.each do |unit|
       if (start_at.to_i - end_at.to_i).abs > unit.max_reservation_period
         unit.errors[:base] << "cannot be reserved for more than #{distance_of_time_in_words(unit.max_reservation_period)}"
@@ -94,8 +94,6 @@ class Reservation < ActiveRecord::Base
   end
 
   def conflicting_units
-    return if invalid_overriding?
-
     (reserved_equipment + reserved_accessories).select {|ru| ru.valid? } .each do |reserved_unit|
       overlapping_reservations = reserved_unit.unit.
         in_reservations_in_range_exclusive(starts_at, ends_at).tap do |relation|
@@ -110,9 +108,5 @@ class Reservation < ActiveRecord::Base
 
   def contains?(equipment)
     equipment.exists? equipment
-  end
-
-  def invalid_overriding?
-    invalid_override == true
   end
 end
