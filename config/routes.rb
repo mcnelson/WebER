@@ -10,11 +10,7 @@ Weber::Application.routes.draw do
   resources :reservations, except: [:edit, :update, :destroy]
 
   namespace :admin do
-    get '/' => 'dashboards#index', as: :admin_root
-
-    controller :dashboards do
-      get :index
-    end
+    get '/' => 'reservations#index', as: :admin_root
 
     resources :semesters do
       resources :er_hours, except: [:index, :show]
