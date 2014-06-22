@@ -36,13 +36,11 @@ class ReservationsController < ApplicationController
 
       format.js do
         if params[:commit]
-          @reservation.invalid_override = true
-          @reservation.valid?
           @reservation.save!
 
           render js: "window.location = '#{reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
         else
-          @reservation.valid?
+          @reservation.valid_dates?
           render action: "update_form"
         end
       end

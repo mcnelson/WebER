@@ -12,7 +12,7 @@ describe Admin::ReservationsController, type: :controller do
     let(:attrs) do
       attributes_for(:reservation).merge(
         user_id: reservation_owner.id,
-        reserved_equipment_attributes: [equipment.id],
+        reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
       )
     end
 

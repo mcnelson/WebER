@@ -30,7 +30,6 @@ class Admin::ReservationsController < AdminController
 
     respond_to do |format|
       format.html do
-        require 'pry'; binding.pry;
         if @reservation.save!
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
         else
@@ -40,8 +39,7 @@ class Admin::ReservationsController < AdminController
 
       format.js do
         if params[:commit] && @reservation.save
-          @reservation.invalid_override = true
-          @reservation.valid?
+          @reservation.valid_dates?
           @reservation.save!
 
           render js: "window.location = '#{admin_reservation_path(@reservation)}';",
@@ -92,6 +90,12 @@ class Admin::ReservationsController < AdminController
   end
 
   def reservation_params
-    params.require(:reservation).permit(%w(starts_at ends_at status notes user_id))
+    params.
+      require(:reservation).
+      permit(
+        %w(starts_at ends_at status notes user_id),
+        reserved_equipment_attributes: %w(unit_id _destroy),
+        reserved_accessroy_attributes: %w(unit_id _destroy),
+      )
   end
 end

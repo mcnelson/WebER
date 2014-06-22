@@ -9,9 +9,9 @@ namespace "weber.reservations.form", (exports) ->
       on("ajax:success", (evt) ->
 
         # Add/remove units
-        $(document).
-          unbind('nested:fieldAdded nested:fieldRemoved').
-          on('nested:fieldAdded nested:fieldRemoved', exports.heartbeat)
+      # $(document).
+      #   unbind('nested:fieldAdded nested:fieldRemoved').
+      #   on('nested:fieldAdded nested:fieldRemoved', exports.heartbeat)
 
         # Change any select
         $("select").unbind("change").on("change", exports.heartbeat).chosen()
