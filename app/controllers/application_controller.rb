@@ -40,11 +40,11 @@ class ApplicationController < ActionController::Base
     params[:direction] || "desc"
   end
 
-  private
-
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
+  private
 
   def redirect_back(opts={})
     return if root_url == request_url # Never redirect at root
