@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-include FallSemester
-
 describe Admin::ReservationsController do
+  include SemestersSupport
+
   def valid_attributes
     @user = FactoryGirl.create(:user)
     FactoryGirl.attributes_for(:reservation).merge({ user_id: @user.id })
