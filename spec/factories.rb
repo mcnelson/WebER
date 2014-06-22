@@ -43,8 +43,8 @@ FactoryGirl.define do
   factory :reserved_unit
 
   factory :reservation do
-    starts_at   Date.parse("Nov 12, 2012")
-    ends_at     Date.parse("Nov 14, 2012")
+    starts_at   1.day.from_now
+    ends_at     3.days.from_now
 
     before :create do |r|
       r.user = FactoryGirl.create(:user)

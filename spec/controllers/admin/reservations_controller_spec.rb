@@ -1,23 +1,25 @@
 require 'spec_helper'
 
-describe Admin::ReservationsController do
+describe Admin::ReservationsController, type: :controller do
   include SemestersSupport
 
-  def valid_attributes
-    @user = FactoryGirl.create(:user)
-    FactoryGirl.attributes_for(:reservation).merge({ user_id: @user.id })
-  end
+  let!(:current_semester) { semester_with_test_er_hours }
+  before { signin_as("admin") }
 
-  before do
-    signin_as("admin")
-    semester_with_test_er_hours
-  end
+  describe "#create" do
+    let(:reservation_owner) { create(:user) }
+    let(:equipment) { create(:equipment) }
+    let(:attrs) do
+      attributes_for(:reservation).merge(
+        user_id: reservation_owner.id,
+        reserved_equipment_attributes: [equipment.id],
+      )
+    end
 
-  describe "POST create" do
     it 'creates a new reservation' do
-      post :create, {reservation: valid_attributes}
-      assigns(:reservation).should be_a(Reservation)
-      assigns(:reservation).should be_persisted
+      post :create, {reservation: attrs}
+      expect(assigns(:reservation)).to be_a(Reservation)
+      expect(assigns(:reservation)).to be_persisted
     end
   end
 end

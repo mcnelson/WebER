@@ -18,8 +18,7 @@ class ReservationsController < ApplicationController
   end
 
   def new
-    @reservation = Reservation.new(starts_at: Semester.current.next_er_hour(2.days.from_now).starts_at)
-    @reservation.user = current_user
+    @reservation = current_user.reservations.build
   end
 
   def create

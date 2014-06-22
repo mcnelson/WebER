@@ -22,13 +22,13 @@
               = g.link_to_remove class: "btn btn-inverse btn-mini" do
                 span.icon: i.icon-remove
               = g.association :unit,
-                collection: grouped_units_select_options(EquipmentCategory),
-                as: :grouped_select,
-                group_method: :first,
+                collection:         grouped_units_select_options(EquipmentCategory),
+                as:                 :grouped_select,
+                group_method:       :first,
                 group_label_method: :last,
-                label_html: { class: :upper_fade },
-                label_method: :name_brand_model,
-                label: "Item"
+                label_html:         { class: :upper_fade },
+                label_method:       :name_brand_model,
+                label:              "Item"
 
           = f.link_to_add :reserved_equipment, class: "btn btn-mini" do
             span.icon: i.icon-plus
@@ -41,13 +41,13 @@
               = g.link_to_remove class: "btn btn-inverse btn-mini" do
                 span.icon: i.icon-remove
               = g.association :unit,
-                collection: grouped_units_select_options(AccessoryCategory),
-                as: :grouped_select,
-                group_method: :first,
+                collection:         grouped_units_select_options(AccessoryCategory),
+                as:                 :grouped_select,
+                group_method:       :first,
                 group_label_method: :last,
-                label_html: { class: :upper_fade },
-                label_method: :name_brand_model,
-                label: "Item"
+                label_html:         { class: :upper_fade },
+                label_method:       :name_brand_model,
+                label:              "Item"
 
           = f.link_to_add :reserved_accessories, class: "btn btn-mini" do
             span.icon: i.icon-plus
