@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Semester do
-  include FallSemester
+  include SemestersSupport
 
   def date_on_wday(wday)
     Date.parse(Date::DAYS_INTO_WEEK.key(wday - 1).to_s) # Naughty

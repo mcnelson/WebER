@@ -1,4 +1,4 @@
-module FallSemester
+module SemestersSupport
   def semester_with_test_er_hours(method = :create)
     FactoryGirl.public_send(method, :semester).tap do |semester|
       (1..5).each do |wday|
