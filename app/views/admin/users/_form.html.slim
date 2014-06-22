@@ -12,7 +12,12 @@
 
           h2 Permissions
           = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
-          = f.input :permission_level, collection: User::PERMISSION_LEVELS, as: :radio_buttons, label_method: :capitalize
+          = f.input :permission_level,
+            collection: User::PERMISSION_LEVELS,
+            as: :radio_buttons,
+            label_method: :capitalize,
+            value_method: -> (s) { User::PERMISSION_LEVELS.index(s) }
+
           = f.input :can_reserve, label: "Allowed to create reservations?"
 
     .span6

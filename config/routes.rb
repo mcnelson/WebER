@@ -20,7 +20,7 @@ Weber::Application.routes.draw do
       resources :er_hours, except: [:index, :show]
     end
 
-    resources :users
+    resources :users, except: [:delete]
 
     resources :categories, only: [:index, :destroy]
     resources :equipment_categories, only: [:create, :edit, :update]
