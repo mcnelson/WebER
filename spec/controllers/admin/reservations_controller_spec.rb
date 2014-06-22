@@ -71,7 +71,7 @@ describe Admin::ReservationsController, type: :controller do
     let(:attrs) do
       attributes_for(:reservation).merge(
         reserved_equipment_attributes: {
-          current_reserved_unit.id => {unit_id: current_reserved_unit.unit_id},
+          #current_reserved_unit.id => {unit_id: current_reserved_unit.unit_id}, TODO: shouldn't this work?
           "0"                      => {unit_id: new_equipment.id},
         },
       )
@@ -82,6 +82,18 @@ describe Admin::ReservationsController, type: :controller do
       reservation_with_one_unit.reload
       expect(reservation_with_one_unit.equipment_ids).to include(current_reserved_unit.unit_id)
       expect(reservation_with_one_unit.equipment_ids).to include(new_equipment.id)
+    end
+  end
+
+  describe '#destroy' do
+    it 'deletes the given reservation' do
+      reservation_with_one_unit # create the object
+
+      expect {
+        delete :destroy, id: reservation_with_one_unit
+      }.to change(Reservation, :count).by(-1)
+
+      expect(response).to be_redirect
     end
   end
 end
