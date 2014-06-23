@@ -1,9 +1,7 @@
 class Admin::ErHoursController < AdminController
   def new
     @er_hour = ErHour.new
-
-    # Nested route, so we need to tell it what semester
-    @er_hour.semester = Semester.find(params[:semester_id])
+    @er_hour.semester = Semester.find(params[:semester_id]) # nested route
   end
 
   def edit
@@ -11,7 +9,7 @@ class Admin::ErHoursController < AdminController
   end
 
   def create
-    @er_hour = ErHour.new(params[:er_hour])
+    @er_hour = ErHour.new(er_hour_params)
     @er_hour.semester = Semester.find(params[:semester_id])
 
     if @er_hour.save
@@ -24,7 +22,7 @@ class Admin::ErHoursController < AdminController
   def update
     @er_hour = ErHour.find(params[:id])
 
-    if @er_hour.update_attributes(params[:er_hour])
+    if @er_hour.update_attributes(er_hour_params)
       redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'ER Hour was successfully updated.'
     else
       render action: "edit"
@@ -36,5 +34,11 @@ class Admin::ErHoursController < AdminController
     @er_hour.destroy
 
     redirect_to edit_admin_semester_path(@er_hour.semester)
+  end
+
+  private
+
+  def er_hour_params
+    params.require(:er_hour).permit(%w(starts_at ends_at wday))
   end
 end
