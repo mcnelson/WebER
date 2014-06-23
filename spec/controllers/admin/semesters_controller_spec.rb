@@ -120,20 +120,4 @@ describe Admin::SemestersController do
       end
     end
   end
-
-  describe "DELETE destroy" do
-    it "destroys the requested semester" do
-      semester = Semester.create! valid_attributes
-      expect {
-        delete :destroy, {:id => semester.to_param}
-      }.to change(Semester, :count).by(-1)
-    end
-
-    it "redirects to the semesters list" do
-      semester = Semester.create! valid_attributes
-      delete :destroy, {:id => semester.to_param}
-      response.should redirect_to(admin_semesters_path)
-    end
-  end
-
 end

@@ -8,9 +8,7 @@ class Admin::ReservationsController < AdminController
       else
         r = r.order("#{sort_column} #{sort_direction}")
       end
-
-      r = r.page(params[:page])
-    end
+    end.page(params[:page])
   end
 
   def show
