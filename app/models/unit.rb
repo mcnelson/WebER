@@ -10,12 +10,12 @@ class Unit < ActiveRecord::Base
 
   has_attached_file :photo,
     styles: {
-      thirtytwo: ["32x32#", :jpg],
-      forty: ["40x40#", :jpg],
-      twosixty: ["260x180#", :jpg],
-      threehundred: ["300x200#", :jpg],
-      seventwenty: ["720x450>", :jpg],
-      tentwentyfour: ["1024x768>", :jpg]
+      thirtytwo:     [ "32x32#", :jpg],
+      forty:         [ "40x40#", :jpg],
+      twosixty:      [ "260x180#", :jpg],
+      threehundred:  [ "300x200#", :jpg],
+      seventwenty:   [ "720x450>", :jpg],
+      tentwentyfour: [ "1024x768>", :jpg]
     },
 
     convert_options: {
