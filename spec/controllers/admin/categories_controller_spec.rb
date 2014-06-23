@@ -1,7 +1,7 @@
 
 require 'spec_helper'
 
-describe Admin::CategoriesController do
+describe Admin::CategoriesController, type: :controller do
   def valid_attributes
     FactoryGirl.attributes_for(:equipment_category)
   end

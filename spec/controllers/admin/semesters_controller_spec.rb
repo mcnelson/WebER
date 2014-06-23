@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::SemestersController do
+describe Admin::SemestersController, type: :controller do
   def valid_attributes
     FactoryGirl.attributes_for(:semester)
   end
@@ -9,113 +9,86 @@ describe Admin::SemestersController do
     signin_as("admin")
   end
 
-  describe "GET index" do
+  describe "#index" do
+    let!(:semester) { create(:semester) }
+
     it "assigns all semesters as @semesters" do
-      semester = Semester.create! valid_attributes
-      get :index, {}
+      get :index
       assigns(:semesters).should eq([semester])
     end
   end
 
-  describe "GET show" do
+  describe "#show" do
+    let!(:semester) { create(:semester) }
+
     it "assigns the requested semester as @semester" do
-      semester = Semester.create! valid_attributes
-      get :show, {:id => semester.to_param}
+      get :show, {id: semester}
       assigns(:semester).should eq(semester)
     end
   end
 
-  describe "GET new" do
+  describe "#new" do
     it "assigns a new semester as @semester" do
       get :new, {}
       assigns(:semester).should be_a_new(Semester)
     end
   end
 
-  describe "GET edit" do
+  describe "#edit" do
+    let(:semester) { create(:semester) }
+
     it "assigns the requested semester as @semester" do
-      semester = Semester.create! valid_attributes
-      get :edit, {:id => semester.to_param}
+      get :edit, {id: semester.to_param}
       assigns(:semester).should eq(semester)
     end
   end
 
-  describe "POST create" do
+  describe "#create" do
     describe "with valid params" do
       it "creates a new Semester" do
         expect {
-          post :create, {:semester => valid_attributes}
+          post :create, {semester: valid_attributes}
         }.to change(Semester, :count).by(1)
       end
 
       it "assigns a newly created semester as @semester" do
-        post :create, {:semester => valid_attributes}
+        post :create, {semester: valid_attributes}
         assigns(:semester).should be_a(Semester)
         assigns(:semester).should be_persisted
       end
 
       it "redirects to the created semester" do
-        post :create, {:semester => valid_attributes}
+        post :create, {semester: valid_attributes}
         response.should redirect_to([:admin, Semester.last])
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved semester as @semester" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Semester.any_instance.stub(:save).and_return(false)
-        post :create, {:semester => {}}
-        assigns(:semester).should be_a_new(Semester)
-      end
+        post :create, {semester: {starts_at: "blah"}}
 
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Semester.any_instance.stub(:save).and_return(false)
-        post :create, {:semester => {}}
-        response.should render_template("new")
+        expect(assigns(:semester)).to be_a_new(Semester)
+        expect(response).to render_template("new")
       end
     end
   end
 
-  describe "PUT update" do
+  describe "#update" do
+    let(:semester) { create(:semester) }
+
     describe "with valid params" do
       it "updates the requested semester" do
-        semester = Semester.create! valid_attributes
-        # Assuming there are no other semesters in the database, this
-        # specifies that the Semester created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Semester.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => semester.to_param, :semester => {'these' => 'params'}}
-      end
-
-      it "assigns the requested semester as @semester" do
-        semester = Semester.create! valid_attributes
-        put :update, {:id => semester.to_param, :semester => valid_attributes}
-        assigns(:semester).should eq(semester)
-      end
-
-      it "redirects to the semester" do
-        semester = Semester.create! valid_attributes
-        put :update, {:id => semester.to_param, :semester => valid_attributes}
-        response.should render_template("edit")
+        put :update, {id: semester, semester: attributes_for(:semester)}
+        response.should redirect_to([:admin, semester])
       end
     end
 
     describe "with invalid params" do
-      it "assigns the semester as @semester" do
-        semester = Semester.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Semester.any_instance.stub(:save).and_return(false)
-        put :update, {:id => semester.to_param, :semester => {}}
-        assigns(:semester).should eq(semester)
-      end
+      let(:semester) { create(:semester) }
 
-      it "re-renders the 'edit' template" do
-        semester = Semester.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Semester.any_instance.stub(:save).and_return(false)
-        put :update, {:id => semester.to_param, :semester => {}}
+      it "assigns the semester as @semester" do
+        put :update, {id: semester.to_param, semester: {starts_at: "blah"}}
+        assigns(:semester).should eq(semester)
         response.should render_template("edit")
       end
     end

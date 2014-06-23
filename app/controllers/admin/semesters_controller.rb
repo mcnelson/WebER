@@ -1,6 +1,6 @@
 class Admin::SemestersController < AdminController
   def index
-    @semesters = Semester.all(params[:page])
+    @semesters = Semester.page(params[:page])
 
     respond_to do |format|
       format.html
@@ -29,7 +29,7 @@ class Admin::SemestersController < AdminController
   end
 
   def create
-    @semester = Semester.new(params[:semester])
+    @semester = Semester.new(semester_params)
 
     respond_to do |format|
       if @semester.save
@@ -46,7 +46,7 @@ class Admin::SemestersController < AdminController
     @semester = Semester.find(params[:id])
 
     respond_to do |format|
-      if @semester.update_attributes(params[:semester])
+      if @semester.update_attributes(semester_params)
         format.html { redirect_to [:admin, @semester], notice: 'Semester was successfully updated.' }
         format.json { head :no_content }
       else
@@ -54,5 +54,11 @@ class Admin::SemestersController < AdminController
         format.json { render json: @semester.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def semester_params
+    params.require(:semester).permit(%w(starts_at ends_at))
   end
 end
