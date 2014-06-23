@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    @reservation = Reservation.new(params[:reservation], user_id: current_user.id)
+    @reservation = Reservation.new(reservation_params, user_id: current_user.id)
     @reservation.user = current_user
 
     respond_to do |format|
@@ -47,7 +47,19 @@ class ReservationsController < ApplicationController
     end
   end
 
+  private
+
   def sort_column
     params[:sort] || "starts_at"
+  end
+
+  def reservation_params
+    params.
+      require(:reservation).
+      permit(
+        %w(starts_at ends_at status notes user_id),
+        reserved_equipment_attributes: %w(unit_id _destroy),
+        reserved_accessory_attributes: %w(unit_id _destroy),
+      )
   end
 end
