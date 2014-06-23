@@ -42,7 +42,7 @@ class Admin::EquipmentController < AdminController
   end
 
   def create
-    @equipment = Equipment.new(params[:equipment])
+    @equipment = Equipment.new(equipment_params)
 
     respond_to do |format|
       if @equipment.save
@@ -59,7 +59,7 @@ class Admin::EquipmentController < AdminController
     @equipment = Equipment.find(params[:id])
 
     respond_to do |format|
-      if @equipment.update_attributes(params[:equipment])
+      if @equipment.update_attributes(equipment_params)
         format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
@@ -79,7 +79,15 @@ class Admin::EquipmentController < AdminController
     end
   end
 
+  private
+
   def sort_column
     params[:sort] || "name"
+  end
+
+  def equipment_params
+    params.require(:equipment).permit(%w(
+      active status name brand model serial max_reservation_period photo category_id notes type
+    ))
   end
 end
