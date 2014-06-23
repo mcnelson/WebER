@@ -1,7 +1,7 @@
 
 require 'spec_helper'
 
-describe Admin::EquipmentController do
+describe Admin::EquipmentController, type: :controller do
   def valid_attributes
     FactoryGirl.attributes_for(:equipment).merge(category_id: @equipment_category.id)
   end
