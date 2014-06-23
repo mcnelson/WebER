@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController do
+describe SessionsController, type: :controller do
   context 'user is already logged in' do
     before { signin_as("student") }
 
