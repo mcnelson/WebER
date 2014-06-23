@@ -1,21 +1,10 @@
 class Admin::AccessoriesController < AdminController
-
   def show
     @accessory = Accessory.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @accessory}
-    end
   end
 
   def new
     @accessory = Accessory.new
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @accessory }
-    end
   end
 
   def edit
@@ -23,30 +12,22 @@ class Admin::AccessoriesController < AdminController
   end
 
   def create
-    @accessory = Accessory.new(params[:accessory])
+    @accessory = Accessory.new(accessory_params)
 
-    respond_to do |format|
-      if @accessory.save
-        format.html { redirect_to [:admin, @accessory], notice: 'Accessory was successfully created.' }
-        format.json { render json: @accessory, status: :created, location: @accessory }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @accessory.errors, status: :unprocessable_entity }
-      end
+    if @accessory.save
+      redirect_to [:admin, @accessory], notice: 'Accessory was successfully created.'
+    else
+      render action: "new"
     end
   end
 
   def update
     @accessory = Accessory.find(params[:id])
 
-    respond_to do |format|
-      if @accessory.update_attributes(params[:accessory])
-        format.html { redirect_to [:admin, @accessory], notice: 'Accessory was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @accessory.errors, status: :unprocessable_entity }
-      end
+    if @accessory.update_attributes(accessory_params)
+      redirect_to [:admin, @accessory], notice: 'Accessory was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
@@ -54,9 +35,14 @@ class Admin::AccessoriesController < AdminController
     @accessory = Accessory.find(params[:id])
     @accessory.destroy
 
-    respond_to do |format|
-      format.html { redirect_to admin_equipment_index_path }
-      format.json { head :no_content }
-    end
+    redirect_to admin_equipment_index_path
+  end
+
+  private
+
+  def accessory_params
+    params.require(:accessory).permit(%w(
+      active status name brand model serial max_reservation_period photo category_id notes type
+    ))
   end
 end

@@ -20,7 +20,7 @@ FactoryGirl.define do
     model "HBDS2224"
     serial "750871676"
 
-    active    true
+    active true
     notes "Holds about half charge"
 
     accessory_category
