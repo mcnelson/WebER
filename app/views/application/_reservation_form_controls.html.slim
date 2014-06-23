@@ -13,7 +13,10 @@
 
     .span6
       .gasket
-        = content_tag :span, "", id: :before_show_day_data, :"data-er_hour_days" => valid_er_hour_days(f.object.starts_at || Date.today)
+        = content_tag :span, "",
+          id: :before_show_day_data,
+          "data-er_hour_days" => valid_er_hour_days(f.object.starts_at || Date.today)
+
         h2 Reserved Units
         .reservation-equipment-rows.well
           = f.fields_for :reserved_equipment do |g|

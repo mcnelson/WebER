@@ -22,9 +22,7 @@ class Admin::SemestersController < AdminController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @semester }
-    end
-  end
+      format.json { render json: @semester } end end
 
   def edit
     @semester = Semester.find(params[:id])
@@ -55,16 +53,6 @@ class Admin::SemestersController < AdminController
         format.html { render action: "edit" }
         format.json { render json: @semester.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def destroy
-    @semester = Semester.find(params[:id])
-    @semester.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_semesters_url }
-      format.json { head :no_content }
     end
   end
 end

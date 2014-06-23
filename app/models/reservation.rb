@@ -1,4 +1,5 @@
 class Reservation < ActiveRecord::Base
+  SemesterMissingError = Class.new(StandardError)
   include ActionView::Helpers # Wah wah wahhhh
 
   attr_accessor :run_date_validations
@@ -45,12 +46,23 @@ class Reservation < ActiveRecord::Base
   }
 
   after_initialize :defaults
+  after_find :verify_containing_semester_present
 
   STATUSES = ["live", "pending", "archived", "missed"]
   STATUS_BOOTSTRAP_COLORS = ["info", "warning", "", "default"]
 
   def defaults
     self.status ||= STATUSES.first
+  end
+
+  def verify_containing_semester_present
+    if starts_at && Semester.around_date(starts_at).blank?
+      raise SemesterMissingError, "date #{starts_at} is not contained by any semester"
+    end
+
+    if ends_at && Semester.around_date(ends_at).blank?
+      raise SemesterMissingError, "date #{ends_at} is not contained by any semester"
+    end
   end
 
   def equipment_or_accessory

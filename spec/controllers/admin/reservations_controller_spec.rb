@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::ReservationsController, type: :controller do
   include SemestersSupport
   before { signin_as("admin") }
+  render_views
 
   let(:reservation_with_one_unit) do
     build(:reservation).tap do |r|
@@ -13,6 +14,9 @@ describe Admin::ReservationsController, type: :controller do
 
   describe "#index" do
     it "displays sortable/paginated reservations" do
+      semester_with_test_er_hours
+      reservation_with_one_unit
+
       get :index
       expect(assigns(:reservations)).to include(reservation_with_one_unit)
     end
@@ -20,6 +24,7 @@ describe Admin::ReservationsController, type: :controller do
 
   describe '#show' do
     it 'shows a reservation' do
+      semester_with_test_er_hours
       get :show, id: reservation_with_one_unit
       expect(response).to be_success
       expect(response).to render_template("show")
@@ -39,11 +44,22 @@ describe Admin::ReservationsController, type: :controller do
 
   describe '#edit' do
     let(:user) { create(:user) }
+    before { semester_with_test_er_hours }
 
     it 'renders the form with the loaded reservation' do
       get :edit, id: reservation_with_one_unit
       expect(response).to be_success
       expect(assigns(:reservation)).to eql(reservation_with_one_unit)
+    end
+
+    context "no semester defined for the given reservation's dates" do
+      it 'raises an error' do
+        reservation_with_one_unit.update_attributes!(starts_at: 5.years.ago, ends_at: 5.years.ago)
+
+        expect {
+          get :edit, id: reservation_with_one_unit
+        }.to raise_error(Reservation::SemesterMissingError)
+      end
     end
   end
 
@@ -76,6 +92,7 @@ describe Admin::ReservationsController, type: :controller do
         },
       )
     end
+    before { semester_with_test_er_hours }
 
     it 'updates the given reservation' do
       put :update, id: reservation_with_one_unit, reservation: attrs
@@ -87,6 +104,7 @@ describe Admin::ReservationsController, type: :controller do
 
   describe '#destroy' do
     it 'deletes the given reservation' do
+      semester_with_test_er_hours
       reservation_with_one_unit # create the object
 
       expect {
