@@ -1,6 +1,7 @@
 class Reservation < ActiveRecord::Base
   SemesterMissingError = Class.new(StandardError)
-  include ActionView::Helpers # Wah wah wahhhh
+  include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::TextHelper
 
   attr_accessor :run_date_validations
 
@@ -55,6 +56,10 @@ class Reservation < ActiveRecord::Base
     self.status ||= STATUSES.first
   end
 
+  def duration
+    ends_at - starts_at
+  end
+
   def verify_containing_semester_present
     if starts_at && Semester.around_date(starts_at).blank?
       raise SemesterMissingError, "date #{starts_at} is not contained by any semester"
@@ -71,36 +76,43 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def valid_dates?
+  def fully_valid?
     self.run_date_validations = true
-    valid?
+    result = valid?
     self.run_date_validations = false
+
+    result
   end
 
   def date_chronology
-    errors[:starts_at] << "must be in the future" if starts_at < Date.today
-    errors[:ends_at] << "must be after the check-out date" if starts_at >= ends_at
+    errors[:starts_at] << "must be in the future" if starts_at && starts_at < Date.today
+    errors[:ends_at] << "must be after the check-out date" if starts_at && ends_at && starts_at >= ends_at
   end
 
   def lead_time
-    # Use er hour time to now to afford the possiblity of using more granular time in config
-    outdate = Semester.current.to_er_hour_start(starts_at) or starts_at
-    given_lead_time = (outdate - DateTime.now).abs
+    return unless starts_at
 
-    # start date less than minimum lead time
-    if (given_lead_time < Weber::Application.config.reservation_min_lead_time)
-      errors[:starts_at] << "must be at least #{distance_of_time_in_words(Weber::Application.config.reservation_min_lead_time)} from now"
+    min_lead_time = Weber::Application.config.reservation_min_lead_time
+    max_lead_time = Weber::Application.config.reservation_max_lead_time
 
-    # start date greater than max lead time
-    elsif (given_lead_time > Weber::Application.config.reservation_max_lead_time)
-      errors[:starts_at] << "must be no more than #{distance_of_time_in_words(Weber::Application.config.reservation_max_lead_time)} from now"
+    min_starting_point = min_lead_time.from_now.at_beginning_of_day
+    max_starting_point = max_lead_time.from_now.at_beginning_of_day
+
+    if (starts_at < min_starting_point)
+      errors[:starts_at] << "must be at least #{distance_of_time_in_words(min_lead_time)} from now"
+
+    elsif (starts_at >= max_starting_point)
+      errors[:starts_at] << "must be no more than #{distance_of_time_in_words(max_lead_time)} from now"
     end
   end
 
   def units_max_period
+    return unless starts_at && ends_at
+
     units.each do |unit|
-      if (start_at.to_i - end_at.to_i).abs > unit.max_reservation_period
-        unit.errors[:base] << "cannot be reserved for more than #{distance_of_time_in_words(unit.max_reservation_period)}"
+      if duration > unit.max_reservation_period
+        unit.errors[:base] <<
+          "cannot be reserved for more than #{distance_of_time_in_words(unit.max_reservation_period)}"
       end
     end
   end
