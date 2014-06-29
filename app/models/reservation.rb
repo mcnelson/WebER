@@ -4,7 +4,7 @@ class Reservation < ActiveRecord::Base
 
   attr_accessor :run_date_validations
 
-  validate :ends_at, :starts_at, :status, :user_id, presence: true
+  validates :starts_at, :ends_at, :status, :user_id, presence: true
   validate :date_chronology,   if: :run_date_validations
   validate :lead_time,         if: :run_date_validations
   validate :units_max_period,  if: :run_date_validations
