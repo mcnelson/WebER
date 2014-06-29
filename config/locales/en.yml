@@ -16,9 +16,5 @@ en:
       dmy:         "%-m/%-d/%Y"
       dmy_ampm:    "%-m/%-d/%Y %l:%M%P"
       ampm:        "%l:%M%P"
-
-  date:
-    formats:
-      dmy:              "%-m/%-d/%Y"
-      weekday_monthday: "%a, %b %e"
       monthday:         "%b %e"
+      weekday_monthday: "%a, %b %e"
