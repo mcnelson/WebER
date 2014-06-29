@@ -33,7 +33,7 @@
                 label_method:       :name_brand_model,
                 label:              "Item"
 
-          = f.link_to_add :reserved_equipment, class: "btn btn-mini" do
+          = f.link_to_add :reserved_equipment, class: "btn btn-mini", id: "addEquipmentBtn" do
             span.icon: i.icon-plus
             |  Add Equipment
 
@@ -52,6 +52,6 @@
                 label_method:       :name_brand_model,
                 label:              "Item"
 
-          = f.link_to_add :reserved_accessories, class: "btn btn-mini" do
+          = f.link_to_add :reserved_accessories, class: "btn btn-mini", id: "addAccessoryBtn" do
             span.icon: i.icon-plus
             |  Add Accessory
