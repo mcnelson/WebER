@@ -10,7 +10,7 @@ describe Reservation do
 
         it 'is valid' do
           r = Reservation.new(starts_at: starts_at)
-          r.fully_valid?
+          r.lead_time
           expect(r.errors).to_not have_key(:starts_at)
         end
       end
@@ -20,8 +20,78 @@ describe Reservation do
 
         it 'is invalid' do
           r = Reservation.new(starts_at: starts_at)
-          r.fully_valid?
+          r.lead_time
           expect(r.errors).to have_key(:starts_at)
+        end
+      end
+    end
+
+    describe '#conflicting_reservations' do
+      context 'empty reservation' do
+        let(:reservation) { Reservation.new }
+
+        it 'does not conflict' do
+          reservation.conflicting_reservations
+          expect(reservation.errors).to_not have_key(:base)
+        end
+      end
+
+      context 'narrowly avoids conflicts with another reservation' do
+        let(:unit) { create(:equipment) }
+
+        let(:reservation) do
+          build(:reservation).tap do |r|
+            r.starts_at = Time.parse("June 3, 2014 3:00pm")
+            r.ends_at   = Time.parse("June 5, 2014 3:00pm")
+
+            r.reserved_equipment.build(unit: unit)
+            r.user_id = 1
+          end
+        end
+
+        before do
+          build(:reservation).tap do |r|
+            r.starts_at = Time.parse("June 1, 2014 3:00pm")
+            r.ends_at   = Time.parse("June 3, 2014 3:00pm")
+
+            r.equipment << unit
+            r.user_id = 1
+            r.save!
+          end
+        end
+
+        it 'does not conflict' do
+          reservation.conflicting_reservations
+          expect(reservation.errors).to_not have_key(:base)
+        end
+      end
+
+      context 'conflicts with another reservation' do
+        let(:conflicted_unit) { create(:equipment) }
+        let(:reservation) do
+          build(:reservation).tap do |r|
+            r.starts_at = Time.parse("June 3, 2014 3:00pm")
+            r.ends_at   = Time.parse("June 5, 2014 3:00pm")
+
+            r.equipment << conflicted_unit
+            r.user_id = 1
+          end
+        end
+
+        before do
+          build(:reservation).tap do |r|
+            r.starts_at = Time.parse("June 3, 2014 3:00pm")
+            r.ends_at   = Time.parse("June 5, 2014 3:00pm")
+
+            r.reserved_equipment.build(unit: conflicted_unit)
+            r.user_id = 1
+            r.save!
+          end
+        end
+
+        it 'it conflicts' do
+          reservation.conflicting_reservations
+          expect(reservation.errors).to have_key(:base)
         end
       end
     end
