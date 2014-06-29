@@ -43,18 +43,20 @@ describe Admin::ReservationsController, type: :controller do
   end
 
   describe '#edit' do
-    let(:user) { create(:user) }
-    before { semester_with_test_er_hours }
+    context 'happy path' do
+      let(:user) { create(:user) }
+      before { semester_with_test_er_hours }
 
-    it 'renders the form with the loaded reservation' do
-      get :edit, id: reservation_with_one_unit
-      expect(response).to be_success
-      expect(assigns(:reservation)).to eql(reservation_with_one_unit)
+      it 'renders the form with the loaded reservation' do
+        get :edit, id: reservation_with_one_unit
+        expect(response).to be_success
+        expect(assigns(:reservation)).to eql(reservation_with_one_unit)
+      end
     end
 
     context "no semester defined for the given reservation's dates" do
       it 'raises an error' do
-        reservation_with_one_unit.update_attributes!(starts_at: 5.years.ago, ends_at: 5.years.ago)
+        reservation_with_one_unit
 
         expect {
           get :edit, id: reservation_with_one_unit
@@ -64,26 +66,52 @@ describe Admin::ReservationsController, type: :controller do
   end
 
   describe "#create" do
-    before { semester_with_test_er_hours }
-    let(:user) { create(:user) }
-    let(:equipment) { create(:equipment) }
-    let(:accessory) { create(:accessory) }
-    let(:attrs) do
-      attributes_for(:reservation).merge(
-        user_id: user.id,
-        reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
-        reserved_accessories_attributes: {"0" => {unit_id: accessory.id}},
-      )
+    context "HTML" do
+      before { semester_with_test_er_hours }
+      let(:user) { create(:user) }
+      let(:equipment) { create(:equipment) }
+      let(:accessory) { create(:accessory) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          user_id: user.id,
+          reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+          reserved_accessories_attributes: {"0" => {unit_id: accessory.id}},
+        )
+      end
+
+      it 'creates a new reservation' do
+        post :create, {reservation: attrs}
+
+        reservation = assigns(:reservation)
+        expect(reservation).to be_a(Reservation)
+        expect(reservation).to be_persisted
+        expect(reservation.equipment).to include(equipment)
+        expect(reservation.accessories).to include(accessory)
+      end
     end
 
-    it 'creates a new reservation' do
-      post :create, {reservation: attrs}
+    context "JS" do
+      before { semester_with_test_er_hours }
+      let(:user) { create(:user) }
+      let(:equipment) { create(:equipment) }
+      let(:accessory) { create(:accessory) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          user_id: user.id,
+          reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+          reserved_accessories_attributes: {"0" => {unit_id: accessory.id}},
+        )
+      end
 
-      reservation = assigns(:reservation)
-      expect(reservation).to be_a(Reservation)
-      expect(reservation).to be_persisted
-      expect(reservation.equipment).to include(equipment)
-      expect(reservation.accessories).to include(accessory)
+      it 'creates a new reservation' do
+        post :create, reservation: attrs, format: :js
+
+        reservation = assigns(:reservation)
+        expect(reservation).to be_a(Reservation)
+        expect(reservation).to be_persisted
+        expect(reservation.equipment).to include(equipment)
+        expect(reservation.accessories).to include(accessory)
+      end
     end
   end
 

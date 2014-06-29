@@ -26,21 +26,20 @@ class Admin::ReservationsController < AdminController
   def create
     @reservation = Reservation.new(reservation_params)
 
-    respond_to do |format|
-      format.html do
-        if @reservation.save!
+    respond_to do |fmt|
+      fmt.html do
+        if @reservation.save
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
         else
           render action: "new"
         end
       end
 
-      format.js do
-        if @reservation.fully_valid?
-          @reservation.save!
-
+      fmt.js do
+        if @reservation.save
           render js: "window.location = '#{admin_reservation_path(@reservation)}';",
             notice: 'Reservation was successfully created.'
+
         else
           render action: "update_form"
         end
@@ -61,9 +60,7 @@ class Admin::ReservationsController < AdminController
       end
 
       fmt.js do
-        @reservation.assign_attributes(reservation_params)
-
-        if @reservation.fully_valid?
+        if @reservation.update_attributes(reservation_params)
           render js: "window.location = '#{admin_reservation_path(@reservation)}';",
             notice: 'Reservation was successfully updated.'
 
