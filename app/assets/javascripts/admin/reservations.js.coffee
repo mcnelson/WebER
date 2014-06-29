@@ -1,33 +1,35 @@
 namespace "weber.reservations.form", (exports) ->
   exports.init = ->
     $ ->
-      exports.heartbeat()
+      initFormControls()
 
-  exports.heartbeat = (event) ->
-    $(".reservation-form").submit().
-      unbind("ajax:success").
-      on("ajax:success", (evt) ->
+      $form = $(".reservation-form")
+      $form.on "ajax:send", ->
+        toggleEnabled($form, false)
 
-        # Add/remove units
-      # $(document).
-      #   unbind('nested:fieldAdded nested:fieldRemoved').
-      #   on('nested:fieldAdded nested:fieldRemoved', exports.heartbeat)
+      $form.on "ajax:success", ->
+        toggleEnabled($form, true)
 
-        # Change any select
-        $("select").unbind("change").on("change", exports.heartbeat).chosen()
+  initFormControls = (form) ->
+    $("select").unbind("change").chosen()
 
-        # Initialize datepicker
-        $(".simpleform-inline-datepicker").datepicker({
-          beforeShowDay: (date) ->
-            valid_er_hour_dates = $('#before_show_day_data').data('er_hour_days')
-            [($.inArray($.datepicker.formatDate('dd/mm/yy', date), valid_er_hour_dates) != -1), "", "ER doesn't operate on this day"]
+    $(".simpleform-inline-datepicker").datepicker
+      beforeShowDay: (date) ->
+        valid_er_hour_dates = $('#before_show_day_data').data('er_hour_days')
+        [($.inArray($.datepicker.formatDate('dd/mm/yy', date), valid_er_hour_dates) != -1), "", "ER doesn't operate on this day"]
 
-          onSelect: (datetext, inst) ->
-            $(@).children('input').attr("value", datetext).trigger('select')
+      onSelect: (datetext, inst) ->
+        $(@).children('input').attr("value", datetext).trigger('select')
 
-          dateFormat: "yy/mm/dd"
-        }).each ->
-          $(@).datepicker("setDate", $(@).children('input').attr("value"))
+      dateFormat: "yy/mm/dd"
 
-        $(".datepicker-input").on("select", exports.heartbeat)
-      )
+    .each ->
+      $(@).datepicker("setDate", $(@).children('input').attr("value"))
+
+  toggleEnabled = ($form, toggle) ->
+    $form.css({opacity: (if toggle then 1 else .2)})
+
+    if toggle
+      $form.find(":input").removeAttr("disabled")
+    else
+      $form.find(":input").attr("disabled", "disabled")
