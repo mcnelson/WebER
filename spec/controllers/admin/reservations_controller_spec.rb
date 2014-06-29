@@ -67,38 +67,85 @@ describe Admin::ReservationsController, type: :controller do
     before { semester_with_test_er_hours }
     let(:user) { create(:user) }
     let(:equipment) { create(:equipment) }
+    let(:accessory) { create(:accessory) }
     let(:attrs) do
       attributes_for(:reservation).merge(
         user_id: user.id,
         reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+        reserved_accessories_attributes: {"0" => {unit_id: accessory.id}},
       )
     end
 
     it 'creates a new reservation' do
       post :create, {reservation: attrs}
-      expect(assigns(:reservation)).to be_a(Reservation)
-      expect(assigns(:reservation)).to be_persisted
+
+      reservation = assigns(:reservation)
+      expect(reservation).to be_a(Reservation)
+      expect(reservation).to be_persisted
+      expect(reservation.equipment).to include(equipment)
+      expect(reservation.accessories).to include(accessory)
     end
   end
 
   describe '#update' do
-    let(:current_reserved_unit) { reservation_with_one_unit.reserved_units.first }
-    let(:new_equipment) { create(:equipment) }
-    let(:attrs) do
-      attributes_for(:reservation).merge(
-        reserved_equipment_attributes: {
-          #current_reserved_unit.id => {unit_id: current_reserved_unit.unit_id}, TODO: shouldn't this work?
-          "0"                      => {unit_id: new_equipment.id},
-        },
-      )
-    end
-    before { semester_with_test_er_hours }
+    context "HTML" do
+      let(:current_reserved_unit) { reservation_with_one_unit.reserved_units.first }
+      let(:new_equipment) { create(:equipment) }
+      let(:new_accessory) { create(:accessory) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          # datepicker uses YMD format
+          starts_at: I18n.localize(reservation_with_one_unit.starts_at, format: :ymd),
+          ends_at:   I18n.localize(reservation_with_one_unit.ends_at, format: :ymd),
 
-    it 'updates the given reservation' do
-      put :update, id: reservation_with_one_unit, reservation: attrs
-      reservation_with_one_unit.reload
-      expect(reservation_with_one_unit.equipment_ids).to include(current_reserved_unit.unit_id)
-      expect(reservation_with_one_unit.equipment_ids).to include(new_equipment.id)
+          reserved_equipment_attributes: {
+            "0" => {id: current_reserved_unit.id, unit_id: current_reserved_unit.unit_id},
+            "1" => {unit_id: new_equipment.id},
+          },
+
+          reserved_accessories_attributes: {
+            "0" => {unit_id: new_accessory.id},
+          },
+        )
+      end
+      before { semester_with_test_er_hours }
+
+      it 'updates the given reservation' do
+        patch :update, id: reservation_with_one_unit, reservation: attrs
+        reservation = assigns(:reservation)
+        expect(reservation.equipment_ids).to include(current_reserved_unit.unit_id)
+        expect(reservation.equipment_ids).to include(new_equipment.id)
+      end
+    end
+
+    context "JS" do
+      let(:current_reserved_unit) { reservation_with_one_unit.reserved_units.first }
+      let(:new_equipment) { create(:equipment) }
+      let(:new_accessory) { create(:accessory) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          # datepicker uses YMD format
+          starts_at: I18n.localize(reservation_with_one_unit.starts_at, format: :ymd),
+          ends_at:   I18n.localize(reservation_with_one_unit.ends_at, format: :ymd),
+
+          reserved_equipment_attributes: {
+            "0" => {id: current_reserved_unit.id, unit_id: current_reserved_unit.unit_id},
+            "1" => {unit_id: new_equipment.id},
+          },
+
+          reserved_accessories_attributes: {
+            "0" => {unit_id: new_accessory.id},
+          },
+        )
+      end
+      before { semester_with_test_er_hours }
+
+      it 'updates the given reservation' do
+        patch :update, id: reservation_with_one_unit, reservation: attrs, format: :js
+        reservation = assigns(:reservation)
+        expect(reservation.equipment_ids).to include(current_reserved_unit.unit_id)
+        expect(reservation.equipment_ids).to include(new_equipment.id)
+      end
     end
   end
 
