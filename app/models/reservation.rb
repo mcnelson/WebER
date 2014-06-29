@@ -1,7 +1,6 @@
 class Reservation < ActiveRecord::Base
   SemesterMissingError = Class.new(StandardError)
   include ActionView::Helpers::DateHelper
-  include ActionView::Helpers::TextHelper
 
   attr_accessor :run_date_validations
 
@@ -9,7 +8,7 @@ class Reservation < ActiveRecord::Base
   validate :date_chronology,   if: :run_date_validations
   validate :lead_time,         if: :run_date_validations
   validate :units_max_period,  if: :run_date_validations
-  validate :conflicting_units, if: :run_date_validations
+  validate :conflicting_reservations, if: :run_date_validations
   validate :equipment_or_accessory
 
   belongs_to :user
@@ -117,17 +116,29 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def conflicting_units
-    (reserved_equipment + reserved_accessories).select {|ru| ru.valid? } .each do |reserved_unit|
-      overlapping_reservations = reserved_unit.unit.
-        in_reservations_in_range_exclusive(starts_at, ends_at).tap do |relation|
-          relation = relation.where("reservations.id != ?", id) if id.present?
-        end
-
-      if overlapping_reservations.any?
-        errors[:base] << "#{reserved_unit.unit.name} conflicts with #{pluralize(overlapping_reservations.count, "reservation")}"
-      end
+  def conflicting_reservations
+    conflicting_reserved_units.each do |reserved_unit|
+      errors[:base] << "#{reserved_unit[:name]} is already reserved within your requested dates"
     end
+  end
+
+  def conflicting_reserved_units
+    ids = (reserved_equipment + reserved_accessories).map(&:unit_id)
+
+    relation = ReservedUnit.
+      select("reserved_units.id, units.name").
+      joins(:reservation, :unit).
+      where(unit_id: ids).
+      where("(starts_at >= ? AND ends_at <= ?)
+        OR (starts_at <= ? AND ? < ends_at)
+        OR (starts_at < ? AND ? < ends_at)",
+        starts_at, ends_at,
+        starts_at, starts_at,
+        ends_at, ends_at
+      )
+
+    relation = relation.where("reserved_units.reservation_id != ?", id) if id
+    relation.map { |ru| ru.attributes.with_indifferent_access }
   end
 
   def contains?(equipment)

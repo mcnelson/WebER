@@ -36,14 +36,12 @@ class Admin::ReservationsController < AdminController
       end
 
       format.js do
-        if params[:commit] && @reservation.save
-          @reservation.valid_dates?
+        if @reservation.fully_valid?
           @reservation.save!
 
           render js: "window.location = '#{admin_reservation_path(@reservation)}';",
             notice: 'Reservation was successfully created.'
         else
-          @reservation.valid?
           render action: "update_form"
         end
       end

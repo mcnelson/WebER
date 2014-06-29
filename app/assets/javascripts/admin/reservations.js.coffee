@@ -9,9 +9,10 @@ namespace "weber.reservations.form", (exports) ->
 
       $form.on "ajax:success", ->
         toggleEnabled($form, true)
+        initFormControls()
 
   initFormControls = (form) ->
-    $("select").unbind("change").chosen()
+    $("select").chosen()
 
     $(".simpleform-inline-datepicker").datepicker
       beforeShowDay: (date) ->
