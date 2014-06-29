@@ -30,6 +30,8 @@ namespace "weber.reservations.form", (exports) ->
     $form.css({opacity: (if toggle then 1 else .2)})
 
     if toggle
+      $('.loader').css(display: 'none')
       $form.find(":input").removeAttr("disabled")
     else
+      $('.loader').css(display: 'block')
       $form.find(":input").attr("disabled", "disabled")

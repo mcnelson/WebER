@@ -20,6 +20,32 @@
     margin-bottom: 4px;
   }
 
+  .reservation-form-outer {
+    position: relative;
+
+    .loader {
+      display: none;
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: white;
+      left: 50%;
+      top: 50%;
+      margin-left: -60px;
+      margin-top: -60px;
+
+      img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 66px;
+        height: 66px;
+        margin-left: -33px;
+        margin-top: -33px;
+      }
+    }
+  }
+
   .unit-row {
     min-height: 40px;
     border-top: solid 1px #CCC;
