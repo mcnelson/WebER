@@ -103,7 +103,6 @@ describe Reservation do
 
     it 'returns the duration of the reservation' do
       r = Reservation.new(starts_at: start_at, ends_at: end_at)
-      expect(r.duration).to be_kind_of(Rational)
       expect(r.duration.to_i).to be > 0
     end
   end
@@ -130,7 +129,7 @@ describe Reservation do
 
       it 'runs normal validations plus special date validations' do
         reservation.fully_valid?
-        expect(reservation.errors[:base]).to be_present
+        expect(reservation.errors.to_a).to be_present
       end
     end
 
