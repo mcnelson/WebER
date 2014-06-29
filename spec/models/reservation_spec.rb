@@ -106,46 +106,4 @@ describe Reservation do
       expect(r.duration.to_i).to be > 0
     end
   end
-
-  describe '#fully_valid?' do
-    context 'empty reservation' do
-      let(:reservation) { Reservation.new }
-
-      it 'runs normal validations plus special date validations' do
-        reservation.fully_valid?
-        expect(reservation.errors[:base]).to be_present
-      end
-    end
-
-    context 'incomplete reservation' do
-      let(:reservation) do
-        build(:reservation,
-          starts_at: nil,
-          ends_at:   nil,
-          equipment: [create(:equipment)],
-          user_id:   1,
-        )
-      end
-
-      it 'runs normal validations plus special date validations' do
-        reservation.fully_valid?
-        expect(reservation.errors.to_a).to be_present
-      end
-    end
-
-    context 'complete reservation' do
-      let(:reservation) do
-        build(:reservation).tap do |r|
-          r.equipment << create(:equipment)
-          r.user_id = 1
-          r.save!
-        end
-      end
-
-      it 'runs normal validations plus special date validations' do
-        reservation.fully_valid?
-        expect(reservation).to be_fully_valid
-      end
-    end
-  end
 end

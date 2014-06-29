@@ -2,13 +2,15 @@ class Reservation < ActiveRecord::Base
   SemesterMissingError = Class.new(StandardError)
   include ActionView::Helpers::DateHelper
 
-  attr_accessor :run_date_validations
-
   validates :starts_at, :ends_at, :status, :user_id, presence: true
-  validate :date_chronology,   if: :run_date_validations
-  validate :lead_time,         if: :run_date_validations
-  validate :units_max_period,  if: :run_date_validations
-  validate :conflicting_reservations, if: :run_date_validations
+
+  # Run date-related validations on create only, allowing admins to backdate stuff
+  # via update
+  validate :date_chronology, on: :create
+  validate :lead_time, on: :create
+
+  validate :units_max_period
+  validate :conflicting_reservations
   validate :equipment_or_accessory
 
   belongs_to :user
@@ -73,14 +75,6 @@ class Reservation < ActiveRecord::Base
     if reserved_equipment.blank? && reserved_accessories.blank?
       errors[:base] << "Reservation must have at least one equipment unit or accessory."
     end
-  end
-
-  def fully_valid?
-    self.run_date_validations = true
-    result = valid?
-    self.run_date_validations = false
-
-    result
   end
 
   def date_chronology

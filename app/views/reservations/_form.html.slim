@@ -29,8 +29,6 @@
           - else
             = f.button :submit, class: "btn btn-danger", confirm: "You're submitting an invalid reservation. Are you sure this is what you want?"
 
-
-
-    - content_for :js do
-      coffee:
-        weber.reservations.form.init()
+- content_for :js do
+  coffee:
+    weber.reservations.form.init()
