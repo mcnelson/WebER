@@ -11,6 +11,8 @@ namespace "weber.reservations.form", (exports) ->
         toggleEnabled($form, true)
         initFormControls()
 
+      $(document).on "nested:fieldAdded", initFormControls
+
   initFormControls = (form) ->
     $("select").chosen()
 
