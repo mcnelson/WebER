@@ -13,8 +13,9 @@ en:
 
   time:
     formats:
-      dmy:         "%-m/%-d/%Y"
-      dmy_ampm:    "%-m/%-d/%Y %l:%M%P"
-      ampm:        "%l:%M%P"
+      dmy:              "%-m/%-d/%Y"
+      dmy_ampm:         "%-m/%-d/%Y %l:%M%P"
+      ymd:              "%Y/%m/%d"
+      ampm:             "%l:%M%P"
       monthday:         "%b %e"
       weekday_monthday: "%a, %b %e"
