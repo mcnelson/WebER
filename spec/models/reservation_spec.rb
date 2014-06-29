@@ -1,5 +1,82 @@
 require 'spec_helper'
 
 describe Reservation do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    describe '#lead_time' do
+      let(:min_lead_time) { Weber::Application.config.reservation_min_lead_time }
+
+      context "reservation starts any time during the day min_lead_time days from now" do
+        let(:starts_at) { min_lead_time.from_now.change(hour: 9) }
+
+        it 'is valid' do
+          r = Reservation.new(starts_at: starts_at)
+          r.fully_valid?
+          expect(r.errors).to_not have_key(:starts_at)
+        end
+      end
+
+      context "reservation starts any time during the current day" do
+        let(:starts_at) { Time.now.change(hour: 3) }
+
+        it 'is invalid' do
+          r = Reservation.new(starts_at: starts_at)
+          r.fully_valid?
+          expect(r.errors).to have_key(:starts_at)
+        end
+      end
+    end
+  end
+
+  describe '#duration' do
+    let(:start_at) { Time.now }
+    let(:end_at)   { 2.days.from_now }
+
+    it 'returns the duration of the reservation' do
+      r = Reservation.new(starts_at: start_at, ends_at: end_at)
+      expect(r.duration).to be_kind_of(Rational)
+      expect(r.duration.to_i).to be > 0
+    end
+  end
+
+  describe '#fully_valid?' do
+    context 'empty reservation' do
+      let(:reservation) { Reservation.new }
+
+      it 'runs normal validations plus special date validations' do
+        reservation.fully_valid?
+        expect(reservation.errors[:base]).to be_present
+      end
+    end
+
+    context 'incomplete reservation' do
+      let(:reservation) do
+        build(:reservation,
+          starts_at: nil,
+          ends_at:   nil,
+          equipment: [create(:equipment)],
+          user_id:   1,
+        )
+      end
+
+      it 'runs normal validations plus special date validations' do
+        reservation.fully_valid?
+        expect(reservation.errors[:base]).to be_present
+      end
+    end
+
+    context 'complete reservation' do
+      let(:reservation) do
+        build(:reservation).tap do |r|
+          r.equipment << create(:equipment)
+          r.user_id = 1
+          r.save!
+        end
+      end
+
+      it 'runs normal validations plus special date validations' do
+        reservation.fully_valid?
+        expect(reservation).to be_fully_valid
+      end
+    end
+  end
 end
