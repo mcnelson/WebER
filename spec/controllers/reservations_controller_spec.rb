@@ -37,20 +37,40 @@ describe ReservationsController, type: :controller do
   end
 
   describe '#create' do
-    before { semester_with_test_er_hours }
-    let(:user) { create(:user) }
-    let(:equipment) { create(:equipment) }
-    let(:attrs) do
-      attributes_for(:reservation).merge(
-        user_id: user.id,
-        reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
-      )
+    context "HTML" do
+      before { semester_with_test_er_hours }
+      let(:user) { create(:user) }
+      let(:equipment) { create(:equipment) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          user_id: user.id,
+          reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+        )
+      end
+
+      it 'creates a new reservation' do
+        post :create, {reservation: attrs}
+        expect(assigns(:reservation)).to be_a(Reservation)
+        expect(assigns(:reservation)).to be_persisted
+      end
     end
 
-    it 'creates a new reservation' do
-      post :create, {reservation: attrs}
-      expect(assigns(:reservation)).to be_a(Reservation)
-      expect(assigns(:reservation)).to be_persisted
+    context "JS" do
+      before { semester_with_test_er_hours }
+      let(:user) { create(:user) }
+      let(:equipment) { create(:equipment) }
+      let(:attrs) do
+        attributes_for(:reservation).merge(
+          user_id: user.id,
+          reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+        )
+      end
+
+      it 'creates a new reservation' do
+        post :create, reservation: attrs, format: :js
+        expect(assigns(:reservation)).to be_a(Reservation)
+        expect(assigns(:reservation)).to be_persisted
+      end
     end
   end
 end

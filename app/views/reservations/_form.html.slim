@@ -1,6 +1,7 @@
 .reservation-form-outer
-  .loader
-    img src="http://rackspot.com/assets/img/ajax_loader_big.gif" alt="Loading" width="66" height="66"
+  .loader.ellipsis-loader
+    - 3.times do
+      span .
 
   = simple_nested_form_for @reservation, remote: true, html: { class: "form-horizontal reservation-form" } do |f|
     .row-fluid
@@ -30,5 +31,5 @@
             = f.button :submit, class: "btn btn-danger", confirm: "You're submitting an invalid reservation. Are you sure this is what you want?"
 
 - content_for :js do
-  coffee:
-    weber.reservations.form.init()
+  javascript:
+    weber.reservations.form.init();

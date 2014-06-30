@@ -35,12 +35,10 @@ class ReservationsController < ApplicationController
       end
 
       format.js do
-        if params[:commit]
-          @reservation.save!
-
-          render js: "window.location = '#{reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
+        if @reservation.save
+          render js: "window.location = '#{reservation_path(@reservation)}';",
+            notice: 'Reservation was successfully created.'
         else
-          @reservation.valid_dates?
           render action: "update_form"
         end
       end
