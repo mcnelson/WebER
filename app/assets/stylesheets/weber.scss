@@ -23,8 +23,10 @@ body {
   }
 
   .navbar {
+    position: static;
+
     .navbar-inner {
-      padding: 7px 0;
+      padding: 7px 0 0;
 
       .container {
         height: 50px;
