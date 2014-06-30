@@ -26,24 +26,21 @@ class Admin::ReservationsController < AdminController
   def create
     @reservation = Reservation.new(reservation_params)
 
-    respond_to do |format|
-      format.html do
-        if @reservation.save!
+    respond_to do |fmt|
+      fmt.html do
+        if @reservation.save
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
         else
           render action: "new"
         end
       end
 
-      format.js do
-        if params[:commit] && @reservation.save
-          @reservation.valid_dates?
-          @reservation.save!
-
+      fmt.js do
+        if @reservation.save
           render js: "window.location = '#{admin_reservation_path(@reservation)}';",
             notice: 'Reservation was successfully created.'
+
         else
-          @reservation.valid?
           render action: "update_form"
         end
       end
@@ -52,22 +49,22 @@ class Admin::ReservationsController < AdminController
 
   def update
     @reservation = Reservation.find(params[:id])
-    @reservation.assign_attributes(reservation_params)
 
-    respond_to do |format|
-      format.html do
-        if @reservation.save(reservation_params)
+    respond_to do |fmt|
+      fmt.html do
+        if @reservation.update_attributes(reservation_params)
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully updated.'
         else
           render action: "edit"
         end
       end
 
-      format.js do
-        if params[:commit] && @reservation.save(reservation_params)
-          render js: "window.location = '#{admin_reservation_path(@reservation)}';", notice: 'Reservation was successfully updated.'
+      fmt.js do
+        if @reservation.update_attributes(reservation_params)
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';",
+            notice: 'Reservation was successfully updated.'
+
         else
-          @reservation.valid?
           render action: "update_form"
         end
       end
@@ -92,8 +89,8 @@ class Admin::ReservationsController < AdminController
       require(:reservation).
       permit(
         %w(starts_at ends_at status notes user_id),
-        reserved_equipment_attributes: %w(unit_id _destroy),
-        reserved_accessory_attributes: %w(unit_id _destroy),
+        reserved_equipment_attributes: %w(id unit_id _destroy),
+        reserved_accessories_attributes: %w(id unit_id _destroy),
       )
   end
 end

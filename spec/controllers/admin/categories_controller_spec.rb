@@ -1,41 +1,29 @@
-
 require 'spec_helper'
 
 describe Admin::CategoriesController, type: :controller do
-  def valid_attributes
-    FactoryGirl.attributes_for(:equipment_category)
-  end
+  render_views
+  before { signin_as("admin") }
 
-  before do
-    signin_as("admin")
-  end
+  describe "#index" do
+    let!(:equipment_category) { create(:equipment_category) }
+    let!(:accessory_category) { create(:accessory_category) }
 
-  describe "GET index" do
     it "assigns all equipment categories as @equipment_categories" do
-      equipment_category = EquipmentCategory.create! valid_attributes
-      get :index, {}
-      assigns(:equipment_categories).should eq([equipment_category])
-    end
-
-    it "assigns all accessory categories as @accessory_categories" do
-      accessory_category = AccessoryCategory.create! valid_attributes
-      get :index, {}
-      assigns(:accessory_categories).should eq([accessory_category])
+      get :index
+      expect(assigns(:equipment_categories)).to include(equipment_category)
+      expect(assigns(:accessory_categories)).to include(accessory_category)
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested category" do
-      category = Category.create! valid_attributes
-      expect {
-        delete :destroy, {:id => category.to_param}
-      }.to change(Category, :count).by(-1)
-    end
+  describe "#destroy" do
+    let!(:category) { create(:equipment_category) }
 
-    it "redirects to the categories index" do
-      category = Category.create! valid_attributes
-      delete :destroy, {:id => category.to_param}
-      response.should redirect_to(admin_categories_path)
+    it "destroys the requested category" do
+      expect {
+        delete :destroy, {id: category.to_param}
+      }.to change(Category, :count).by(-1)
+
+      expect(response).to redirect_to(admin_categories_path)
     end
   end
 

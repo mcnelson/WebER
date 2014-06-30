@@ -1,32 +1,24 @@
-= simple_nested_form_for @reservation, remote: true, html: { class: "form-horizontal reservation-form" } do |f|
-  .row-fluid
-    .span12
-      .liner
-        .form-errors
-          = form_errors @reservation
+.reservation-form-outer
+  .loader.ellipsis-loader
+    - 3.times do
+      span .
 
-  = render partial: 'reservation_form_controls', locals: { f: f }
+  = simple_nested_form_for @reservation, remote: true, html: {class: "form-horizontal reservation-form"} do |f|
+    .row-fluid
+      .span12
+        .liner
+          .form-errors
+            = form_errors @reservation
 
-  .form-actions
-    - if @reservation.invalid?
-      .pending-reservation-warning
-        .alert.alert-warning
-          h4
-            i.icon.icon-warning-sign
-            |  Warning
-          p This reservation currently has conflicts or other problems. Please check the errors at the top of the form to resolve them. If you have special conditions or arrangements with the equipment room staff, you can still submit the reservation but it will require additional approval.
+    = render partial: 'reservation_form_controls', locals: { f: f }
 
-    .btn-group
-      = link_to "Back", root_path, class: "btn"
+    .form-actions
+      .btn-group
+        = link_to "Back", root_path, class: "btn"
 
-      .input-append
-        - if @reservation.valid?
+        .input-append
           = f.button :submit, class: "btn btn-primary"
-        - else
-          = f.button :submit, class: "btn btn-danger", confirm: "You're submitting an invalid reservation. Are you sure this is what you want?"
 
-
-
-  - content_for :js do
-    coffee:
-      weber.reservations.form.init()
+- content_for :js do
+  javascript:
+    weber.reservations.form.init();

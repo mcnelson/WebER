@@ -35,12 +35,10 @@ class ReservationsController < ApplicationController
       end
 
       format.js do
-        if params[:commit]
-          @reservation.save!
-
-          render js: "window.location = '#{reservation_path(@reservation)}';", notice: 'Reservation was successfully created.'
+        if @reservation.save
+          render js: "window.location = '#{reservation_path(@reservation)}';",
+            notice: 'Reservation was successfully created.'
         else
-          @reservation.valid_dates?
           render action: "update_form"
         end
       end
@@ -59,7 +57,7 @@ class ReservationsController < ApplicationController
       permit(
         %w(starts_at ends_at status notes user_id),
         reserved_equipment_attributes: %w(unit_id _destroy),
-        reserved_accessory_attributes: %w(unit_id _destroy),
+        reserved_accessories_attributes: %w(unit_id _destroy),
       )
   end
 end

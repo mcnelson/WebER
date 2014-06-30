@@ -1,33 +1,40 @@
 namespace "weber.reservations.form", (exports) ->
   exports.init = ->
     $ ->
-      exports.heartbeat()
+      initFormControls()
 
-  exports.heartbeat = (event) ->
-    $(".reservation-form").submit().
-      unbind("ajax:success").
-      on("ajax:success", (evt) ->
+      $form = $(".reservation-form")
+      $form.on "ajax:send", ->
+        toggleEnabled($form, false)
 
-        # Add/remove units
-      # $(document).
-      #   unbind('nested:fieldAdded nested:fieldRemoved').
-      #   on('nested:fieldAdded nested:fieldRemoved', exports.heartbeat)
+      $form.on "ajax:success", ->
+        toggleEnabled($form, true)
+        initFormControls()
 
-        # Change any select
-        $("select").unbind("change").on("change", exports.heartbeat).chosen()
+      $(document).on "nested:fieldAdded", initFormControls
 
-        # Initialize datepicker
-        $(".simpleform-inline-datepicker").datepicker({
-          beforeShowDay: (date) ->
-            valid_er_hour_dates = $('#before_show_day_data').data('er_hour_days')
-            [($.inArray($.datepicker.formatDate('dd/mm/yy', date), valid_er_hour_dates) != -1), "", "ER doesn't operate on this day"]
+  initFormControls = (form) ->
+    $("select").chosen()
 
-          onSelect: (datetext, inst) ->
-            $(@).children('input').attr("value", datetext).trigger('select')
+    $(".simpleform-inline-datepicker").datepicker
+      beforeShowDay: (date) ->
+        valid_er_hour_dates = $('#before_show_day_data').data('er_hour_days')
+        [($.inArray($.datepicker.formatDate('dd/mm/yy', date), valid_er_hour_dates) != -1), "", "ER doesn't operate on this day"]
 
-          dateFormat: "yy/mm/dd"
-        }).each ->
-          $(@).datepicker("setDate", $(@).children('input').attr("value"))
+      onSelect: (datetext, inst) ->
+        $(@).children('input').attr("value", datetext).trigger('select')
 
-        $(".datepicker-input").on("select", exports.heartbeat)
-      )
+      dateFormat: "yy/mm/dd"
+
+    .each ->
+      $(@).datepicker("setDate", $(@).children('input').attr("value"))
+
+  toggleEnabled = ($form, toggle) ->
+    $form.css({opacity: (if toggle then 1 else .2)})
+
+    if toggle
+      $('.loader').css(display: 'none')
+      $form.find(":input").removeAttr("disabled")
+    else
+      $('.loader').css(display: 'block')
+      $form.find(":input").attr("disabled", "disabled")

@@ -1,26 +1,34 @@
 class Admin::AccessoryCategoriesController < AdminController
   def edit
     @category = AccessoryCategory.find(params[:id])
-    render action: "categories/edit"
+    render "admin/categories/edit"
   end
 
   def create
-    @category = AccessoryCategory.new(params[:accessory_category])
+    @category = AccessoryCategory.new(accessory_params)
 
     if @category.save
       redirect_to admin_categories_path, notice: 'Accessory category was successfully created.'
     else
-      render action: "categories/edit"
+      render "admin/categories/edit"
     end
   end
 
   def update
     @category = AccessoryCategory.find(params[:id])
 
-    if @category.update_attributes(params[:accessory_category])
+    if @category.update_attributes(accessory_params)
       redirect_to admin_categories_path, notice: 'Accessory category was successfully updated.'
     else
-      render action: "categories/edit"
+      render "admin/categories/edit"
     end
+  end
+
+  private
+
+  def accessory_params
+    params.
+      require(:accessory_category).
+      permit(:title)
   end
 end
