@@ -56,7 +56,7 @@ describe Reservation do
 
             r.equipment << unit
             r.user_id = 1
-            r.save!
+            r.save!(validate: false) # hehe
           end
         end
 
@@ -85,7 +85,7 @@ describe Reservation do
 
             r.reserved_equipment.build(unit: conflicted_unit)
             r.user_id = 1
-            r.save!
+            r.save!(validate: false) # lulz
           end
         end
 
