@@ -1,6 +1,7 @@
 .reservation-form-outer
-  .loader
-    img src="http://rackspot.com/assets/img/ajax_loader_big.gif" alt="Loading" width="66" height="66"
+  .loader.ellipsis-loader
+    - 3.times do
+      span .
 
   = simple_nested_form_for [:admin, @reservation], remote: true, html: { class: "form-horizontal reservation-form" } do |f|
     .row-fluid
