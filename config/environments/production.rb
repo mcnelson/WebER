@@ -1,4 +1,5 @@
 Weber::Application.configure do
+  config.force_ssl = true
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -10,8 +11,7 @@ Weber::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_assets = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
