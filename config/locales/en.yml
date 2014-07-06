@@ -19,3 +19,7 @@ en:
       ampm:             "%l:%M%P"
       monthday:         "%b %e"
       weekday_monthday: "%a, %b %e"
+
+  date:
+    formats:
+      monthday:         "%b %e"
