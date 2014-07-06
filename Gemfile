@@ -33,6 +33,7 @@ group :test do
   gem 'factory_girl_rails'      # Specs
   gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
   gem 'shoulda-matchers'
+  gem 'timecop'
 end
 
 group :production do

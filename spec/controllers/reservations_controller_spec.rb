@@ -13,7 +13,40 @@ describe ReservationsController, type: :controller do
     end
   end
 
-  pending '#index'
+  describe '#index', integration: true do
+    let(:time) { Time.new(2014, 1, 1, 14, 0, 0) }
+
+    before do
+      semester_with_test_er_hours
+      Timecop.freeze(time)
+    end
+    after { Timecop.return }
+
+    let!(:reservation) do
+      build(:reservation).tap do |r|
+        r.starts_at = (time + 1.day).change(hour: 13)
+        r.ends_at = (time + 3.days).change(hour: 15)
+
+        r.equipment << create(:equipment)
+        r.accessories << create(:accessory)
+        r.user = controller.current_user
+        r.save!
+      end
+    end
+
+    it 'shows due & all reservations' do
+      get :index
+
+      expect(response).to be_success
+      expect(response).to render_template("index")
+
+      # Check date formatting & counts
+      expect(response.body).to include('1/2/2014  1:00pm')
+      expect(response.body).to include('1/4/2014  3:00pm')
+      expect(response.body).to include('1E')
+      expect(response.body).to include('1A')
+    end
+  end
 
   describe '#show' do
     before { semester_with_test_er_hours }
