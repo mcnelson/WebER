@@ -38,4 +38,5 @@ end
 
 group :production do
   gem 'passenger'               # Apache deployment
+  gem 'rails_12factor'          # Heroku logging
 end
