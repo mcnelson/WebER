@@ -1,4 +1,6 @@
 Weber::Application.configure do
+  config.log_level = :debug
+
   config.force_ssl = true
 
   # Code is not reloaded between requests
