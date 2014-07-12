@@ -42,7 +42,10 @@ describe Admin::EquipmentController, type: :controller do
     context "with valid params" do
       it "creates a new Equipment" do
         expect {
-          post :create, {equipment: attributes_for(:equipment, category_id: 1)}
+          post :create, {equipment: attributes_for(:equipment,
+            category_id: 1,
+            photo: fixture_file_upload('hpx_test_photo.jpg', 'image/jpg')
+          )}
         }.to change(Equipment, :count).by(1)
 
         assigns(:equipment).should be_a(Equipment)

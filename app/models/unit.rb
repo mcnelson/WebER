@@ -2,7 +2,6 @@ class Unit < ActiveRecord::Base
   validates_presence_of :active, :status, :category_id
 
   belongs_to :category
-
   has_many :reserved_units
   has_many :reservations, through: :reserved_units
 
@@ -24,6 +23,9 @@ class Unit < ActiveRecord::Base
 
     default_style: :thirtytwo,
     default_url: "/assets/noimage.jpg"
+
+  validates_attachment :photo,
+    content_type: { content_type: /\Aimage\/.*\Z/ }
 
   STATUSES = [
     "available",
