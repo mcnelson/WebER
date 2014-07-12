@@ -9,11 +9,11 @@ class Semester < ActiveRecord::Base
   TERM_SPLIT_MONTH = 6
 
   def term
-    starts_at.month.in?(TERM_SPLIT_MONTH .. 12) ? "Fall" : "Spring"
+    starts_at.month.in?(TERM_SPLIT_MONTH .. 12) ? "Fall" : "Spring" if starts_at
   end
 
   def year
-    starts_at.year
+    starts_at.year if starts_at
   end
 
   def yearterm

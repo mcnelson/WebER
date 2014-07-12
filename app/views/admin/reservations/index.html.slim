@@ -1,11 +1,17 @@
-- set_title("Listing Reservations")
+- set_title("Reservations")
 
 .row-fluid
-  .pagination-centered
-    = paginate @reservations
+  .span4
+    .liner
+      = link_to "New Reservation", new_admin_reservation_path, class: "btn btn-info btn-small"
+
+  .span8
+    .pagination-centered
+      = paginate @reservations
 
 
 .row-fluid
+
   .span12
     .liner
       table.table.table-striped

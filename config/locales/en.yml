@@ -13,6 +13,7 @@ en:
 
     models:
       equipment: "Equipment Unit"
+      equipment: "ER Hour"
 
   time:
     formats:

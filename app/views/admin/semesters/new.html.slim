@@ -1,4 +1,4 @@
-- set_title("New semester")
+- set_crud_title(:new, @semester, @semester.yearterm)
 
 = simple_form_for [:admin, @semester], html: { class: "form-horizontal" } do |f|
   = form_errors @semester

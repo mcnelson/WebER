@@ -1,4 +1,4 @@
-- set_title("Edit #{@category.class.name.underscore.humanize.titlecase}: #{ @category.title }")
+- set_crud_title(:edit, @category, @category.title)
 
 = simple_form_for [:admin, @category], html: { class: "form-horizontal" } do |f|
   = form_errors @category
