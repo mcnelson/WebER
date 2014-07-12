@@ -17,7 +17,7 @@ class Admin::AccessoriesController < AdminController
     if @accessory.save
       redirect_to [:admin, @accessory], notice: 'Accessory was successfully created.'
     else
-      render action: "new"
+      render "new"
     end
   end
 
@@ -27,7 +27,7 @@ class Admin::AccessoriesController < AdminController
     if @accessory.update_attributes(accessory_params)
       redirect_to [:admin, @accessory], notice: 'Accessory was successfully updated.'
     else
-      render action: "edit"
+      render "edit"
     end
   end
 

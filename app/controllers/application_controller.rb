@@ -65,6 +65,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render_no_current_semester
-    render action: "no_current_semester", status: 500, layout: "smallcenter"
+    render "no_current_semester", status: 500, layout: "smallcenter"
   end
 end

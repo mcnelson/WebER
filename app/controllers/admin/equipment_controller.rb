@@ -49,7 +49,7 @@ class Admin::EquipmentController < AdminController
         format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully created.' }
         format.json { render json: @equipment, status: :created, location: @equipment }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @equipment.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class Admin::EquipmentController < AdminController
         format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @equipment.errors, status: :unprocessable_entity }
       end
     end

@@ -31,7 +31,7 @@ class Admin::ReservationsController < AdminController
         if @reservation.save
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully created.'
         else
-          render action: "new"
+          render "new"
         end
       end
 
@@ -55,7 +55,7 @@ class Admin::ReservationsController < AdminController
         if @reservation.update_attributes(reservation_params)
           redirect_to [:admin, @reservation], notice: 'Reservation was successfully updated.'
         else
-          render action: "edit"
+          render "edit"
         end
       end
 

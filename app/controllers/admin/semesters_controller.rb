@@ -36,7 +36,7 @@ class Admin::SemestersController < AdminController
         format.html { redirect_to [:admin, @semester], notice: 'Semester was successfully created.' }
         format.json { render json: @semester, status: :created, location: @semester }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @semester.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +50,7 @@ class Admin::SemestersController < AdminController
         format.html { redirect_to [:admin, @semester], notice: 'Semester was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @semester.errors, status: :unprocessable_entity }
       end
     end

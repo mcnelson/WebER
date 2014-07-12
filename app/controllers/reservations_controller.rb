@@ -30,7 +30,7 @@ class ReservationsController < ApplicationController
         if @reservation.save
           redirect_to @reservation, notice: 'Reservation was successfully created.'
         else
-          render action: "new"
+          render "new"
         end
       end
 
@@ -40,7 +40,7 @@ class ReservationsController < ApplicationController
           flash[:notice] = 'Reservation was successfully created.'
 
         else
-          render action: "update_form"
+          render "update_form"
         end
       end
     end

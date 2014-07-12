@@ -60,12 +60,22 @@ describe ReservationsController, type: :controller do
   end
 
   describe '#new' do
-    before { semester_with_test_er_hours }
+    context "with valid semester present" do
+      before { semester_with_test_er_hours }
 
-    it 'renders the form with an empty reservation' do
-      get :new
-      expect(assigns(:reservation)).to be_a_new(Reservation)
-      expect(response).to render_template("new")
+      it 'renders the form with an empty reservation' do
+        get :new
+        expect(assigns(:reservation)).to be_a_new(Reservation)
+        expect(response).to render_template("new")
+      end
+    end
+
+    context "no current semester" do
+      it "renders the no current semester view" do
+        get :new
+        expect(response).to render_template("no_current_semester")
+        expect(response).not_to render_template("new")
+      end
     end
   end
 

@@ -46,7 +46,7 @@ class Admin::PackagesController < AdminController
         format.html { redirect_to @package, notice: 'Package was successfully created.' }
         format.json { render json: @package, status: :created, location: @package }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @package.errors, status: :unprocessable_entity }
       end
     end
@@ -62,7 +62,7 @@ class Admin::PackagesController < AdminController
         format.html { redirect_to @package, notice: 'Package was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @package.errors, status: :unprocessable_entity }
       end
     end

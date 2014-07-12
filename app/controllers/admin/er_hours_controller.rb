@@ -15,7 +15,7 @@ class Admin::ErHoursController < AdminController
     if @er_hour.save
       redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'ER Hour was successfully created.'
     else
-      render action: "new"
+      render "new"
     end
   end
 
@@ -25,7 +25,7 @@ class Admin::ErHoursController < AdminController
     if @er_hour.update_attributes(er_hour_params)
       redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'ER Hour was successfully updated.'
     else
-      render action: "edit"
+      render "edit"
     end
   end
 
