@@ -61,7 +61,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_403
-    render file: "public/403", format: :html, status: 404, layout: nil
+    render file: "public/403", format: :html, status: 403, layout: nil
+  end
+
+  def render_404
+    render file: "public/404", format: :html, status: 404, layout: nil
   end
 
   def render_no_current_semester

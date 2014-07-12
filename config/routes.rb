@@ -7,7 +7,11 @@ Weber::Application.routes.draw do
     delete :signout, action: :destroy
   end
 
-  resources :reservations, except: [:edit, :update, :destroy]
+  resources :reservations, except: %w(edit update destroy)
+
+  controller :units do
+    get :forty_image, as: :unit_forty_image
+  end
 
   namespace :admin do
     get '/' => 'reservations#index', as: :admin_root

@@ -29,9 +29,10 @@
                 as:                 :grouped_select,
                 group_method:       :first,
                 group_label_method: :last,
-                label_html:         { class: :upper_fade },
+                label_html:         {class: :upper_fade},
                 label_method:       :name_brand_model,
-                label:              "Item"
+                label:              "Item",
+                input_html:         {class: "unit-select", "data-ajax-url" => unit_forty_image_path}
 
           = f.link_to_add :reserved_equipment, class: "btn btn-mini", id: "addEquipmentBtn" do
             span.icon: i.icon-plus
@@ -48,9 +49,10 @@
                 as:                 :grouped_select,
                 group_method:       :first,
                 group_label_method: :last,
-                label_html:         { class: :upper_fade },
+                label_html:         {class: :upper_fade},
                 label_method:       :name_brand_model,
-                label:              "Item"
+                label:              "Item",
+                input_html:         {class: "unit-select", "data-ajax-url" => unit_forty_image_path}
 
           = f.link_to_add :reserved_accessories, class: "btn btn-mini", id: "addAccessoryBtn" do
             span.icon: i.icon-plus
