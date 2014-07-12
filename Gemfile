@@ -31,7 +31,7 @@ group :test do
   gem 'rspec-rails', '~> 3.0.0.rc1'
   gem 'factory_girl', '~> 4.4.0'
   gem 'factory_girl_rails'      # Specs
-  gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
+  #gem 'turn', '< 0.8.3'         # Alternative runners for MiniTest
   gem 'shoulda-matchers'
   gem 'timecop'
 end

@@ -57,7 +57,6 @@ describe Admin::UsersController, type: :controller do
       end
 
       it "rerenders the form with errors" do
-        User.any_instance.stub(:save).and_return(false)
         post :create, {user: invalid_attrs}
 
         expect(assigns(:user)).to be_a_new(User)

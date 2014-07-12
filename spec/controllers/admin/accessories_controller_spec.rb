@@ -10,7 +10,7 @@ describe Admin::AccessoriesController, type: :controller do
 
     it "assigns the requested accessory as @accessory" do
       get :show, {id: accessory}
-      assigns(:accessory).should eq(accessory)
+      expect(assigns(:accessory)).to eql(accessory)
     end
   end
 
@@ -52,8 +52,8 @@ describe Admin::AccessoriesController, type: :controller do
 
       it "assigns a newly created but unsaved accessory as @accessory" do
         post :create, accessory: invalid_attrs
-        assigns(:accessory).should be_a_new(Accessory)
-        response.should render_template("new")
+        expect(assigns(:accessory)).to be_a_new(Accessory)
+        expect(response).to render_template("new")
       end
     end
   end
@@ -64,16 +64,16 @@ describe Admin::AccessoriesController, type: :controller do
     context "with valid params" do
       it "updates the requested accessory" do
         put :update, {id: accessory, accessory: attributes_for(:accessory)}
-        assigns(:accessory).should eq(accessory)
-        response.should redirect_to([:admin, accessory])
+        expect(assigns(:accessory)).to eql(accessory)
+        expect(response).to redirect_to([:admin, accessory])
       end
     end
 
     describe "with invalid params" do
       it "assigns the accessory as @accessory" do
         put :update, {id: accessory, accessory: attributes_for(:accessory, category_id: "")}
-        assigns(:accessory).should eq(accessory)
-        response.should render_template("edit")
+        expect(assigns(:accessory)).to eql(accessory)
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -86,7 +86,7 @@ describe Admin::AccessoriesController, type: :controller do
         delete :destroy, {id: accessory}
       }.to change(Accessory, :count).by(-1)
 
-      response.should redirect_to(admin_equipment_index_path)
+      expect(response).to redirect_to(admin_equipment_index_path)
     end
   end
 end
