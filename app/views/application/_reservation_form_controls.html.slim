@@ -5,7 +5,7 @@
         h2 Timeframe
         = f.input :starts_at, as: :datepicker
         = f.input :ends_at, as: :datepicker
-        - if current_user.workstudy? && controller.class == Admin::ReservationsController
+        - if in_admin_area?
           .well
             h2 Administrative Options
             = f.input :status, collection: Reservation::STATUSES, as: :radio_buttons, label_method: :capitalize

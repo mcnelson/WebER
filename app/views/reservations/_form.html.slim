@@ -3,13 +3,10 @@
     - 3.times do
       span .
 
-  = simple_nested_form_for @reservation, remote: true, html: {class: "form-horizontal reservation-form"} do |f|
-    .row-fluid
-      .span12
-        .liner
-          .form-errors
-            = form_errors @reservation
+  = simple_nested_form_for (in_admin_area? ? [:admin, @reservation] : @reservation),
+    remote: true, html: {class: "form-horizontal reservation-form"} do |f|
 
+    = form_errors @reservation
     = render partial: 'reservation_form_controls', locals: { f: f }
 
     .form-actions

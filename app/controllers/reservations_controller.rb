@@ -36,8 +36,9 @@ class ReservationsController < ApplicationController
 
       format.js do
         if @reservation.save
-          render js: "window.location = '#{reservation_path(@reservation)}';",
-            notice: 'Reservation was successfully created.'
+          render js: "window.location = '#{reservation_path(@reservation)}';"
+          flash[:notice] = 'Reservation was successfully created.'
+
         else
           render action: "update_form"
         end

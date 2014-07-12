@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :sort_column, :sort_direction
+  helper_method :current_user, :sort_column, :sort_direction, :in_admin_area?
 
   protect_from_forgery
 
@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
 
   def require_current_semester
     render_no_current_semester if Semester.current.nil?
+  end
+
+  def in_admin_area?
+    self.class.superclass == AdminController
   end
 
   def sort_column

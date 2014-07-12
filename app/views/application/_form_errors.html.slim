@@ -1,6 +1,7 @@
-- if object.errors.any?
+- if object.errors.present?
   .form-errors
-    | #{pluralize(object.errors.count, "error")} prohibited this #{object.class.model_name.human} from being saved:
+    | Please fix the following #{pluralize(object.errors.count, "error")} to save
+      this #{object.class.model_name.human}:
     ul
       - object.errors.full_messages.each do |message|
         li = message

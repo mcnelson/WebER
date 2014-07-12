@@ -111,6 +111,7 @@ describe Admin::ReservationsController, type: :controller do
         expect(reservation).to be_persisted
         expect(reservation.equipment).to include(equipment)
         expect(reservation.accessories).to include(accessory)
+        expect(flash[:notice]).to be_present
       end
     end
   end

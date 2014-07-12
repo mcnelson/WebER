@@ -37,11 +37,11 @@ class Admin::ReservationsController < AdminController
 
       fmt.js do
         if @reservation.save
-          render js: "window.location = '#{admin_reservation_path(@reservation)}';",
-            notice: 'Reservation was successfully created.'
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';"
+          flash[:notice] = 'Reservation was successfully created.'
 
         else
-          render action: "update_form"
+          render "/reservations/update_form"
         end
       end
     end
@@ -61,11 +61,11 @@ class Admin::ReservationsController < AdminController
 
       fmt.js do
         if @reservation.update_attributes(reservation_params)
-          render js: "window.location = '#{admin_reservation_path(@reservation)}';",
-            notice: 'Reservation was successfully updated.'
+          render js: "window.location = '#{admin_reservation_path(@reservation)}';"
+          flash[:notice] = 'Reservation was successfully updated.'
 
         else
-          render action: "update_form"
+          render "/reservations/update_form"
         end
       end
     end
