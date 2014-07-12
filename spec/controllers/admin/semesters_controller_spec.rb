@@ -9,7 +9,7 @@ describe Admin::SemestersController, type: :controller do
 
     it "assigns all semesters as @semesters" do
       get :index
-      assigns(:semesters).should eq([semester])
+      expect(assigns(:semesters)).to include(semester)
     end
   end
 
@@ -18,14 +18,14 @@ describe Admin::SemestersController, type: :controller do
 
     it "assigns the requested semester as @semester" do
       get :show, id: semester
-      assigns(:semester).should eq(semester)
+      expect(assigns(:semester)).to eq(semester)
     end
   end
 
   describe "#new" do
     it "assigns a new semester as @semester" do
       get :new
-      assigns(:semester).should be_a_new(Semester)
+      expect(assigns(:semester)).to be_a_new(Semester)
     end
   end
 
@@ -34,7 +34,7 @@ describe Admin::SemestersController, type: :controller do
 
     it "assigns the requested semester as @semester" do
       get :edit, id: semester
-      assigns(:semester).should eq(semester)
+      expect(assigns(:semester)).to eq(semester)
     end
   end
 
@@ -71,7 +71,7 @@ describe Admin::SemestersController, type: :controller do
     describe "with valid params" do
       it "updates the requested semester" do
         put :update, id: semester, semester: attributes_for(:semester)
-        response.should redirect_to([:admin, semester])
+        expect(response).to redirect_to([:admin, semester])
       end
     end
 
@@ -80,8 +80,8 @@ describe Admin::SemestersController, type: :controller do
 
       it "assigns the semester as @semester" do
         put :update, id: semester, semester: {starts_at: "blah"}
-        assigns(:semester).should eq(semester)
-        response.should render_template("edit")
+        expect(assigns(:semester)).to eq(semester)
+        expect(response).to render_template("edit")
       end
     end
   end

@@ -9,7 +9,7 @@ describe Admin::EquipmentController, type: :controller do
 
     it "assigns all equipment as @equipment" do
       get :index
-      assigns(:equipment).should eq([equipment])
+      expect(assigns(:equipment)).to include(equipment)
     end
   end
 
@@ -18,14 +18,14 @@ describe Admin::EquipmentController, type: :controller do
 
     it "assigns the requested equipment as @equipment" do
       get :show, {id: equipment}
-      assigns(:equipment).should eq(equipment)
+      expect(assigns(:equipment)).to eq(equipment)
     end
   end
 
   describe "#new" do
     it "assigns a new equipment as @equipment" do
       get :new
-      assigns(:equipment).should be_a_new(Equipment)
+      expect(assigns(:equipment)).to be_a_new(Equipment)
     end
   end
 
@@ -34,7 +34,7 @@ describe Admin::EquipmentController, type: :controller do
 
     it "assigns the requested equipment as @equipment" do
       get :edit, {id: equipment}
-      assigns(:equipment).should eq(equipment)
+      expect(assigns(:equipment)).to eql(equipment)
     end
   end
 
@@ -48,17 +48,17 @@ describe Admin::EquipmentController, type: :controller do
           )}
         }.to change(Equipment, :count).by(1)
 
-        assigns(:equipment).should be_a(Equipment)
-        assigns(:equipment).should be_persisted
-        response.should redirect_to([:admin, Equipment.last])
+        expect(assigns(:equipment)).to be_a(Equipment)
+        expect(assigns(:equipment)).to be_persisted
+        expect(response).to redirect_to([:admin, Equipment.last])
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved equipment as @equipment" do
         post :create, equipment: attributes_for(:equipment, name: "")
-        assigns(:equipment).should be_a_new(Equipment)
-        response.should render_template("new")
+        expect(assigns(:equipment)).to be_a_new(Equipment)
+        expect(response).to render_template("new")
       end
     end
   end
@@ -69,16 +69,16 @@ describe Admin::EquipmentController, type: :controller do
     context "with valid params" do
       it "updates the requested equipment" do
         put :update, id: equipment, equipment: attributes_for(:equipment, category_id: 1)
-        assigns(:equipment).should eq(equipment)
-        response.should redirect_to([:admin, equipment])
+        expect(assigns(:equipment)).to eq(equipment)
+        expect(response).to redirect_to([:admin, equipment])
       end
     end
 
     context "with invalid params" do
       it "assigns the equipment as @equipment" do
         put :update, id: equipment, equipment: attributes_for(:equipment, name: "")
-        assigns(:equipment).should eq(equipment)
-        response.should render_template("edit")
+        expect(assigns(:equipment)).to eq(equipment)
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -90,7 +90,7 @@ describe Admin::EquipmentController, type: :controller do
       expect {
         delete :destroy, {id: equipment}
       }.to change(Equipment, :count).by(-1)
-      response.should redirect_to(admin_equipment_index_path)
+      expect(response).to redirect_to(admin_equipment_index_path)
     end
   end
 end

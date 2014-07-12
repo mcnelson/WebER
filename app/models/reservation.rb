@@ -1,5 +1,6 @@
 class Reservation < ActiveRecord::Base
   SemesterMissingError = Class.new(StandardError)
+  ErHourMissingError = Class.new(StandardError)
   include ActionView::Helpers::DateHelper
 
   validates :starts_at, :ends_at, :status, :user_id, presence: true
@@ -137,5 +138,19 @@ class Reservation < ActiveRecord::Base
 
   def contains?(equipment)
     equipment.exists? equipment
+  end
+
+  def pickup_er_hour
+    verify_containing_semester_present
+
+    semester = Semester.around_date(starts_at).first
+    er_hour = semester.er_hour_on_day(starts_at)
+
+    unless er_hour
+      raise ErHourMissingError,
+        "no ER hour present on #{I18n.localize(starts_at, format: :dmy)}"
+    end
+
+    er_hour
   end
 end

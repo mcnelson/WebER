@@ -49,11 +49,11 @@ describe ReservationsController, type: :controller do
   end
 
   describe '#show' do
-    before { semester_with_test_er_hours }
-    let!(:reservation) { reservation_with_one_unit }
+    let!(:semester) { semester_with_test_er_hours }
+    let(:reservation) { reservation_with_one_unit }
 
     it 'shows the given reservation' do
-      get :show, id: reservation_with_one_unit
+      get :show, id: reservation
       expect(response).to be_success
       expect(response).to render_template("show")
     end

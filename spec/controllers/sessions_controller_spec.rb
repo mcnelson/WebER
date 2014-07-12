@@ -22,21 +22,21 @@ describe SessionsController, type: :controller do
     describe "GET new" do
       it "does not redirect" do
         get :new, {}
-        response.should_not redirect_to(root_url)
+        expect(response).not_to redirect_to(root_url)
       end
     end
 
     describe "POST create" do
       it "rejects incorrect login information" do
         post :create, { punet: @user.punet, password: "notcorrect" }
-        flash[:alert].should =~ /incorrect password/i
+        expect(flash[:alert]).to match(/incorrect password/i)
       end
 
       it "accepts correct login information" do
         post :create, { punet: @user.punet, password: @plaintext_password }
-        flash[:notice].should =~ /welcome back/i
-        flash[:alert].should be_blank
-        response.should be_redirect
+        expect(flash[:notice]).to match(/welcome back/i)
+        expect(flash[:alert]).to be_blank
+        expect(response).to be_redirect
       end
     end
   end

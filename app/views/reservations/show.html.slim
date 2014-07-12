@@ -24,7 +24,7 @@ p#notice = notice
     .liner
       = render partial: "equipment_table", locals: { equipment: @reservation.equipment, show_controls: false }
 
-- er_hour = Semester.around_date(@reservation.starts_at).first.er_hour_on_day(@reservation.starts_at)
+- er_hour = @reservation.pickup_er_hour
 .row-fluid
   .span4
     .gasket
