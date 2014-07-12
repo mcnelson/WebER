@@ -1,7 +1,6 @@
 - if object.errors.any?
-  .gasket
-    .alert.alert-error
-      strong = "#{pluralize(object.errors.count, "error")} prohibited this object from being saved:"
-      ul
-        - object.errors.full_messages.each do |message|
-          li = message
+  .form-errors
+    | #{pluralize(object.errors.count, "error")} prohibited this #{object.class.model_name.human} from being saved:
+    ul
+      - object.errors.full_messages.each do |message|
+        li = message

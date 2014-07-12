@@ -86,6 +86,26 @@ body {
     }
   }
 
+  #notice {
+    background: #357732;
+    padding: 10px 12px;
+    font-weight: bold;
+    border-bottom: 2px solid #25631A;
+    color: white;
+  }
+
+  .form-errors {
+    background: #941616;
+    padding: 10px 12px;
+    font-weight: bold;
+    border-bottom: 2px solid #691313;
+    color: white;
+
+    ul {
+      margin-bottom: 0;
+    }
+  }
+
   // Show
   .ptable {
     p strong {

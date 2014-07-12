@@ -11,6 +11,9 @@ en:
         checkin_hour: "Associated check-in hour"
         wday: "Weekday"
 
+    models:
+      equipment: "Equipment Unit"
+
   time:
     formats:
       dmy:              "%-m/%-d/%Y"

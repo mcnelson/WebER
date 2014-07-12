@@ -4,6 +4,16 @@ module ApplicationHelper
     content_for(:page_title) { title }
   end
 
+  def set_crud_title(action, record_instance, title = nil)
+    formatted_title = if title
+      ": " << (title.present? ? title : "(unnamed)")
+    else
+      ""
+    end
+
+    set_title("#{action.to_s.capitalize} #{record_instance.class.model_name.human}#{formatted_title}")
+  end
+
   def form_errors(object)
     if ["text/javascript", "data/json"].include? request.format
       render partial: "ajax_errors", locals: { object: object }
