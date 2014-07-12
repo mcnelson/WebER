@@ -13,7 +13,7 @@ en:
 
     models:
       equipment: "Equipment Unit"
-      equipment: "ER Hour"
+      er_hour: "ER Hour"
 
   time:
     formats:
