@@ -20,7 +20,11 @@
 
   .span8
     .liner
-      = render partial: "equipment_table", locals: { equipment: @reservation.equipment, show_controls: true }
+      h3 Equipment
+      = render partial: "equipment_table", locals: {equipment: @reservation.equipment, show_controls: true}
+
+      h3 Accessories
+      = render partial: "equipment_table", locals: {equipment: @reservation.accessories, show_controls: true}
 
 
 .form-actions

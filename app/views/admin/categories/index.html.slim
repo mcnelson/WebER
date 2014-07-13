@@ -17,10 +17,13 @@
             td = equipment_category.equipment.count
             td
               .btn-group
-                = link_to 'Edit', edit_admin_equipment_category_path(equipment_category), class: "btn btn-small btn-primary"
-                = link_to 'Delete', admin_category_path(equipment_category), confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+                = link_to 'Edit', edit_admin_equipment_category_path(equipment_category),
+                  class: "btn btn-small btn-primary"
 
-      = render partial: 'admin/categories/form', locals: { target: @new_equipment_category }
+                = link_to 'Delete', admin_category_path(equipment_category),
+                  confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+
+      = render partial: 'admin/categories/form', locals: {target: @new_equipment_category}
 
   .span6
     .gasket
@@ -38,7 +41,10 @@
             td = accessory_category.accessories.count
             td
               .btn-group
-                = link_to 'Edit', edit_admin_accessory_category_path(accessory_category), class: "btn btn-small btn-primary"
-                = link_to 'Delete', admin_category_path(accessory_category), confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+                = link_to 'Edit', edit_admin_accessory_category_path(accessory_category),
+                  class: "btn btn-small btn-primary"
+
+                = link_to 'Delete', admin_category_path(accessory_category),
+                  confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
 
       = render partial: 'admin/categories/form', locals: { target: @new_accessory_category }
