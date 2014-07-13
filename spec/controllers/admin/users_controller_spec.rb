@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Admin::UsersController, type: :controller do
+  render_views
   before { signin_as("admin") }
 
   describe "#index" do
