@@ -25,8 +25,8 @@
 
         - @reservations.each do |reservation|
           tr
-            td = reservation.starts_at
-            td = reservation.ends_at
+            td = l reservation.starts_at, format: :dmy_ampm
+            td = l reservation.ends_at, format: :dmy_ampm
             td = reservation_pretty_status(reservation.status)
             td = reservation.user.punet
             td
