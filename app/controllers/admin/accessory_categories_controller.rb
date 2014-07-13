@@ -8,7 +8,7 @@ class Admin::AccessoryCategoriesController < AdminController
     @category = AccessoryCategory.new(accessory_params)
 
     if @category.save
-      redirect_to admin_categories_path, notice: 'Accessory category was successfully created.'
+      redirect_to admin_categories_path, flash: {success: 'Accessory category was successfully created.'}
     else
       render "admin/categories/edit"
     end
@@ -18,7 +18,7 @@ class Admin::AccessoryCategoriesController < AdminController
     @category = AccessoryCategory.find(params[:id])
 
     if @category.update_attributes(accessory_params)
-      redirect_to admin_categories_path, notice: 'Accessory category was successfully updated.'
+      redirect_to admin_categories_path, flash: {success: 'Accessory category was successfully updated.'}
     else
       render "admin/categories/edit"
     end

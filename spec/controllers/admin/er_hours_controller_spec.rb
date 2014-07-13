@@ -38,6 +38,7 @@ describe Admin::ErHoursController, type: :controller do
         expect(assigns(:er_hour)).to be_a(ErHour)
         expect(assigns(:er_hour)).to be_persisted
         expect(response).to redirect_to(edit_admin_semester_path(semester))
+        expect(flash[:success]).to be_present
       end
     end
 
@@ -65,6 +66,7 @@ describe Admin::ErHoursController, type: :controller do
         put :update, {semester_id: semester, id: er_hour, er_hour: attributes_for(:er_hour)}
         expect(assigns(:er_hour)).to  eql(er_hour)
         expect(response).to           redirect_to(edit_admin_semester_path(semester))
+        expect(flash[:success]).to    be_present
       end
     end
 

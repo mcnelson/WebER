@@ -33,7 +33,7 @@ class Admin::SemestersController < AdminController
 
     respond_to do |format|
       if @semester.save
-        format.html { redirect_to [:admin, @semester], notice: 'Semester was successfully created.' }
+        format.html { redirect_to [:admin, @semester], flash: {success: 'Semester was successfully created.'} }
         format.json { render json: @semester, status: :created, location: @semester }
       else
         format.html { render "new" }
@@ -47,7 +47,7 @@ class Admin::SemestersController < AdminController
 
     respond_to do |format|
       if @semester.update_attributes(semester_params)
-        format.html { redirect_to [:admin, @semester], notice: 'Semester was successfully updated.' }
+        format.html { redirect_to [:admin, @semester], flash: {success: 'Semester was successfully updated.'} }
         format.json { head :no_content }
       else
         format.html { render "edit" }

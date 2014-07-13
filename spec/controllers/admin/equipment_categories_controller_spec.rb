@@ -19,6 +19,7 @@ describe Admin::EquipmentCategoriesController, type: :controller do
       post :create, equipment_category: attributes_for(:equipment_category)
       expect(response).to redirect_to(admin_categories_path)
       expect(assigns(:category)).to be_persisted
+      expect(flash[:success]).to be_present
     end
   end
 
@@ -29,6 +30,7 @@ describe Admin::EquipmentCategoriesController, type: :controller do
       patch :update, id: equipment_category, equipment_category: attributes_for(:equipment_category, title: 'bar')
       expect(response).to redirect_to(admin_categories_path)
       expect(assigns(:category).title).to eql('bar')
+      expect(flash[:success]).to be_present
     end
   end
 end

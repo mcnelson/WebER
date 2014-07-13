@@ -15,7 +15,7 @@ class Admin::AccessoriesController < AdminController
     @accessory = Accessory.new(accessory_params)
 
     if @accessory.save
-      redirect_to [:admin, @accessory], notice: 'Accessory was successfully created.'
+      redirect_to [:admin, @accessory], flash: {success: 'Accessory was successfully created.'}
     else
       render "new"
     end
@@ -25,7 +25,7 @@ class Admin::AccessoriesController < AdminController
     @accessory = Accessory.find(params[:id])
 
     if @accessory.update_attributes(accessory_params)
-      redirect_to [:admin, @accessory], notice: 'Accessory was successfully updated.'
+      redirect_to [:admin, @accessory], flash: {success: 'Accessory was successfully updated.'}
     else
       render "edit"
     end

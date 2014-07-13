@@ -8,7 +8,7 @@ class Admin::EquipmentCategoriesController < AdminController
     @category = EquipmentCategory.new(category_params)
 
     if @category.save
-      redirect_to admin_categories_path, notice: 'Equipment category was successfully created.'
+      redirect_to admin_categories_path, flash: {success: 'Equipment category was successfully created.'}
     else
       render "admin/categories/edit"
     end
@@ -18,7 +18,7 @@ class Admin::EquipmentCategoriesController < AdminController
     @category = EquipmentCategory.find(params[:id])
 
     if @category.update_attributes(category_params)
-      redirect_to admin_categories_path, notice: 'Equipment category was successfully updated.'
+      redirect_to admin_categories_path, flash: {success: 'Equipment category was successfully updated.'}
     else
       render "admin/categories/edit"
     end

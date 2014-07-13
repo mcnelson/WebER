@@ -51,6 +51,7 @@ describe Admin::EquipmentController, type: :controller do
         expect(assigns(:equipment)).to be_a(Equipment)
         expect(assigns(:equipment)).to be_persisted
         expect(response).to redirect_to([:admin, Equipment.last])
+        expect(flash[:success]).to be_present
       end
     end
 
@@ -71,6 +72,7 @@ describe Admin::EquipmentController, type: :controller do
         put :update, id: equipment, equipment: attributes_for(:equipment, category_id: 1)
         expect(assigns(:equipment)).to eq(equipment)
         expect(response).to redirect_to([:admin, equipment])
+        expect(flash[:success]).to be_present
       end
     end
 

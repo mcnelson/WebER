@@ -15,7 +15,17 @@ module ApplicationHelper
   end
 
   def form_errors(object)
-    render partial: "form_errors", locals: { object: object }
+    render partial: "form_errors", locals: {object: object}
+  end
+
+  def success_flash
+    return "" if flash[:success].blank?
+    simple_div("success-flash", flash[:success])
+  end
+
+  def alert_flash
+    return "" if flash[:alert].blank?
+    simple_div("form-errors", flash[:alert])
   end
 
   def weekdays_for_select
@@ -95,5 +105,11 @@ module ApplicationHelper
     link_to link_href, { class: link_class} do
       link_inner.html_safe
     end
+  end
+
+  private
+
+  def simple_div(klass, content)
+    content_tag(:div, class: klass) { content }.html_safe
   end
 end

@@ -87,6 +87,7 @@ describe Admin::ReservationsController, type: :controller do
         expect(reservation).to be_persisted
         expect(reservation.equipment).to include(equipment)
         expect(reservation.accessories).to include(accessory)
+        expect(flash[:success]).to be_present
       end
     end
 
@@ -111,7 +112,7 @@ describe Admin::ReservationsController, type: :controller do
         expect(reservation).to be_persisted
         expect(reservation.equipment).to include(equipment)
         expect(reservation.accessories).to include(accessory)
-        expect(flash[:notice]).to be_present
+        expect(flash[:success]).to be_present
       end
     end
   end
@@ -144,6 +145,7 @@ describe Admin::ReservationsController, type: :controller do
         reservation = assigns(:reservation)
         expect(reservation.equipment_ids).to include(current_reserved_unit.unit_id)
         expect(reservation.equipment_ids).to include(new_equipment.id)
+        expect(flash[:success]).to be_present
       end
     end
 

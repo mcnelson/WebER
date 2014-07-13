@@ -13,7 +13,7 @@ class Admin::ErHoursController < AdminController
     @er_hour.semester = Semester.find(params[:semester_id])
 
     if @er_hour.save
-      redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'ER Hour was successfully created.'
+      redirect_to edit_admin_semester_path(@er_hour.semester), flash: {success: 'ER Hour was successfully created.'}
     else
       render "new"
     end
@@ -23,7 +23,7 @@ class Admin::ErHoursController < AdminController
     @er_hour = ErHour.find(params[:id])
 
     if @er_hour.update_attributes(er_hour_params)
-      redirect_to edit_admin_semester_path(@er_hour.semester), notice: 'ER Hour was successfully updated.'
+      redirect_to edit_admin_semester_path(@er_hour.semester), flash: {success: 'ER Hour was successfully updated.'}
     else
       render "edit"
     end

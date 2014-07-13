@@ -52,6 +52,7 @@ describe Admin::SemestersController, type: :controller do
         expect(assigns(:semester)).to be_a(Semester)
         expect(assigns(:semester)).to be_persisted
         expect(response).to redirect_to([:admin, Semester.last])
+        expect(flash[:success]).to be_present
       end
     end
 
@@ -72,6 +73,7 @@ describe Admin::SemestersController, type: :controller do
       it "updates the requested semester" do
         put :update, id: semester, semester: attributes_for(:semester)
         expect(response).to redirect_to([:admin, semester])
+        expect(flash[:success]).to be_present
       end
     end
 

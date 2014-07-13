@@ -42,6 +42,7 @@ describe Admin::AccessoriesController, type: :controller do
         expect(assigns(:accessory)).to be_a(Accessory)
         expect(assigns(:accessory)).to be_persisted
         expect(response).to redirect_to([:admin, assigns(:accessory)])
+        expect(flash[:success]).to be_present
       end
     end
 
@@ -66,6 +67,7 @@ describe Admin::AccessoriesController, type: :controller do
         put :update, {id: accessory, accessory: attributes_for(:accessory)}
         expect(assigns(:accessory)).to eql(accessory)
         expect(response).to redirect_to([:admin, accessory])
+        expect(flash[:success]).to be_present
       end
     end
 

@@ -46,7 +46,7 @@ class Admin::EquipmentController < AdminController
 
     respond_to do |format|
       if @equipment.save
-        format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully created.' }
+        format.html { redirect_to [:admin, @equipment], flash: {success: 'Equipment was successfully created.'}}
         format.json { render json: @equipment, status: :created, location: @equipment }
       else
         format.html { render "new" }
@@ -60,7 +60,7 @@ class Admin::EquipmentController < AdminController
 
     respond_to do |format|
       if @equipment.update_attributes(equipment_params)
-        format.html { redirect_to [:admin, @equipment], notice: 'Equipment was successfully updated.' }
+        format.html { redirect_to [:admin, @equipment], flash: {success: 'Equipment was successfully updated.'}}
         format.json { head :no_content }
       else
         format.html { render "edit" }
