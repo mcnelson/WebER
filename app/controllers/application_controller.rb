@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :sort_column, :sort_direction, :in_admin_area?
+  before_filter :check_session_expiry
 
   protect_from_forgery
 
@@ -46,6 +47,19 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def check_session_expiry
+    return unless session[:user_id]
+
+    if session[:expires_at].kind_of?(Time) && session[:expires_at] <= Time.now
+      session[:user_id] = nil
+      redirect_to signin_path,
+        flash: {alert: "For security reasons, your session is no longer active."}
+
+    else
+      session[:expires_at] = 5.minutes.from_now
+    end
   end
 
   private

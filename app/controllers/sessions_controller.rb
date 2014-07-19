@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       if user.active
         session[:user_id] = user.id
+        session[:expires_at] = 5.minutes.from_now
         redirect_to '/', flash: {success: "Welcome back, #{user.punet}!"}
       else
         render "unavailable_account", layout: "smallcenter"
@@ -21,6 +22,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:expires_at] = nil
     redirect_to root_url, flash: {success: "Signed out successfully."}
   end
 
