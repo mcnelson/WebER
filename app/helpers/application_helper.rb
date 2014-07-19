@@ -46,6 +46,14 @@ module ApplicationHelper
     render partial: "user_bar"
   end
 
+  def user_link(user)
+    if current_user.admin?
+      link_to user.punet, edit_admin_user_path(user)
+    else
+      user.punet
+    end
+  end
+
   def nav_link_to(label, path, opts={})
     p = Rails.application.routes.recognize_path path
 

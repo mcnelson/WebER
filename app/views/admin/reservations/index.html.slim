@@ -28,7 +28,7 @@
             td = l reservation.starts_at, format: :dmy_ampm
             td = l reservation.ends_at, format: :dmy_ampm
             td = reservation_pretty_status(reservation.status)
-            td = reservation.user.punet
+            td = user_link(reservation.user)
             td
               span.badge.badge-info = "#{reservation.equipment.count}E"
               |  

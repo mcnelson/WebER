@@ -7,7 +7,7 @@
       .ptable.ptable-40
         p
           strong Owner:
-          = @reservation.user.punet
+          = user_link(@reservation.user)
         p
           strong Starts at:
           = l @reservation.starts_at, format: :monthday

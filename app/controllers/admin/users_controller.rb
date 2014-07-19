@@ -17,7 +17,7 @@ class Admin::UsersController < AdminController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to [:admin, @user], flash: {success: 'User info was successfully created.'}
+      redirect_to edit_admin_user_path(@user), flash: {success: 'User info was successfully created.'}
     else
       render "new"
     end
@@ -27,7 +27,7 @@ class Admin::UsersController < AdminController
     @user = User.find(params[:id])
 
     if @user.update_attributes(user_params)
-      redirect_to [:admin, @user], flash: {success: 'User info was successfully updated.'}
+      redirect_to edit_admin_user_path(@user), flash: {success: 'User info was successfully updated.'}
     else
       render "edit"
     end

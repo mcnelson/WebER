@@ -39,7 +39,7 @@ describe Admin::UsersController, type: :controller do
 
         expect(assigns(:user)).to be_a(User)
         expect(assigns(:user)).to be_persisted
-        expect(response).to redirect_to([:admin, User.last])
+        expect(response).to redirect_to(edit_admin_user_path(User.last))
         expect(flash[:success]).to be_present
       end
     end
@@ -71,7 +71,7 @@ describe Admin::UsersController, type: :controller do
 
       it "updates the requested user" do
         put :update, {id: user, user: valid_attrs_without_password}
-        expect(response).to redirect_to([:admin, user])
+        expect(response).to redirect_to(edit_admin_user_path(User.last))
         expect(flash[:success]).to be_present
       end
     end
@@ -79,7 +79,7 @@ describe Admin::UsersController, type: :controller do
     context "valid params with password" do
       it "updates the requested user" do
         put :update, {id: user, user: attributes_for(:user)}
-        expect(response).to redirect_to([:admin, user])
+        expect(response).to redirect_to(edit_admin_user_path(User.last))
       end
     end
 

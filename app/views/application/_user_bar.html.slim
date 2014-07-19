@@ -2,7 +2,7 @@
   - if current_user
     .signed-in
       ' Signed in as 
-      strong = current_user.punet
+      strong = user_link current_user
       ' , 
       = current_user.permission_name.capitalize
     = link_to "Sign Out", signout_path, method: :delete
