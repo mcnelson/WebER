@@ -12,7 +12,7 @@ describe SessionsController, type: :controller do
       end
     end
 
-    context 'already logged in' do
+    context 'already signed in' do
       before { signin_as("student") }
 
       it "redirects to /" do
@@ -66,7 +66,7 @@ describe SessionsController, type: :controller do
     it "logs user out" do
       delete :destroy
 
-      expect(flash[:success]).to match(/logged out/i)
+      expect(flash[:success]).to match(/signed out/i)
       expect(response).to redirect_to(root_url)
     end
   end

@@ -49,8 +49,10 @@
 
   .span4
     .gasket
-      h2 Some Policy
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tortor vitae nunc vulputate a interdum turpis dapibus. Sed hendrerit molestie viverra. Vivamus venenatis ipsum vitae sapien ultricies tincidunt.
+      h2 All Done?
+      p Thank you for using WebER! Are you finished reserving equipment?
+      p
+        = link_to "Sign Out", signout_path, method: :delete, class: "btn btn-primary"
 
 .form-actions
   .btn-group

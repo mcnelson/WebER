@@ -1,9 +1,8 @@
 - set_title("Sign In")
 
 = form_for :session, url: signin_path, html: {class: "form-horizontal"} do
-  - if flash[:alert]
-    .form-errors
-      = flash[:alert]
+  = success_flash
+  = alert_flash
 
   .form-inputs.gasket
     .liner
