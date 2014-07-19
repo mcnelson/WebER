@@ -25,6 +25,14 @@ describe SessionsController, type: :controller do
   describe "#create" do
     let(:user) { create(:user, password: "herp derps", password_confirmation: "herp derps") }
 
+    it "accepts correct login information" do
+      post :create, {punet: user.punet, password: "herp derps"}
+
+      expect(flash[:success]).to match(/welcome back/i)
+      expect(flash[:alert]).to be_blank
+      expect(response).to be_redirect
+    end
+
     it "rejects incorrect username" do
       post :create, {punet: "nobody"}
       expect(flash[:alert]).to match(/doesn't match any of our records/i)
@@ -35,12 +43,20 @@ describe SessionsController, type: :controller do
       expect(flash[:alert]).to match(/doesn't match any of our records/i)
     end
 
-    it "accepts correct login information" do
-      post :create, {punet: user.punet, password: "herp derps"}
+    context "inactive user" do
+      let(:user) do
+        create(:user,
+          password:              "herp derps",
+          password_confirmation: "herp derps",
+          active:                false
+        )
+      end
 
-      expect(flash[:success]).to match(/welcome back/i)
-      expect(flash[:alert]).to be_blank
-      expect(response).to be_redirect
+      it "renders a small center message" do
+        post :create, {punet: user.punet, password: "herp derps"}
+        expect(response).to render_template("smallcenter")
+        expect(response.body).to include("unavailable")
+      end
     end
   end
 
