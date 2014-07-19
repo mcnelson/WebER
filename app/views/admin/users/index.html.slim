@@ -27,8 +27,4 @@
             td = user.pu_student_id
             td = user.strikes
             td = user.can_reserve
-            td
-              .btn-group
-                = link_to 'Show', [:admin, user], class: "btn btn-small"
-                = link_to 'Edit', edit_admin_user_path(user), class: "btn btn-small btn-primary"
-                = link_to 'Delete', [:admin, user], confirm: 'Are you sure?', method: :delete, class: "btn btn-small btn-inverse"
+            td = link_to 'Edit', edit_admin_user_path(user), class: "btn btn-small btn-primary"

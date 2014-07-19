@@ -13,15 +13,6 @@ describe Admin::UsersController, type: :controller do
     end
   end
 
-  describe "#show" do
-    it "shows the user" do
-      user = create(:user)
-      get :show, {id: user}
-      expect(response).to be_successful
-      expect(assigns(:user)).to eql(user)
-    end
-  end
-
   describe "#new" do
     it "renders the form" do
       get :new
