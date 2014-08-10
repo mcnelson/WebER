@@ -29,23 +29,31 @@
     .gasket
       h2 Checking Out
       p
-        | Go to the equipment room (ER) during the hours below on 
+        | Go to the equipment room (ER) on this day: 
         strong = er_hour.wday_name
-        | . You may show up at any time, but please don't be late.
+        | .
+
+      p You may show up at any time, but please don't be late. Equipment can be checked in/out at any of the open
+        ER times on the dates of your reservation.
 
       .gasket
         .well
+          p The first ER hour of the day is:
+
           .emphasize-time
             = l er_hour.starts_at, format: :ampm
             |  
             i.icon-minus
             = l er_hour.ends_at, format: :ampm
-          = @reservation.starts_at.to_date
+          = l @reservation.starts_at, format: :dmy
 
   .span4
     .gasket
-      h2 Location
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tortor vitae nunc vulputate a interdum turpis dapibus. Sed hendrerit molestie viverra. Vivamus venenatis ipsum vitae sapien ultricies tincidunt.
+      h2 Disclaimer
+      p You can be held financially liable for any damage or loss that is caused by negligence and/or carelessness.
+        Your access to Media Arts equipment can be revoked for failure to return all items at the time established
+        by this reservation. <em>We hope your use of departmental equipment allows you to do something
+        inspiring!</em>
 
   .span4
     .gasket
