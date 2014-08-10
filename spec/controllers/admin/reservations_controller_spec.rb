@@ -13,12 +13,20 @@ describe Admin::ReservationsController, type: :controller do
   end
 
   describe "#index" do
-    it "displays sortable/paginated reservations" do
+    it "renders successfully" do
       semester_with_test_er_hours
       reservation_with_one_unit
 
       get :index
       expect(assigns(:reservations)).to include(reservation_with_one_unit)
+    end
+
+    it "sorts correctly" do
+      semester_with_test_er_hours
+      reservation_with_one_unit
+
+      get :index, sort: "starts_at"
+      expect(assigns(:reservations).to_sql).to include("ORDER")
     end
   end
 
