@@ -12,7 +12,11 @@
           = f.input :password_confirmation
 
           h2 Permissions
-          = f.input :active, label: "Active account?", hint: "Completely disable acocunt" if !@user.new_record?
+          - if !@user.new_record?
+            = f.input :active,
+              label: "Active account?",
+              hint: "Un-check to completely disable acocunt"
+
           = f.input :permission_level,
             collection: User::PERMISSION_LEVELS,
             as: :radio_buttons,

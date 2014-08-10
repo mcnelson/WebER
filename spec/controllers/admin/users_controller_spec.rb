@@ -7,9 +7,22 @@ describe Admin::UsersController, type: :controller do
   describe "#index" do
     it "lists users" do
       user = create(:user)
+      inactive_user = create(:user, active: false)
+
       get :index
       expect(response).to be_successful
       expect(assigns(:users)).to include(user)
+      expect(assigns(:users)).not_to include(inactive_user)
+    end
+
+    it "can show inactive users" do
+      user = create(:user)
+      inactive_user = create(:user, active: false)
+
+      get :index, show_inactive: "On"
+      expect(response).to be_successful
+      expect(assigns(:users)).to include(user)
+      expect(assigns(:users)).to include(inactive_user)
     end
   end
 

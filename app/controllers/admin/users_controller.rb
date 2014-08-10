@@ -2,7 +2,8 @@ class Admin::UsersController < AdminController
   before_filter :require_admin
 
   def index
-    @users = User.page params[:page]
+    @users = User.page(params[:page])
+    @users = @users.where(active: true) unless params[:show_inactive].present?
   end
 
   def new

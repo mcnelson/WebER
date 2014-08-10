@@ -8,13 +8,21 @@
   .span4.pagination-centered
     = paginate @users
 
+  .span4
+    = form_tag nil, method: :get do
+      .pull-right
+        .liner
+          | Show inactive:  
+          = check_box_tag :show_inactive, false, params[:show_inactive]
+          |  
+          = submit_tag "Go", class: "btn"
+
 .row-fluid
   .span12
     .liner
       table.table.table-striped
         tr
           th PUNetID
-          th Active
           th Student #
           th Strikes
           th Can reserve
@@ -23,7 +31,6 @@
         - @users.each do |user|
           tr
             td = user.punet
-            td = active_label user
             td = user.pu_student_id
             td = user.strikes
             td = user.can_reserve
