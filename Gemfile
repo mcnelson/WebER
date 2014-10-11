@@ -37,6 +37,6 @@ group :test do
 end
 
 group :production do
-  gem 'passenger'               # Apache deployment
+  gem 'unicorn'
   gem 'rails_12factor'          # Heroku logging
 end
