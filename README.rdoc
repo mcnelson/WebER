@@ -1,5 +1,2 @@
-== WebER
-The Pacific Film & Video Department’s equipment room has been inventoried and checked out entirely by paper record. WebER is a web application that assists in inventory management and scheduling. The project was completed over roughly three months in the spring semester of 2012. 
-The application had two primary goals from its inception. First, it had to allow students to electronically check out equipment to replace the current manual process. Second, it was to provide a solution that assists staff in keeping track of the location, status, and details of each unit of equipment.
-WebER is a Ruby on Rails application using PostgreSQL for data persistence, and runs on any unix-like server. Currently, it lives on the Media Arts department’s web server.
-
+== WebER (Web Equipment Room)
+A simple scheduling and inventory management application for video production equipment. Built originally for Pacific University in Forest Grove, Oregon, USA.
