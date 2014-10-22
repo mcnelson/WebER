@@ -39,6 +39,6 @@ class Admin::ErHoursController < AdminController
   private
 
   def er_hour_params
-    params.require(:er_hour).permit(%w(starts_at ends_at wday))
+    params.require(:er_hour).permit(%w(starts_at ends_at wday checkin_hour_id))
   end
 end

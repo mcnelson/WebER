@@ -70,6 +70,19 @@ describe Admin::ErHoursController, type: :controller do
       end
     end
 
+    context 'with assocated ER hour' do
+      let(:other_er_hour) { create(:er_hour, semester: semester) }
+
+      it 'sets the correct association' do
+        put :update,
+          semester_id: semester,
+          id: er_hour,
+          er_hour: attributes_for(:er_hour).merge(checkin_hour_id: other_er_hour)
+
+        expect(assigns(:er_hour).checkin_hour).to  eql(other_er_hour)
+      end
+    end
+
     context "with invalid params" do
       let(:invalid_attrs) do
         attributes_for(:er_hour).tap do |a|
