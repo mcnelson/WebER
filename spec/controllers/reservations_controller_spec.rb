@@ -133,6 +133,25 @@ describe ReservationsController, type: :controller do
         expect(assigns(:reservation)).to be_a(Reservation)
         expect(assigns(:reservation)).to be_persisted
       end
+
+      context 'workstudy student' do
+        before { signin_as('workstudy') }
+        let(:attrs) do
+          attributes_for(:reservation).merge(
+            user_id: user.id,
+            reserved_equipment_attributes: {"0" => {unit_id: equipment.id}},
+            starts_at: 1.day.ago
+          )
+        end
+
+        it 'allows submitting invalid reservation' do
+          expect(Reservation.new(attrs)).to be_invalid
+
+          post :create, {reservation: attrs}, format: :js
+          expect(assigns(:reservation)).to be_a(Reservation)
+          expect(assigns(:reservation)).to be_persisted
+        end
+      end
     end
   end
 end

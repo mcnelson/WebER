@@ -25,9 +25,10 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params, user_id: current_user.id)
     @reservation.user = current_user
 
+    result = @reservation.save(current_user.workstudy? ? {validate: false} : {})
     respond_to do |format|
       format.html do
-        if @reservation.save(current_user.workstudy? ? {validate: false} : {})
+        if result
           redirect_to @reservation, flash: {success: 'Reservation was successfully created.'}
         else
           render "new"
@@ -35,7 +36,7 @@ class ReservationsController < ApplicationController
       end
 
       format.js do
-        if @reservation.save
+        if result
           render js: "window.location = '#{reservation_path(@reservation)}';"
           flash[:success] = 'Reservation was successfully created.'
 
