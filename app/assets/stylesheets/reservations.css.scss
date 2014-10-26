@@ -41,6 +41,15 @@
     }
   }
 
+  // This is ridiculous. Makes the "today" highlighting a pressed button when selected.
+  // Should be default behavior, this is a hack.
+  .ui-datepicker .ui-datepicker-calendar a.ui-state-highlight.ui-state-active {
+    border: 1px solid #999999;
+    background: #999999 url(ui-bg_inset-hard_75_999999_1x100.png) 50% 50% repeat-x;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
   .unit-row {
     min-height: 40px;
     border-top: solid 1px #CCC;
