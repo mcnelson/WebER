@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        if @reservation.save
+        if @reservation.save(current_user.workstudy? ? {validate: false} : {})
           redirect_to @reservation, flash: {success: 'Reservation was successfully created.'}
         else
           render "new"
