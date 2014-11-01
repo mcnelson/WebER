@@ -19,7 +19,7 @@ html
           = link_to root_path do
             = image_tag "logo.png", width: 192, height: 50, class: "logo"
           ul.nav
-            li = nav_link_to "Admin", admin_equipment_index_path if current_user.admin?
+            li = nav_link_to "Admin", admin_equipment_index_path if current_user.workstudy?
 
     .container
       h1.page-title = yield :page_title
