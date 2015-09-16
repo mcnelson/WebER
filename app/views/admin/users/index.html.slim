@@ -9,10 +9,11 @@
     = paginate @users
 
   .span4
-    = form_tag nil, method: :get do
+    = form_tag nil, method: :get, class: 'form-inline' do
       .pull-right
         .liner
-          | Show inactive:  
+          label for="show_inactive" Show inactive:  
+          |  
           = check_box_tag :show_inactive, false, params[:show_inactive]
           |  
           = submit_tag "Go", class: "btn"

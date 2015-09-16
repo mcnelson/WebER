@@ -5,13 +5,21 @@
     .liner
       = link_to "New Reservation", new_admin_reservation_path, class: "btn btn-info btn-small"
 
-  .span8
+  .span4
     .pagination-centered
       = paginate @reservations
 
+  .span4
+    = form_tag nil, method: :get, class: 'form-inline' do
+      .pull-right
+        .liner
+          label for="show_archived" Show archived:
+          |  
+          = check_box_tag :show_archived, false, params[:show_archived]
+          |  
+          = submit_tag 'Go', class: 'btn'
 
 .row-fluid
-
   .span12
     .liner
       table.table.table-striped

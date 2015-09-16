@@ -3,6 +3,8 @@ class Admin::ReservationsController < AdminController
 
   def index
     @reservations = Reservation.joins(:user)
+    @reservations = @reservations.where("status != 'archived'") if params[:show_archived].blank?
+
     if sort_column == "user"
       @reservations = @reservations.order("users.punet #{sort_direction}")
     else
